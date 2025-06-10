@@ -24,20 +24,7 @@ export default function ExperienceSection() {
     return `${monthNames[parseInt(month) - 1]} ${year}`;
   };
 
-  const calculateDuration = (startDate: string, endDate: string) => {
-    const start = new Date(startDate);
-    const end = endDate === 'Present' ? new Date() : new Date(endDate);
-    const diffTime = Math.abs(end.getTime() - start.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    const months = Math.floor(diffDays / 30);
-    const years = Math.floor(months / 12);
-    const remainingMonths = months % 12;
 
-    if (years > 0) {
-      return remainingMonths > 0 ? `${years}y ${remainingMonths}m` : `${years}y`;
-    }
-    return `${months}m`;
-  };
 
   return (
     <section id="experience" className="section-padding bg-surface-light dark:bg-surface-dark">
@@ -129,9 +116,6 @@ export default function ExperienceSection() {
                           <FaCalendarAlt size={12} />
                           <span>
                             {formatDate(exp.startDate)} - {formatDate(exp.endDate)}
-                          </span>
-                          <span className="text-xs text-gray-500">
-                            ({calculateDuration(exp.startDate, exp.endDate)})
                           </span>
                         </div>
                         <div className="flex items-center space-x-1">

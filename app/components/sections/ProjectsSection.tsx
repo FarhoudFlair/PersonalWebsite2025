@@ -11,7 +11,7 @@ import ScrollReveal from '@/components/animations/ScrollReveal';
 import { staggerContainer } from '@/utils/motionVariants';
 
 export default function ProjectsSection() {
-  const [filter, setFilter] = useState<'all' | 'featured' | 'completed' | 'in-progress'>('all');
+  const [filter, setFilter] = useState<'featured' | 'all'>('featured');
 
   const statusIcons = {
     completed: FaCheckCircle,
@@ -28,7 +28,7 @@ export default function ProjectsSection() {
   const filteredProjects = siteData.projects.filter(project => {
     if (filter === 'all') return true;
     if (filter === 'featured') return project.featured;
-    return project.status === filter;
+    return true;
   });
 
   const projectVariants = {
@@ -62,7 +62,7 @@ export default function ProjectsSection() {
         <ScrollReveal>
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-primary-light dark:text-text-primary-dark mb-4">
-              Featured Projects
+              Projects
             </h2>
             <p className="text-lg sm:text-xl text-text-secondary-light dark:text-text-secondary-dark max-w-2xl mx-auto">
               A showcase of my recent work and personal projects that demonstrate my skills and passion for development.
@@ -74,10 +74,8 @@ export default function ProjectsSection() {
         <ScrollReveal delay={0.2}>
           <div className="flex flex-wrap justify-center gap-3 mb-12">
             {[
-              { key: 'all', label: 'All Projects' },
               { key: 'featured', label: 'Featured' },
-              { key: 'completed', label: 'Completed' },
-              { key: 'in-progress', label: 'In Progress' },
+              { key: 'all', label: 'All Projects' },
             ].map((filterOption) => (
               <Button
                 key={filterOption.key}
