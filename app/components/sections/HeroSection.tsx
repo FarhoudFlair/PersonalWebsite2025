@@ -67,8 +67,7 @@ export default function HeroSection() {
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background-light to-surface-light dark:from-background-dark dark:to-surface-dark"
     >
-      {/* Particle Background */}
-      <ParticleBackground />
+
 
       {/* Hero Content */}
       <motion.div

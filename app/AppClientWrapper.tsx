@@ -1,18 +1,36 @@
 "use client";
 
-import React from 'react';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
 import { SettingsProvider, useSettings } from '@/context/SettingsContext';
-import TsParticleBackground from '@/components/animations/TsParticleBackground';
+
+// Dynamically import the TsParticleBackground component
+const TsParticleBackground = lazy(() => import('@/components/animations/TsParticleBackground'));
 
 interface AppClientWrapperProps {
   children: React.ReactNode;
 }
 
 function InnerClientLogic({ children }: { children: React.ReactNode }) {
-  // const { isParticleEffectEnabled } = useSettings(); // Setting is no longer used here if particles are always on
+  // Add state to delay loading particles until after main content
+  const [showParticles, setShowParticles] = useState(false);
+  
+  useEffect(() => {
+    // Delay loading particles until after initial page render
+    // This improves First Contentful Paint metrics
+    const timer = setTimeout(() => {
+      setShowParticles(true);
+    }, 1000); // 1 second delay
+    
+    return () => clearTimeout(timer);
+  }, []);
+  
   return (
     <>
-      <TsParticleBackground />
+      {showParticles && (
+        <Suspense fallback={<div className="absolute inset-0 -z-10" />}>
+          <TsParticleBackground />
+        </Suspense>
+      )}
       {children}
     </>
   );
