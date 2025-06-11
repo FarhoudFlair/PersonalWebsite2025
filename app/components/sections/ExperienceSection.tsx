@@ -136,7 +136,7 @@ export default function ExperienceSection() {
                             key={achIndex}
                             initial={{ opacity: 0, x: -20 }}
                             animate={timelineInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                            transition={{ delay: index * 0.2 + achIndex * 0.1 + 0.8 }}
+                            transition={{ delay: index * 0.2 + achIndex * 0.1 + 0.4 }}
                             className="flex items-start space-x-2 text-sm text-text-secondary-light dark:text-text-secondary-dark"
                           >
                             <span className="w-1.5 h-1.5 bg-primary-500 rounded-full mt-2 flex-shrink-0" />

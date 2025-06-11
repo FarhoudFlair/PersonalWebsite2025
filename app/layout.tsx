@@ -1,7 +1,9 @@
+import React from 'react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { siteData } from '@/data/siteData';
+import AppClientWrapper from './AppClientWrapper';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -80,8 +82,8 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.className} antialiased`}>
-        {children}
+      <body className={`${inter.className} antialiased relative`}>
+        <AppClientWrapper>{children}</AppClientWrapper>
       </body>
     </html>
   );
