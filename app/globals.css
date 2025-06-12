@@ -38,7 +38,8 @@
   }
   
   body {
-    background-color: hsl(var(--background));
+    /* The main background is now applied to the <main> element in page.tsx */
+    background-color: transparent;
     color: hsl(var(--foreground));
     transition: background-color 0.3s ease, color 0.3s ease;
   }

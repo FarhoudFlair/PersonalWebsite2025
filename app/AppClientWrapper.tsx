@@ -27,7 +27,7 @@ function InnerClientLogic({ children }: { children: React.ReactNode }) {
   return (
     <>
       {showParticles && (
-        <Suspense fallback={<div className="absolute inset-0 -z-10" />}>
+        <Suspense fallback={<div className="absolute inset-0" />}>
           <TsParticleBackground />
         </Suspense>
       )}

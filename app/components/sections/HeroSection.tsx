@@ -65,7 +65,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background-light to-surface-light dark:from-background-dark dark:to-surface-dark"
+      className="min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background-light to-surface-light dark:from-background-dark dark:to-surface-dark"
     >
 
 
