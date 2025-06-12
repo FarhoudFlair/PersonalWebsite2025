@@ -111,7 +111,7 @@ export default function ProjectsSection() {
               >
                 <Card variant="elevated" className="h-full overflow-hidden">
                   {/* Project Image */}
-                  <div className="relative h-48 bg-gradient-to-br from-primary-100 to-purple-100 dark:from-primary-900/20 dark:to-purple-900/20 overflow-hidden">
+                  <div className="relative h-48 bg-gradient-to-br from-primary-100 to-purple-100 dark:from-primary-900 dark:to-purple-900 overflow-hidden">
                     {/* Placeholder for project image */}
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="text-6xl opacity-20">🚀</div>

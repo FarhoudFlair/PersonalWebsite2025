@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
+import emailjs from 'emailjs-com';
 import { motion } from 'framer-motion';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaTwitter, FaPaperPlane } from 'react-icons/fa';
 import { siteData } from '@/data/siteData';
@@ -21,6 +22,7 @@ interface FormErrors {
   email?: string;
   subject?: string;
   message?: string;
+  submit?: string; // Added to handle general submission errors
 }
 
 export default function ContactSection() {
@@ -85,18 +87,42 @@ export default function ContactSection() {
 
     setIsSubmitting(true);
 
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
+      console.error('EmailJS environment variables are not configured.');
+      setErrors({ submit: 'Configuration error: Unable to send email. Please contact support.' });
+      setIsSubmitting(false);
+      return;
+    }
+
+    const templateParams = {
+      name: formData.name,
+      email: formData.email,
+      subject: formData.subject,
+      message: formData.message,
+    };
+
     try {
-      // Simulate form submission (replace with actual EmailJS or API call)
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await emailjs.send(
+        serviceId,
+        templateId,
+        templateParams,
+        publicKey
+      );
       
       setIsSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
+      setErrors({}); // Clear errors on successful submission
       
       // Reset success state after 5 seconds
       setTimeout(() => setIsSubmitted(false), 5000);
     } catch (error) {
       console.error('Error submitting form:', error);
-      // Handle error (show toast notification, etc.)
+      // Optionally, set an error state here to show a message to the user
+      setErrors({ submit: 'Failed to send message. Please try again later.' }); 
     } finally {
       setIsSubmitting(false);
     }
@@ -335,6 +361,11 @@ export default function ContactSection() {
                     </div>
                   </motion.div>
 
+                  {errors.submit && (
+                    <motion.div variants={itemVariants} className="mb-4">
+                      <p className="text-sm text-red-500 text-center">{errors.submit}</p>
+                    </motion.div>
+                  )}
                   <motion.div variants={itemVariants}>
                     <Button
                       type="submit"

@@ -1,21 +1,24 @@
 'use client';
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react'; // Removed useRef and useEffect for manual refresh, Container type
 import Particles from 'react-tsparticles';
-import { loadFull } from 'tsparticles';
-import type { Engine } from 'tsparticles-engine';
+import { loadFull } from 'tsparticles'; 
+import { type Engine, type ISourceOptions } from 'tsparticles-engine'; // Removed Container type
 
-const TsParticleBackground: React.FC = () => {
+interface TsParticleBackgroundProps {
+  interactionMode: 'repulse' | 'attract';
+  particleColor: string; // New prop for particle color
+}
+
+const TsParticleBackground: React.FC<TsParticleBackgroundProps> = ({ 
+  interactionMode, 
+  particleColor 
+}) => {
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadFull(engine);
   }, []);
 
-  return (
-    <Particles
-      id="tsparticles"
-      init={particlesInit}
-      className="absolute inset-0 w-full h-full"
-      options={{
+  const currentOptions = useMemo<ISourceOptions>(() => ({
         fullScreen: {
           enable: true,
           zIndex: 1,
@@ -34,7 +37,7 @@ const TsParticleBackground: React.FC = () => {
             },
             onHover: {
               enable: true,
-              mode: "repulse",
+              mode: interactionMode, 
             },
             resize: true,
           },
@@ -43,30 +46,35 @@ const TsParticleBackground: React.FC = () => {
               quantity: 4,
             },
             repulse: {
+              distance: 100, 
+              duration: 0.4, 
+            },
+            attract: {
               distance: 200,
-              duration: 0.4,
+              duration: 0.4, 
+              speed: 3, 
             },
           },
         },
         particles: {
           color: {
-            value: "#00c896",
+            value: particleColor, 
           },
           links: {
-            color: "#00c896",
+            color: particleColor, 
             distance: 150,
             enable: true,
-            opacity: 0.5,
+            opacity: 0.25,
             width: 1,
           },
           collisions: {
             enable: true,
           },
           move: {
-            direction: "none",
+            direction: "none", 
             enable: true,
             outModes: {
-              default: "bounce",
+              default: "bounce", 
             },
             random: false,
             speed: 1,
@@ -80,7 +88,7 @@ const TsParticleBackground: React.FC = () => {
             value: 80,
           },
           opacity: {
-            value: 0.5,
+            value: 0.25,
           },
           shape: {
             type: "circle",
@@ -90,7 +98,14 @@ const TsParticleBackground: React.FC = () => {
           },
         },
         detectRetina: true,
-      }}
+      }), [interactionMode, particleColor]);
+
+  return (
+    <Particles
+      id="tsparticles"
+      init={particlesInit}
+      className="absolute inset-0 w-full h-full"
+      options={currentOptions} 
     />
   );
 };

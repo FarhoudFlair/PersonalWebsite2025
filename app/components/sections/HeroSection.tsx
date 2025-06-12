@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { FaArrowDown } from 'react-icons/fa';
 import { siteData } from '@/data/siteData';
 import Button from '@/components/ui/Button';
-import ParticleBackground from '@/components/animations/TsParticleBackground';
 import GradientText from '@/components/animations/GradientText';
 import { staggerContainer } from '@/utils/motionVariants';
 

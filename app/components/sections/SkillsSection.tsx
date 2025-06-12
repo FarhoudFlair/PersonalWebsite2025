@@ -204,7 +204,7 @@ export default function SkillsSection() {
         {/* Skills Summary */}
         <ScrollReveal delay={0.6}>
           <div className="mt-16 text-center">
-            <div className="bg-gradient-to-r from-primary-50 to-purple-50 dark:from-primary-900/20 dark:to-purple-900/20 rounded-2xl p-8 border border-primary-100 dark:border-primary-800">
+            <div className="bg-gradient-to-r from-primary-50 to-purple-50 dark:from-primary-900 dark:to-purple-900 rounded-2xl p-8 border border-primary-100 dark:border-primary-800">
               <h3 className="text-2xl font-bold text-text-primary-light dark:text-text-primary-dark mb-4">
                 Always Learning
               </h3>
