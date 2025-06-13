@@ -15,6 +15,7 @@ alwaysApply: true
      ```python
      # userinput.py
      user_input = input("prompt: ")
+     print(user_input)
      ```
 
 2. **Main Workflow**:
