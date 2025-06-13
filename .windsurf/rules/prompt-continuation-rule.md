@@ -1,10 +1,8 @@
 ---
 trigger: always_on
----
-
----
-description: 
-globs: 
+description: "Interactive user input loop for continuous task execution until stopped"
+globs:
+  - "userinput.py"
 alwaysApply: true
 ---
 
@@ -26,7 +24,7 @@ alwaysApply: true
    * Run:
 
      ```bash
-     python userinput.py
+     python3 userinput.py
      ```
    * The terminal should be opened in the chat window itself.
 

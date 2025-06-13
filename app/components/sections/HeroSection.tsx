@@ -207,7 +207,7 @@ export default function HeroSection() {
             ease: 'easeInOut',
             delay: 1,
           }}
-          className="absolute top-[30%] right-[20%] w-16 h-16 sm:w-32 sm:h-32 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full opacity-15 blur-xl"
+          className="absolute top-[30%] right-[20%] w-16 h-16 sm:w-32 sm:h-32 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full opacity-20 blur-xl"
         />
         <motion.div
           animate={{
