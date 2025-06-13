@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, Suspense, lazy } from 'react';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 // import { SettingsProvider } from '@/context/SettingsContext'; // Assuming SettingsProvider is still needed from original file structure
 
 // Dynamically import the TsParticleBackground component
@@ -25,6 +26,7 @@ interface AppClientWrapperProps {
 function InnerClientLogic({ children }: { children: React.ReactNode }) {
   const [showParticles, setShowParticles] = useState(false);
   const [interactionMode, setInteractionMode] = useState<'repulse' | 'attract'>('attract'); // Changed default to 'attract'
+  const prefersReducedMotion = useReducedMotion();
   const [particleColor, setParticleColor] = useState<string>(particleColors[0].value); // Restored state
   const handleToggleInteraction = useCallback(() => {
     setInteractionMode(prevMode => prevMode === 'repulse' ? 'attract' : 'repulse');
@@ -35,6 +37,10 @@ function InnerClientLogic({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      setShowParticles(false);
+      return;
+    }
     // Delay loading particles until after initial page render
     // This improves First Contentful Paint metrics
     const timer = setTimeout(() => {
@@ -42,7 +48,7 @@ function InnerClientLogic({ children }: { children: React.ReactNode }) {
     }, 1000); // 1 second delay
     
     return () => clearTimeout(timer);
-  }, []);
+  }, [prefersReducedMotion]);
   
   return (
     <>

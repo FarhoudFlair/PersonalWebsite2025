@@ -194,7 +194,7 @@ export default function HeroSection() {
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-          className="absolute top-1/4 left-1/4 w-20 h-20 bg-gradient-to-r from-primary-400 to-primary-600 rounded-full opacity-20 blur-xl"
+          className="absolute top-[20%] left-[20%] w-12 h-12 sm:w-20 sm:h-20 bg-gradient-to-r from-primary-400 to-primary-600 rounded-full opacity-20 blur-xl"
         />
         <motion.div
           animate={{
@@ -207,7 +207,7 @@ export default function HeroSection() {
             ease: 'easeInOut',
             delay: 1,
           }}
-          className="absolute top-1/3 right-1/4 w-32 h-32 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full opacity-15 blur-xl"
+          className="absolute top-[30%] right-[20%] w-16 h-16 sm:w-32 sm:h-32 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full opacity-15 blur-xl"
         />
         <motion.div
           animate={{
@@ -220,7 +220,7 @@ export default function HeroSection() {
             ease: 'easeInOut',
             delay: 2,
           }}
-          className="absolute bottom-1/3 left-1/3 w-24 h-24 bg-gradient-to-r from-pink-400 to-pink-600 rounded-full opacity-20 blur-xl"
+          className="absolute bottom-[30%] left-[30%] w-14 h-14 sm:w-24 sm:h-24 bg-gradient-to-r from-pink-400 to-pink-600 rounded-full opacity-20 blur-xl"
         />
       </motion.div>
     </section>

@@ -75,7 +75,7 @@ export default function ExperienceSection() {
                 />
 
                 {/* Content Card */}
-                <div className={`w-full md:w-5/12 ml-12 md:ml-0 ${
+                <div className={`w-full md:w-5/12 ml-10 mr-4 md:mx-0 ${ // Adjusted margins for mobile
                   index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'
                 }`}>
                   <motion.div
@@ -85,15 +85,17 @@ export default function ExperienceSection() {
                   >
                     {/* Company and Role */}
                     <div className="mb-4">
-                      <div className="flex items-start justify-between mb-2">
+                      {/* Changed to flex-wrap and gap for better alignment */}
+                      <div className="flex flex-wrap items-center gap-x-3 mb-2">
                         <h3 className="text-xl font-bold text-text-primary-light dark:text-text-primary-dark">
                           {exp.role}
                         </h3>
-                        <Badge variant="outline" size="sm">
+                        {/* <Badge variant="outline" size="sm" className="whitespace-nowrap">
                           {exp.type}
-                        </Badge>
+                        </Badge> */}
                       </div>
-                      
+
+                      {/* Company Link */}
                       <div className="flex items-center space-x-2 mb-2">
                         <h4 className="text-lg font-semibold text-primary-600 dark:text-primary-400">
                           {exp.company}
