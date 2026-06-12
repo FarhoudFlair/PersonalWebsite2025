@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaTwitter, FaSun, FaMoon, FaBars, FaTimes, FaDownload } from 'react-icons/fa';
 import { useTheme } from '@/hooks/useTheme';
 import { siteData } from '@/data/siteData';
@@ -18,6 +18,7 @@ export default function Navigation() {
       setIsScrolled(window.scrollY > 50);
     };
 
+    handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -154,6 +155,7 @@ export default function Navigation() {
       </div>
 
       {/* Mobile Menu */}
+      <AnimatePresence>
       {isMobileMenuOpen && (
         <motion.div
           initial={{ opacity: 0, height: 0 }}
@@ -231,6 +233,7 @@ export default function Navigation() {
           </div>
         </motion.div>
       )}
+      </AnimatePresence>
     </motion.nav>
   );
 } 

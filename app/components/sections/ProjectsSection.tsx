@@ -44,18 +44,6 @@ export default function ProjectsSection() {
     },
   };
 
-  const overlayVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.3,
-        ease: 'easeOut',
-      },
-    },
-  };
-
   return (
     <section id="projects" className="section-padding bg-surface-light dark:bg-surface-dark">
       <div className="container-custom">
@@ -140,11 +128,8 @@ export default function ProjectsSection() {
                     </div>
 
                     {/* Hover Overlay */}
-                    <motion.div
-                      initial="hidden"
-                      whileHover="visible"
-                      variants={overlayVariants}
-                      className="absolute inset-0 bg-black/60 flex items-center justify-center"
+                    <div
+                      className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-300"
                     >
                       <div className="flex space-x-4">
                         {project.liveUrl && (
@@ -169,16 +154,42 @@ export default function ProjectsSection() {
                           </Button>
                         )}
                       </div>
-                    </motion.div>
+                    </div>
                   </div>
 
                   {/* Project Content */}
                   <div className="p-6">
                     {/* Project Title and Description */}
                     <div className="mb-4">
-                      <h3 className="text-xl font-bold text-text-primary-light dark:text-text-primary-dark mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                        {project.title}
-                      </h3>
+                      <div className="flex items-start justify-between gap-2 mb-2">
+                        <h3 className="text-xl font-bold text-text-primary-light dark:text-text-primary-dark group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                          {project.title}
+                        </h3>
+                        <div className="flex items-center gap-3 pt-1 flex-shrink-0">
+                          {project.githubUrl && (
+                            <a
+                              href={project.githubUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={`View ${project.title} source code on GitHub`}
+                              className="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                            >
+                              <FaGithub size={18} />
+                            </a>
+                          )}
+                          {project.liveUrl && (
+                            <a
+                              href={project.liveUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={`Open live demo of ${project.title}`}
+                              className="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                            >
+                              <FaExternalLinkAlt size={16} />
+                            </a>
+                          )}
+                        </div>
+                      </div>
                       <p className="text-text-secondary-light dark:text-text-secondary-dark text-sm leading-relaxed">
                         {project.description}
                       </p>

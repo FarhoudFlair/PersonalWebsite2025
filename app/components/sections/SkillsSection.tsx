@@ -105,6 +105,7 @@ export default function SkillsSection() {
                   <motion.div 
                     initial={{ opacity: 0, x: -50 }}
                     whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
                     className="flex items-center mb-8"
                   >
@@ -125,6 +126,7 @@ export default function SkillsSection() {
                   <motion.div
                     initial="hidden"
                     whileInView="visible"
+                    viewport={{ once: true }}
                     variants={staggerContainer}
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
                   >
@@ -175,6 +177,7 @@ export default function SkillsSection() {
                               <motion.div
                                 initial={{ width: 0 }}
                                 whileInView={{ width: getProficiencyWidth(skill.proficiency) }}
+                                viewport={{ once: true }}
                                 transition={{ 
                                   duration: 1, 
                                   delay: categoryIndex * 0.2 + skillIndex * 0.1,
@@ -217,6 +220,7 @@ export default function SkillsSection() {
                     key={tech}
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
                     className="px-3 py-1 bg-white dark:bg-gray-800 text-text-primary-light dark:text-text-primary-dark rounded-full text-sm font-medium border border-gray-200 dark:border-gray-700"
                   >
