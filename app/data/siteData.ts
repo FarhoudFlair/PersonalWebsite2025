@@ -180,6 +180,25 @@ export const siteData: SiteData = {
   
   projects: [
     {
+      id: 'deenpath',
+      title: 'DeenPath',
+      description: 'Faith companion app for Muslims on iOS: accurate prayer times, qibla compass, prayer tracking, and a dhikr counter — ad-free and privacy-first.',
+      longDescription: 'A polished, privacy-first iOS app shipped on the Apple App Store that supports Muslims in their daily practice. DeenPath combines accurate prayer times (with multiple calculation methods and adhan notifications), a qibla compass, an Islamic Hijri calendar, prayer tracking with streaks, and a haptic dhikr counter. It supports the major schools of thought and uses verified astronomical standards, all in a clean, ad-free experience. Marketing site at deenpath.app.',
+      image: '/images/projects/deenpath.jpg',
+      technologies: ['Swift', 'iOS Development', 'Mobile App', 'App Store'],
+      liveUrl: 'https://apps.apple.com/app/id6749211036',
+      featured: true,
+      status: 'completed',
+      startDate: '2025-07',
+      endDate: 'Present',
+      highlights: [
+        'Shipped on the Apple App Store (Lifestyle category)',
+        'Accurate prayer times with multiple calculation methods & adhan alerts',
+        'Qibla compass, Hijri calendar, prayer streaks & dhikr counter',
+        'Ad-free, privacy-first design with subscription tiers',
+      ],
+    },
+    {
       id: 'stockscanner',
       title: 'StockScanner',
       description: 'Python stock screener for S&P500/NASDAQ/DOWJONES/TSX according to Mark Minervini\'s screening criteria.',
@@ -206,7 +225,7 @@ export const siteData: SiteData = {
       image: '/images/projects/maze-solver.jpg',
       technologies: ['Java', 'Algorithm Design', 'Path Finding', 'GUI Development'],
       githubUrl: 'https://github.com/FarhoudFlair/MazeSolver',
-      featured: true,
+      featured: false,
       status: 'completed',
       startDate: '2020-04',
       endDate: '2020-05',
