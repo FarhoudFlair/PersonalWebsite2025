@@ -100,11 +100,14 @@ export default function ProjectsSection() {
                 <Card variant="elevated" className="h-full overflow-hidden">
                   {/* Project Image */}
                   <div className="relative h-48 bg-gradient-to-br from-primary-100 to-purple-100 dark:from-primary-900 dark:to-purple-900 overflow-hidden">
-                    {/* Placeholder for project image */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-6xl opacity-20">🚀</div>
-                    </div>
-                    
+                    {/* Project cover */}
+                    <img
+                      src={project.image}
+                      alt={`${project.title} project cover`}
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+
                     {/* Featured Badge */}
                     {project.featured && (
                       <div className="absolute top-4 left-4">
@@ -159,13 +162,11 @@ export default function ProjectsSection() {
 
                   {/* Project Content */}
                   <div className="p-6">
-                    {/* Project Title and Description */}
+                    {/* Project Title and Description (title shown on the cover above) */}
                     <div className="mb-4">
-                      <div className="flex items-start justify-between gap-2 mb-2">
-                        <h3 className="text-xl font-bold text-text-primary-light dark:text-text-primary-dark group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                          {project.title}
-                        </h3>
-                        <div className="flex items-center gap-3 pt-1 flex-shrink-0">
+                      <h3 className="sr-only">{project.title}</h3>
+                      {(project.githubUrl || project.liveUrl) && (
+                        <div className="flex items-center justify-end gap-3 mb-2">
                           {project.githubUrl && (
                             <a
                               href={project.githubUrl}
@@ -189,7 +190,7 @@ export default function ProjectsSection() {
                             </a>
                           )}
                         </div>
-                      </div>
+                      )}
                       <p className="text-text-secondary-light dark:text-text-secondary-dark text-sm leading-relaxed">
                         {project.description}
                       </p>

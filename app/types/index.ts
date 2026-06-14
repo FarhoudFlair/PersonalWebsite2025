@@ -37,8 +37,7 @@ export interface Skill {
   id: string;
   name: string;
   icon: string;
-  category: 'frontend' | 'backend' | 'tools' | 'design';
-  proficiency: 1 | 2 | 3 | 4 | 5;
+  category: 'languages' | 'frontend-mobile' | 'backend-systems' | 'tools' | 'ai';
   color?: string;
 }
 

@@ -1,67 +1,68 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { 
-  FaReact, FaNodeJs, FaPython, FaGitAlt, FaDocker, FaAws 
+import {
+  FaJs, FaPython, FaJava, FaSwift, FaApple, FaReact, FaHtml5, FaCss3Alt,
+  FaAndroid, FaDatabase, FaNetworkWired, FaCogs, FaCode, FaShieldAlt,
+  FaGitAlt, FaDocker, FaLinux, FaMagic, FaRobot, FaEdit, FaProjectDiagram,
 } from 'react-icons/fa';
-import { 
-  SiNextdotjs, SiTypescript, SiTailwindcss, SiPostgresql, SiFigma 
+import {
+  SiTypescript, SiCsharp, SiCplusplus, SiC, SiPerl, SiNextdotjs,
+  SiDotnet, SiMysql, SiPerforce, SiOpenai,
 } from 'react-icons/si';
 import { siteData } from '@/data/siteData';
 import ScrollReveal from '@/components/animations/ScrollReveal';
 import { staggerContainer } from '@/utils/motionVariants';
 
 export default function SkillsSection() {
-  const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
-    FaReact,
-    SiNextdotjs,
-    SiTypescript,
-    SiTailwindcss,
-    FaNodeJs,
-    FaPython,
-    SiPostgresql,
-    FaGitAlt,
-    FaDocker,
-    FaAws,
-    SiFigma,
+  const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string; style?: React.CSSProperties }>> = {
+    FaJs, FaPython, FaJava, FaSwift, FaApple, FaReact, FaHtml5, FaCss3Alt,
+    FaAndroid, FaDatabase, FaNetworkWired, FaCogs, FaCode, FaShieldAlt,
+    FaGitAlt, FaDocker, FaLinux, FaMagic, FaRobot, FaEdit, FaProjectDiagram,
+    SiTypescript, SiCsharp, SiCplusplus, SiC, SiPerl, SiNextdotjs,
+    SiDotnet, SiMysql, SiPerforce, SiOpenai,
   };
 
   const skillCategories = [
     {
-      name: 'Frontend',
-      value: 'frontend',
+      name: 'Languages',
+      value: 'languages',
+      icon: '💻',
+      description: 'Programming languages I work in',
+    },
+    {
+      name: 'Frontend & Mobile',
+      value: 'frontend-mobile',
       icon: '🎨',
-      description: 'Building beautiful and interactive user interfaces',
+      description: 'Building interfaces for web and mobile',
     },
     {
-      name: 'Backend',
-      value: 'backend',
+      name: 'Backend & Systems',
+      value: 'backend-systems',
       icon: '⚙️',
-      description: 'Server-side development and APIs',
+      description: 'Server-side, data, networking, and security',
     },
     {
-      name: 'Tools',
+      name: 'Tools & DevOps',
       value: 'tools',
       icon: '🛠️',
-      description: 'Development tools and infrastructure',
+      description: 'Development tooling and infrastructure',
     },
     {
-      name: 'Design',
-      value: 'design',
-      icon: '🎯',
-      description: 'UI/UX design and prototyping',
+      name: 'AI & Automation',
+      value: 'ai',
+      icon: '🤖',
+      description: 'AI-assisted development and workflow automation',
     },
   ];
 
-  const getProficiencyWidth = (level: number) => {
-    return `${(level / 5) * 100}%`;
-  };
-
-  const getProficiencyColor = (level: number) => {
-    if (level >= 4) return 'bg-green-500';
-    if (level >= 3) return 'bg-blue-500';
-    if (level >= 2) return 'bg-yellow-500';
-    return 'bg-red-500';
+  // Brand colors are used to tint each icon. Pure black/white logos (e.g. Next.js)
+  // would vanish on one of the two themes, so fall back to a theme-adaptive gray.
+  const brandColor = (color?: string): string | undefined => {
+    if (!color) return undefined;
+    const v = color.toLowerCase();
+    if (v === '#000' || v === '#000000' || v === '#fff' || v === '#ffffff') return undefined;
+    return color;
   };
 
   const skillVariants = {
@@ -70,10 +71,7 @@ export default function SkillsSection() {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: {
-        duration: 0.5,
-        ease: 'easeOut',
-      },
+      transition: { duration: 0.4, ease: 'easeOut' },
     },
   };
 
@@ -95,14 +93,14 @@ export default function SkillsSection() {
         <div className="space-y-16">
           {skillCategories.map((category, categoryIndex) => {
             const categorySkills = siteData.skills.filter(skill => skill.category === category.value);
-            
+
             if (categorySkills.length === 0) return null;
 
             return (
-              <ScrollReveal key={category.value} delay={categoryIndex * 0.2}>
+              <ScrollReveal key={category.value} delay={categoryIndex * 0.1}>
                 <div>
                   {/* Category Header */}
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, x: -50 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
@@ -128,72 +126,33 @@ export default function SkillsSection() {
                     whileInView="visible"
                     viewport={{ once: true }}
                     variants={staggerContainer}
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                    className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4"
                   >
-                    {categorySkills.map((skill, skillIndex) => {
+                    {categorySkills.map((skill) => {
                       const IconComponent = iconMap[skill.icon];
-                      
+                      const color = brandColor(skill.color);
+
                       return (
                         <motion.div
                           key={skill.id}
                           variants={skillVariants}
-                          whileHover={{ 
-                            y: -8, 
-                            scale: 1.05,
-                            transition: { duration: 0.2 }
-                          }}
-                          className="group relative bg-white dark:bg-gray-900 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 cursor-pointer"
+                          whileHover={{ y: -6, transition: { duration: 0.2 } }}
+                          className="group flex flex-col items-center justify-center gap-3 bg-white dark:bg-gray-900 rounded-xl p-5 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:border-primary-200 dark:hover:border-primary-800 transition-all duration-300"
                         >
-                          {/* Skill Icon */}
-                          <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-gray-50 dark:bg-gray-800 rounded-lg group-hover:bg-primary-50 dark:group-hover:bg-primary-900/20 transition-colors">
+                          <div className="flex items-center justify-center w-14 h-14 bg-gray-50 dark:bg-gray-800 rounded-xl group-hover:scale-110 transition-transform duration-300">
                             {IconComponent ? (
-                              <IconComponent 
-                                size={32} 
-                                className="text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors"
+                              <IconComponent
+                                size={30}
+                                className={color ? '' : 'text-gray-700 dark:text-gray-200'}
+                                style={color ? { color } : undefined}
                               />
                             ) : (
-                              <div 
-                                className="w-8 h-8 bg-primary-500 rounded" 
-                              />
+                              <FaCode size={30} className="text-gray-400" />
                             )}
                           </div>
-
-                          {/* Skill Name */}
-                          <h4 className="text-lg font-semibold text-center text-text-primary-light dark:text-text-primary-dark mb-3">
+                          <span className="text-sm font-medium text-center text-text-primary-light dark:text-text-primary-dark">
                             {skill.name}
-                          </h4>
-
-                          {/* Proficiency Bar */}
-                          <div className="space-y-2">
-                            <div className="flex justify-between items-center text-sm">
-                              <span className="text-text-secondary-light dark:text-text-secondary-dark">
-                                Proficiency
-                              </span>
-                              <span className="text-text-primary-light dark:text-text-primary-dark font-medium">
-                                {skill.proficiency}/5
-                              </span>
-                            </div>
-                            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
-                              <motion.div
-                                initial={{ width: 0 }}
-                                whileInView={{ width: getProficiencyWidth(skill.proficiency) }}
-                                viewport={{ once: true }}
-                                transition={{ 
-                                  duration: 1, 
-                                  delay: categoryIndex * 0.2 + skillIndex * 0.1,
-                                  ease: 'easeOut'
-                                }}
-                                className={`h-full rounded-full ${getProficiencyColor(skill.proficiency)}`}
-                              />
-                            </div>
-                          </div>
-
-                          {/* Hover Overlay */}
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            whileHover={{ opacity: 1 }}
-                            className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-purple-500/5 rounded-xl pointer-events-none"
-                          />
+                          </span>
                         </motion.div>
                       );
                     })}
@@ -205,17 +164,17 @@ export default function SkillsSection() {
         </div>
 
         {/* Skills Summary */}
-        <ScrollReveal delay={0.6}>
+        <ScrollReveal delay={0.4}>
           <div className="mt-16 text-center">
             <div className="bg-gradient-to-r from-primary-50 to-purple-50 dark:from-primary-900 dark:to-purple-900 rounded-2xl p-8 border border-primary-100 dark:border-primary-800">
               <h3 className="text-2xl font-bold text-text-primary-light dark:text-text-primary-dark mb-4">
                 Always Learning
               </h3>
               <p className="text-lg text-text-secondary-light dark:text-text-secondary-dark max-w-2xl mx-auto mb-6">
-                Technology evolves rapidly, and I'm committed to staying current with the latest trends and best practices in web development.
+                Technology evolves rapidly, and I&apos;m committed to staying current with the latest tools and best practices across the stack.
               </p>
               <div className="flex flex-wrap justify-center gap-3">
-                {['React 18', 'Next.js 14', 'TypeScript 5', 'Tailwind CSS 3', 'Node.js', 'PostgreSQL'].map((tech, index) => (
+                {['React 18', 'Next.js 14', 'TypeScript 5', 'Tailwind CSS', '.NET', 'AI-Assisted Dev'].map((tech, index) => (
                   <motion.span
                     key={tech}
                     initial={{ opacity: 0, scale: 0.8 }}
@@ -234,4 +193,4 @@ export default function SkillsSection() {
       </div>
     </section>
   );
-} 
+}
