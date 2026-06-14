@@ -189,7 +189,7 @@ export const siteData: SiteData = {
       liveUrl: 'https://apps.apple.com/app/id6749211036',
       featured: true,
       status: 'completed',
-      startDate: '2025-07',
+      startDate: '2026-02',
       endDate: 'Present',
       highlights: [
         'Shipped on the Apple App Store (Lifestyle category)',
