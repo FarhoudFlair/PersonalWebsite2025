@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
-import emailjs from 'emailjs-com';
+import emailjs from '@emailjs/browser';
 import { motion } from 'framer-motion';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaTwitter, FaPaperPlane } from 'react-icons/fa';
 import { siteData } from '@/data/siteData';
@@ -207,6 +207,7 @@ export default function ContactSection() {
           <motion.div
             initial="hidden"
             whileInView="visible"
+            viewport={{ once: true }}
             variants={containerVariants}
             className="space-y-8"
           >
@@ -284,6 +285,7 @@ export default function ContactSection() {
           <motion.div
             initial="hidden"
             whileInView="visible"
+            viewport={{ once: true }}
             variants={containerVariants}
           >
             <motion.div

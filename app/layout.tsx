@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   authors: [{ name: siteData.personal.name, url: siteData.personal.email }],
   creator: siteData.personal.name,
   publisher: siteData.personal.name,
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://localhost:3000'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.farhoudtalebi.com'),
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -51,9 +51,6 @@ export const metadata: Metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
-  },
-  verification: {
-    google: 'your-google-verification-code',
   },
 };
 
