@@ -1,16 +1,13 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, Suspense, lazy } from 'react';
+import type { ReactNode } from 'react';
+import { Suspense, lazy, useCallback, useEffect, useState } from 'react';
+import { SettingsProvider } from '@/context/SettingsContext';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
-// import { SettingsProvider } from '@/context/SettingsContext'; // Assuming SettingsProvider is still needed from original file structure
+import ParticleColorSelector from '@/components/ui/ParticleColorSelector';
 
-// Dynamically import the TsParticleBackground component
 const TsParticleBackground = lazy(() => import('@/components/animations/TsParticleBackground'));
-import ParticleInteractionToggle from '@/components/ui/ParticleInteractionToggle';
-// Import ParticleColorSelector (will be created later)
-import ParticleColorSelector from '@/components/ui/ParticleColorSelector'; // Uncommented and imported
 
-// Define available particle colors
 const particleColors = [
   { name: 'Mint Green', value: '#00c896' },
   { name: 'Sky Blue', value: '#3b82f6' },
@@ -20,20 +17,21 @@ const particleColors = [
 ];
 
 interface AppClientWrapperProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-function InnerClientLogic({ children }: { children: React.ReactNode }) {
+function InnerClientLogic({ children }: { children: ReactNode }) {
   const [showParticles, setShowParticles] = useState(false);
-  const [interactionMode, setInteractionMode] = useState<'repulse' | 'attract'>('attract'); // Changed default to 'attract'
+  const [interactionMode, setInteractionMode] = useState<'repulse' | 'attract'>('attract');
   const prefersReducedMotion = useReducedMotion();
-  const [particleColor, setParticleColor] = useState<string>(particleColors[0].value); // Restored state
+  const [particleColor, setParticleColor] = useState<string>(particleColors[0].value);
+
   const handleToggleInteraction = useCallback(() => {
-    setInteractionMode(prevMode => prevMode === 'repulse' ? 'attract' : 'repulse');
+    setInteractionMode((previousMode) => previousMode === 'repulse' ? 'attract' : 'repulse');
   }, []);
-  
+
   const handleParticleColorChange = useCallback((colorValue: string) => {
-    setParticleColor(colorValue); // Implemented
+    setParticleColor(colorValue);
   }, []);
 
   useEffect(() => {
@@ -41,62 +39,43 @@ function InnerClientLogic({ children }: { children: React.ReactNode }) {
       setShowParticles(false);
       return;
     }
-    // Delay loading particles until after initial page render
-    // This improves First Contentful Paint metrics
+
     const timer = setTimeout(() => {
       setShowParticles(true);
-    }, 1000); // 1 second delay
-    
+    }, 1000);
+
     return () => clearTimeout(timer);
   }, [prefersReducedMotion]);
-  
+
   return (
     <>
       {showParticles && (
         <Suspense fallback={<div className="absolute inset-0 pointer-events-none -z-10" />}>
-          <TsParticleBackground 
-            // key={interactionMode} // REMOVED KEY ENTIRELY // Add particleColor to key for re-init
+          <TsParticleBackground
             interactionMode={interactionMode}
-            particleColor={particleColor} // Pass color prop
+            particleColor={particleColor}
           />
         </Suspense>
       )}
-      {/* Render toggle globally from AppClientWrapper */}
-      <ParticleInteractionToggle 
-        currentMode={interactionMode}
-        onToggle={handleToggleInteraction}
-      />
       <ParticleColorSelector
         availableColors={particleColors}
         currentColor={particleColor}
         onColorChange={handleParticleColorChange}
+        currentMode={interactionMode}
+        onToggleInteraction={handleToggleInteraction}
+        prefersReducedMotion={prefersReducedMotion}
       />
       {children}
     </>
   );
 }
 
-// Assuming SettingsProvider is from '@/context/SettingsContext' as per original structure
-// If it's not used or from a different place, this might need adjustment.
-// For now, I'm keeping it as it was in the provided file content.
-// If SettingsProvider is not actually used, it can be removed.
-import { SettingsProvider } from '@/context/SettingsContext'; // Moved here for clarity if used
-
-const AppClientWrapper: React.FC<AppClientWrapperProps> = ({ children }) => {
-  // If SettingsProvider is essential, it should wrap InnerClientLogic.
-  // If not, InnerClientLogic can be returned directly.
-  // The `useTheme` from `next-themes` is typically used at a higher level or where theme decisions are made.
-  // If `InnerClientLogic` or its children don't need `resolvedTheme`, `useTheme()` call can be removed from there.
-  
-  // Minimal wrapper if SettingsProvider is not strictly needed here or is handled elsewhere
-  // return <InnerClientLogic>{children}</InnerClientLogic>; 
-
-  // Wrapper with SettingsProvider as per the viewed file content
+function AppClientWrapper({ children }: AppClientWrapperProps) {
   return (
-    <SettingsProvider> 
+    <SettingsProvider>
       <InnerClientLogic>{children}</InnerClientLogic>
     </SettingsProvider>
   );
-};
+}
 
 export default AppClientWrapper;
