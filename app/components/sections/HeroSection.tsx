@@ -1,228 +1,189 @@
 'use client';
 
-import { motion } from 'motion/react';
-import { FaArrowDown } from 'react-icons/fa';
-import { siteData } from '@/data/siteData';
-import Button from '@/components/ui/Button';
+import { motion, useReducedMotion } from 'motion/react';
 import GradientText from '@/components/animations/GradientText';
-import { staggerContainer } from '@/utils/motionVariants';
+import { siteData } from '@/data/siteData';
+
+const signalLineTransition = {
+  duration: 0.7,
+  ease: [0.16, 1, 0.3, 1],
+} as const;
+
+const currentRole = siteData.experience[0];
+const featuredProjects = siteData.projects.filter((project) => project.featured);
 
 export default function HeroSection() {
-  const handleContactClick = () => {
-    const element = document.querySelector('#contact');
-    if (element) {
-      const offset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  const handleProjectsClick = () => {
-    const element = document.querySelector('#projects');
-    if (element) {
-      const offset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  const titleVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const wordVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: 'easeOut',
-      },
-    },
-  };
-
-  const taglineWords = siteData.personal.tagline.split(' ');
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background-light to-surface-light dark:from-background-dark dark:to-surface-dark"
+      data-studio-section="home"
+      data-studio-component="identity-hero"
+      className="min-h-screen overflow-x-clip bg-canvas pt-24 text-ink sm:pt-28 lg:flex lg:items-center lg:pt-24"
     >
-
-
-      {/* Hero Content */}
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={staggerContainer}
-        className="relative z-10 text-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
-      >
-        {/* Greeting */}
-        <motion.p
-          variants={wordVariants}
-          className="text-lg sm:text-xl text-text-secondary-light dark:text-text-secondary-dark mb-4"
-        >
-          Hi, I'm
-        </motion.p>
-
-        {/* Name and Title */}
-        <motion.h1
-          variants={titleVariants}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6"
-        >
-          <motion.span
-            variants={wordVariants}
-            className="block text-text-primary-light dark:text-text-primary-dark"
-          >
-            {siteData.personal.name}
-          </motion.span>
-          <motion.span
-            variants={wordVariants}
-            className="block mt-2"
-          >
-            <GradientText>
-              {siteData.personal.title}
-            </GradientText>
-          </motion.span>
-        </motion.h1>
-
-        {/* Tagline */}
+      <div className="field-container py-12 sm:py-16 lg:py-20">
         <motion.div
-          variants={titleVariants}
-          className="mb-8"
-        >
-          <p className="text-xl sm:text-2xl md:text-3xl text-text-secondary-light dark:text-text-secondary-dark">
-            {taglineWords.map((word, index) => (
-              <motion.span
-                key={index}
-                variants={wordVariants}
-                className="inline-block mr-2"
+          aria-hidden="true"
+          className="h-px origin-left bg-signal"
+          initial={shouldReduceMotion ? false : { scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={shouldReduceMotion ? { duration: 0 } : signalLineTransition}
+        />
+
+        <div className="mt-12 grid min-w-0 grid-cols-1 gap-16 lg:mt-16 lg:grid-cols-12 lg:gap-0">
+          <div className="min-w-0 lg:col-span-7 lg:pr-12 xl:pr-16">
+            <div className="max-w-3xl">
+              <h1 className="text-6xl font-bold leading-none tracking-tight text-ink sm:text-7xl lg:text-8xl xl:text-9xl">
+                {siteData.personal.name}
+              </h1>
+
+              <p className="mt-4 text-2xl font-semibold leading-tight sm:text-3xl lg:text-4xl">
+                <GradientText>{siteData.personal.title}</GradientText>
+              </p>
+
+              <p className="mt-10 max-w-2xl text-xl font-medium leading-8 text-ink sm:text-2xl">
+                {siteData.personal.tagline}
+              </p>
+
+              <p className="mt-6 max-w-2xl text-base leading-7 text-slate sm:text-lg sm:leading-8">
+                {siteData.personal.bio}
+              </p>
+            </div>
+
+            <address className="mt-10 not-italic sm:mt-12">
+              <dl className="grid border-y border-trace sm:grid-cols-2">
+                <div className="py-4 sm:border-r sm:border-trace sm:pr-6">
+                  <dt className="metadata text-xs font-medium uppercase text-slate">
+                    Location
+                  </dt>
+                  <dd className="mt-2 text-sm font-medium text-ink sm:text-base">
+                    {siteData.personal.location}
+                  </dd>
+                </div>
+                <div className="border-t border-trace py-4 sm:border-t-0 sm:pl-6">
+                  <dt className="metadata text-xs font-medium uppercase text-slate">
+                    Email
+                  </dt>
+                  <dd className="mt-2 min-w-0 text-sm font-medium sm:text-base">
+                    <a
+                      href={`mailto:${siteData.personal.email}`}
+                      className="break-words text-ink underline decoration-trace transition-colors hover:decoration-signal"
+                    >
+                      {siteData.personal.email}
+                    </a>
+                  </dd>
+                </div>
+              </dl>
+            </address>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <a
+                href="#contact"
+                data-qa="primary-action"
+                className="inline-flex min-h-11 items-center justify-center bg-signal px-6 py-3 text-sm font-semibold text-canvas outline-safety transition-colors hover:bg-signal/90 dark:text-ink"
               >
-                {word}
-              </motion.span>
-            ))}
-          </p>
-        </motion.div>
+                Contact Farhoud
+              </a>
+              <a
+                href={siteData.personal.resume}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-studio-component="resume-link"
+                aria-label={`Open ${siteData.personal.name}'s résumé in a new tab`}
+                className="inline-flex min-h-11 items-center justify-center border border-trace px-6 py-3 text-sm font-semibold text-ink transition-colors hover:border-signal"
+              >
+                Résumé (PDF)
+              </a>
+            </div>
+          </div>
 
-        {/* Bio */}
-        <motion.p
-          variants={wordVariants}
-          className="text-lg sm:text-xl text-text-secondary-light dark:text-text-secondary-dark max-w-2xl mx-auto mb-12 leading-relaxed"
-        >
-          {siteData.personal.bio}
-        </motion.p>
-
-        {/* Call to Action Buttons */}
-        <motion.div
-          variants={wordVariants}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
-        >
-          <Button
-            onClick={handleContactClick}
-            size="lg"
-            className="w-full sm:w-auto min-w-[160px]"
+          <aside
+            aria-label="Current role and featured projects"
+            className="min-w-0 border-t border-trace pt-10 lg:col-span-5 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-0 xl:pl-16"
           >
-            Contact Me
-          </Button>
-          <Button
-            onClick={handleProjectsClick}
-            variant="outline"
-            size="lg"
-            className="w-full sm:w-auto min-w-[160px]"
-          >
-            View Projects
-          </Button>
-        </motion.div>
+            <section aria-labelledby="current-role-heading">
+              <p className="metadata text-xs font-medium uppercase text-slate">
+                Current role
+              </p>
+              <h2
+                id="current-role-heading"
+                className="mt-3 text-3xl font-bold leading-tight text-ink sm:text-4xl"
+              >
+                {currentRole.companyUrl ? (
+                  <a
+                    href={currentRole.companyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline decoration-trace transition-colors hover:decoration-signal"
+                  >
+                    {currentRole.company}
+                  </a>
+                ) : (
+                  currentRole.company
+                )}
+              </h2>
+              <p className="mt-2 text-lg font-medium text-ink">
+                {currentRole.role}
+              </p>
+              <p className="metadata mt-3 text-xs uppercase leading-5 text-slate">
+                {currentRole.startDate} — {currentRole.endDate}
+                <span aria-hidden="true"> / </span>
+                {currentRole.location}
+              </p>
+              <p className="metadata mt-4 text-xs leading-5 text-slate">
+                {currentRole.technologies.join(' · ')}
+              </p>
+            </section>
 
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 0.6 }}
-          className="flex flex-col items-center"
-        >
-          <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark mb-2">
-            Scroll to explore
-          </p>
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-            className="text-text-secondary-light dark:text-text-secondary-dark"
-          >
-            <FaArrowDown size={20} />
-          </motion.div>
-        </motion.div>
-      </motion.div>
+            <section aria-labelledby="featured-projects-heading" className="mt-10">
+              <h2
+                id="featured-projects-heading"
+                className="metadata text-xs font-medium uppercase text-slate"
+              >
+                Featured projects
+              </h2>
 
-      {/* Floating Elements */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="absolute inset-0 pointer-events-none"
-      >
-        {/* Floating Shapes */}
-        <motion.div
-          animate={{
-            y: [0, -20, 0],
-            rotate: [0, 5, 0],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="absolute top-[20%] left-[20%] w-12 h-12 sm:w-20 sm:h-20 bg-gradient-to-r from-primary-400 to-primary-600 rounded-full opacity-20 blur-xl"
-        />
-        <motion.div
-          animate={{
-            y: [0, 30, 0],
-            rotate: [0, -5, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: 'easeInOut',
-            delay: 1,
-          }}
-          className="absolute top-[30%] right-[20%] w-16 h-16 sm:w-32 sm:h-32 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full opacity-20 blur-xl"
-        />
-        <motion.div
-          animate={{
-            y: [0, -15, 0],
-            rotate: [0, 3, 0],
-          }}
-          transition={{
-            duration: 7,
-            repeat: Infinity,
-            ease: 'easeInOut',
-            delay: 2,
-          }}
-          className="absolute bottom-[30%] left-[30%] w-14 h-14 sm:w-24 sm:h-24 bg-gradient-to-r from-pink-400 to-pink-600 rounded-full opacity-20 blur-xl"
-        />
-      </motion.div>
+              <ul className="mt-4">
+                {featuredProjects.map((project) => {
+                  const projectUrl = project.liveUrl ?? project.githubUrl;
+
+                  return (
+                    <li key={project.id} className="border-t border-trace py-4">
+                      <article>
+                        <h3 className="text-xl font-bold leading-tight text-ink sm:text-2xl">
+                          {projectUrl ? (
+                            <a
+                              href={projectUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={`${project.title} project, opens in a new tab`}
+                              className="inline-flex items-baseline gap-2 underline decoration-trace transition-colors hover:decoration-signal"
+                            >
+                              <span>{project.title}</span>
+                              <span aria-hidden="true" className="text-sm text-signal">
+                                ↗
+                              </span>
+                            </a>
+                          ) : (
+                            project.title
+                          )}
+                        </h3>
+                        <p className="metadata mt-2 text-xs uppercase leading-5 text-slate">
+                          {project.startDate}
+                          {project.endDate && ` — ${project.endDate}`}
+                          <span aria-hidden="true"> / </span>
+                          {project.status.replace('-', ' ')}
+                        </p>
+                      </article>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          </aside>
+        </div>
+      </div>
     </section>
   );
-} 
+}
