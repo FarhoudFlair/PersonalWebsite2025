@@ -39,11 +39,11 @@
       "steps": [
         {
           "type": "click",
-          "selector": "[data-qa=\"mobile-menu-toggle\"]:visible, [data-studio-component=\"site-navigation\"] a[href=\"#projects\"]:visible"
+          "selector": "[data-qa=\"mobile-menu-toggle\"]:visible, [data-studio-component=\"site-navigation\"] > .field-container ol a[href=\"#projects\"]:visible"
         },
         {
           "type": "expectVisible",
-          "selector": "[data-qa=\"mobile-menu-toggle\"][aria-expanded=\"true\"]:visible, [data-studio-component=\"site-navigation\"] a[href=\"#projects\"]:visible"
+          "selector": "[data-qa=\"mobile-menu-toggle\"][aria-expanded=\"true\"]:visible, [data-studio-component=\"site-navigation\"] > .field-container ol a[href=\"#projects\"]:visible"
         },
         {
           "type": "press",
@@ -51,11 +51,11 @@
         },
         {
           "type": "expectVisible",
-          "selector": "#mobile-navigation-drawer a[href=\"#projects\"]:visible, [data-studio-component=\"site-navigation\"] a[href=\"#projects\"]:visible"
+          "selector": "#mobile-navigation-drawer a[href=\"#projects\"]:visible, [data-studio-component=\"site-navigation\"] > .field-container ol a[href=\"#projects\"]:visible"
         },
         {
           "type": "click",
-          "selector": "#mobile-navigation-drawer a[href=\"#projects\"]:visible, [data-studio-component=\"site-navigation\"] a[href=\"#projects\"]:visible"
+          "selector": "#mobile-navigation-drawer a[href=\"#projects\"]:visible, [data-studio-component=\"site-navigation\"] > .field-container ol a[href=\"#projects\"]:visible"
         },
         {
           "type": "expectVisible",

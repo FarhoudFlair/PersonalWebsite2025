@@ -261,7 +261,7 @@ export default function ProjectsSection() {
             id="project-catalog"
             data-studio-component="project-index"
             aria-label={`${filter === 'featured' ? 'Featured' : 'All'} projects`}
-            className="border-b border-trace lg:col-span-5 lg:col-start-8 lg:row-start-1"
+            className="min-w-0 border-b border-trace lg:col-span-5 lg:col-start-8 lg:row-start-1"
           >
             {filteredProjects.map((project, projectIndex) => {
               const isActive = project.id === activeProject?.id;
@@ -291,7 +291,7 @@ export default function ProjectsSection() {
                           <ProjectMetadata project={project} />
                           <h3
                             id={headingId}
-                            className="mt-3 text-3xl font-bold uppercase leading-none text-ink"
+                            className="mt-3 break-words text-3xl font-bold uppercase leading-none text-ink"
                           >
                             {project.title}
                           </h3>
@@ -324,6 +324,7 @@ export default function ProjectsSection() {
                         <Image
                           src={project.image}
                           alt={`${project.title} project cover`}
+                          loading="eager"
                           fill
                           sizes="(max-width: 1023px) calc(100vw - 2rem), 1px"
                           className="object-cover"

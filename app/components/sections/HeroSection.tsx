@@ -115,6 +115,7 @@ export default function HeroSection() {
                     href={currentRole.companyUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`${currentRole.company}, opens in a new tab`}
                     className="underline decoration-trace transition-colors hover:decoration-signal"
                   >
                     {currentRole.company}

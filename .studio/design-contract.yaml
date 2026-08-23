@@ -112,22 +112,22 @@
     "computed_styles": [
       {
         "selector": "body",
-        "property": "backgroundColor",
+        "property": "background-color",
         "expected": "rgb(242, 245, 243)"
       },
       {
         "selector": "[data-studio-component=\"identity-hero\"] h1",
-        "property": "fontFamily",
+        "property": "font-family",
         "expected": "__Barlow_Condensed_df8909, __Barlow_Condensed_Fallback_df8909, sans-serif"
       },
       {
         "selector": "[data-qa=\"primary-action\"]",
-        "property": "backgroundColor",
+        "property": "background-color",
         "expected": "rgb(31, 107, 82)"
       },
       {
         "selector": "[data-qa=\"primary-action\"]",
-        "property": "outlineColor",
+        "property": "outline-color",
         "expected": "rgb(178, 74, 47)"
       }
     ]

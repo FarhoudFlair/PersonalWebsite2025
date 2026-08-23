@@ -110,6 +110,10 @@
 }
 
 @layer utilities {
+  .dark .text-signal {
+    color: rgb(var(--ink));
+  }
+
   .text-balance {
     text-wrap: balance;
   }
