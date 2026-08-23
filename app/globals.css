@@ -10,8 +10,6 @@
     --trace: 200 209 205;
     --signal: 31 107 82;
     --safety: 178 74 47;
-    --font-display: var(--font-display-source);
-    --font-body: var(--font-body-source);
   }
 
   .dark {
@@ -34,6 +32,8 @@
     min-width: 320px;
     background-color: rgb(var(--canvas));
     color: rgb(var(--ink));
+    --font-display: var(--font-display-source);
+    --font-body: var(--font-body-source);
     font-family: var(--font-body), sans-serif;
     transition: background-color 200ms ease-out, color 200ms ease-out;
   }
