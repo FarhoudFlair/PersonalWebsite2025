@@ -114,6 +114,20 @@ export default function Navigation() {
     document.body.style.overflow = 'hidden';
     mobileMenuCloseButtonRef.current?.focus();
 
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target;
+
+      if (
+        !(target instanceof Node) ||
+        mobileMenuRef.current?.contains(target) ||
+        mobileMenuButtonRef.current?.contains(target)
+      ) {
+        return;
+      }
+
+      closeMobileMenu();
+    };
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         event.preventDefault();
@@ -152,11 +166,13 @@ export default function Navigation() {
       }
     };
 
+    document.addEventListener('pointerdown', handlePointerDown, true);
     document.addEventListener('keydown', handleKeyDown);
 
     return () => {
       document.body.style.overflow = previousBodyOverflow;
       document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('pointerdown', handlePointerDown, true);
     };
   }, [closeMobileMenu, isMobileMenuOpen]);
 
@@ -308,7 +324,6 @@ export default function Navigation() {
           <div
             aria-hidden="true"
             className="absolute inset-0 bg-canvas/80"
-            onPointerDown={() => closeMobileMenu()}
           />
           <div
             aria-labelledby="mobile-navigation-title"
