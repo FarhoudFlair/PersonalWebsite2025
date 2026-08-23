@@ -106,9 +106,8 @@
           "selector": "html.dark"
         },
         {
-          "type": "expectText",
-          "selector": "[data-qa=\"theme-toggle\"]",
-          "value": "Switch to light theme"
+          "type": "expectVisible",
+          "selector": "[data-qa=\"theme-toggle\"][aria-label=\"Switch to light theme\"]"
         }
       ]
     },
