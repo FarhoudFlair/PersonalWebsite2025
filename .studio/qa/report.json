@@ -1,0 +1,485 @@
+{
+  "generatedAt": "2026-08-23T05:37:30.975Z",
+  "baseUrl": "http://127.0.0.1:3001",
+  "passed": true,
+  "qaPriority": [
+    "contract-compliance",
+    "dom-layout",
+    "computed-styles",
+    "screenshot-review",
+    "pixel-diff-regression-only"
+  ],
+  "summary": {
+    "checks": 176,
+    "failures": 0,
+    "warnings": 0
+  },
+  "runs": [
+    {
+      "route": "home",
+      "viewport": "desktop",
+      "width": 1440,
+      "height": 1100,
+      "url": "http://127.0.0.1:3001/",
+      "title": "Farhoud Talebi - Software Engineer",
+      "screenshot": "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/home-desktop.png",
+      "checks": 10,
+      "failures": [],
+      "warnings": [],
+      "details": {
+        "consoleErrors": [],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "accessibilityViolationCount": 0,
+        "seriousAccessibilityViolationCount": 0,
+        "inspection": {
+          "textLength": 6875,
+          "elementCount": 959,
+          "blank": false,
+          "horizontalOverflow": false,
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "frameworkOverlay": false
+        },
+        "contractInspection": {
+          "categories": [
+            "contract-compliance",
+            "dom-layout",
+            "computed-styles"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      }
+    },
+    {
+      "route": "home",
+      "viewport": "mobile",
+      "width": 390,
+      "height": 844,
+      "url": "http://127.0.0.1:3001/",
+      "title": "Farhoud Talebi - Software Engineer",
+      "screenshot": "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/home-mobile.png",
+      "checks": 10,
+      "failures": [],
+      "warnings": [],
+      "details": {
+        "consoleErrors": [],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "accessibilityViolationCount": 0,
+        "seriousAccessibilityViolationCount": 0,
+        "inspection": {
+          "textLength": 9640,
+          "elementCount": 959,
+          "blank": false,
+          "horizontalOverflow": false,
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "frameworkOverlay": false
+        },
+        "contractInspection": {
+          "categories": [
+            "contract-compliance",
+            "dom-layout",
+            "computed-styles"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      }
+    }
+  ],
+  "flows": [
+    {
+      "name": "project-catalog-all",
+      "viewport": "desktop",
+      "width": 1440,
+      "height": 1100,
+      "route": "/",
+      "passed": true,
+      "checks": 14,
+      "failures": [],
+      "warnings": [],
+      "screenshots": [
+        "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/flows/project-catalog-all/desktop/final.png"
+      ],
+      "details": {
+        "consoleErrors": [],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "accessibilityViolationCount": 0,
+        "seriousAccessibilityViolationCount": 0,
+        "inspection": {
+          "textLength": 8213,
+          "elementCount": 1419,
+          "blank": false,
+          "horizontalOverflow": false,
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "frameworkOverlay": false
+        },
+        "contractInspection": {
+          "categories": [
+            "contract-compliance",
+            "dom-layout",
+            "computed-styles"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      }
+    },
+    {
+      "name": "mobile-navigation",
+      "viewport": "desktop",
+      "width": 1440,
+      "height": 1100,
+      "route": "/",
+      "passed": true,
+      "checks": 16,
+      "failures": [],
+      "warnings": [],
+      "screenshots": [
+        "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/flows/mobile-navigation/desktop/final.png"
+      ],
+      "details": {
+        "consoleErrors": [],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "accessibilityViolationCount": 0,
+        "seriousAccessibilityViolationCount": 0,
+        "inspection": {
+          "textLength": 6875,
+          "elementCount": 959,
+          "blank": false,
+          "horizontalOverflow": false,
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "frameworkOverlay": false
+        },
+        "contractInspection": {
+          "categories": [
+            "contract-compliance",
+            "dom-layout",
+            "computed-styles"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      }
+    },
+    {
+      "name": "contact-validation",
+      "viewport": "desktop",
+      "width": 1440,
+      "height": 1100,
+      "route": "/",
+      "passed": true,
+      "checks": 15,
+      "failures": [],
+      "warnings": [],
+      "screenshots": [
+        "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/flows/contact-validation/desktop/final.png"
+      ],
+      "details": {
+        "consoleErrors": [],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "accessibilityViolationCount": 0,
+        "seriousAccessibilityViolationCount": 0,
+        "inspection": {
+          "textLength": 7073,
+          "elementCount": 974,
+          "blank": false,
+          "horizontalOverflow": false,
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "frameworkOverlay": false
+        },
+        "contractInspection": {
+          "categories": [
+            "contract-compliance",
+            "dom-layout",
+            "computed-styles"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      }
+    },
+    {
+      "name": "theme-dark",
+      "viewport": "desktop",
+      "width": 1440,
+      "height": 1100,
+      "route": "/",
+      "passed": true,
+      "checks": 13,
+      "failures": [],
+      "warnings": [],
+      "screenshots": [
+        "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/flows/theme-dark/desktop/final.png"
+      ],
+      "details": {
+        "consoleErrors": [],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "accessibilityViolationCount": 0,
+        "seriousAccessibilityViolationCount": 0,
+        "inspection": {
+          "textLength": 6875,
+          "elementCount": 959,
+          "blank": false,
+          "horizontalOverflow": false,
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "frameworkOverlay": false
+        },
+        "contractInspection": {
+          "categories": [
+            "contract-compliance",
+            "dom-layout",
+            "computed-styles"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      }
+    },
+    {
+      "name": "signal-controls",
+      "viewport": "desktop",
+      "width": 1440,
+      "height": 1100,
+      "route": "/",
+      "passed": true,
+      "checks": 20,
+      "failures": [],
+      "warnings": [],
+      "screenshots": [
+        "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/flows/signal-controls/desktop/final.png"
+      ],
+      "details": {
+        "consoleErrors": [],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "accessibilityViolationCount": 0,
+        "seriousAccessibilityViolationCount": 0,
+        "inspection": {
+          "textLength": 6875,
+          "elementCount": 959,
+          "blank": false,
+          "horizontalOverflow": false,
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "frameworkOverlay": false
+        },
+        "contractInspection": {
+          "categories": [
+            "contract-compliance",
+            "dom-layout",
+            "computed-styles"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      }
+    },
+    {
+      "name": "project-catalog-all",
+      "viewport": "mobile",
+      "width": 390,
+      "height": 844,
+      "route": "/",
+      "passed": true,
+      "checks": 14,
+      "failures": [],
+      "warnings": [],
+      "screenshots": [
+        "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/flows/project-catalog-all/mobile/final.png"
+      ],
+      "details": {
+        "consoleErrors": [],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "accessibilityViolationCount": 0,
+        "seriousAccessibilityViolationCount": 0,
+        "inspection": {
+          "textLength": 15292,
+          "elementCount": 1419,
+          "blank": false,
+          "horizontalOverflow": false,
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "frameworkOverlay": false
+        },
+        "contractInspection": {
+          "categories": [
+            "contract-compliance",
+            "dom-layout",
+            "computed-styles"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      }
+    },
+    {
+      "name": "mobile-navigation",
+      "viewport": "mobile",
+      "width": 390,
+      "height": 844,
+      "route": "/",
+      "passed": true,
+      "checks": 16,
+      "failures": [],
+      "warnings": [],
+      "screenshots": [
+        "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/flows/mobile-navigation/mobile/final.png"
+      ],
+      "details": {
+        "consoleErrors": [],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "accessibilityViolationCount": 0,
+        "seriousAccessibilityViolationCount": 0,
+        "inspection": {
+          "textLength": 9640,
+          "elementCount": 959,
+          "blank": false,
+          "horizontalOverflow": false,
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "frameworkOverlay": false
+        },
+        "contractInspection": {
+          "categories": [
+            "contract-compliance",
+            "dom-layout",
+            "computed-styles"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      }
+    },
+    {
+      "name": "contact-validation",
+      "viewport": "mobile",
+      "width": 390,
+      "height": 844,
+      "route": "/",
+      "passed": true,
+      "checks": 15,
+      "failures": [],
+      "warnings": [],
+      "screenshots": [
+        "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/flows/contact-validation/mobile/final.png"
+      ],
+      "details": {
+        "consoleErrors": [],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "accessibilityViolationCount": 0,
+        "seriousAccessibilityViolationCount": 0,
+        "inspection": {
+          "textLength": 9838,
+          "elementCount": 974,
+          "blank": false,
+          "horizontalOverflow": false,
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "frameworkOverlay": false
+        },
+        "contractInspection": {
+          "categories": [
+            "contract-compliance",
+            "dom-layout",
+            "computed-styles"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      }
+    },
+    {
+      "name": "theme-dark",
+      "viewport": "mobile",
+      "width": 390,
+      "height": 844,
+      "route": "/",
+      "passed": true,
+      "checks": 13,
+      "failures": [],
+      "warnings": [],
+      "screenshots": [
+        "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/flows/theme-dark/mobile/final.png"
+      ],
+      "details": {
+        "consoleErrors": [],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "accessibilityViolationCount": 0,
+        "seriousAccessibilityViolationCount": 0,
+        "inspection": {
+          "textLength": 9640,
+          "elementCount": 959,
+          "blank": false,
+          "horizontalOverflow": false,
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "frameworkOverlay": false
+        },
+        "contractInspection": {
+          "categories": [
+            "contract-compliance",
+            "dom-layout",
+            "computed-styles"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      }
+    },
+    {
+      "name": "signal-controls",
+      "viewport": "mobile",
+      "width": 390,
+      "height": 844,
+      "route": "/",
+      "passed": true,
+      "checks": 20,
+      "failures": [],
+      "warnings": [],
+      "screenshots": [
+        "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/flows/signal-controls/mobile/final.png"
+      ],
+      "details": {
+        "consoleErrors": [],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "accessibilityViolationCount": 0,
+        "seriousAccessibilityViolationCount": 0,
+        "inspection": {
+          "textLength": 9640,
+          "elementCount": 959,
+          "blank": false,
+          "horizontalOverflow": false,
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "frameworkOverlay": false
+        },
+        "contractInspection": {
+          "categories": [
+            "contract-compliance",
+            "dom-layout",
+            "computed-styles"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      }
+    }
+  ]
+}

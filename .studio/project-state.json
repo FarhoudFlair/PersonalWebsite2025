@@ -5,18 +5,142 @@
     "directions": "approved",
     "contract": "approved",
     "build": "allowed",
-    "qa": "pending",
-    "release": "blocked"
+    "qa": "passed",
+    "release": "allowed"
   },
   "selected_direction": "field-map",
   "approved_artifacts": {
     "brief": "d83a634519324d9f3aab351f68b87210de84a8a467624e76644430e8da80db79",
     "directions": "30af5486ba6a24eb0bce773bca0b91c7c3f97a27496de9d6f701744d1a904dd9",
-    "contract": "4a6193ac0cd165ec7b5e45244dfdba4acc9f5220fe2b0e1d58e40a99215885af"
+    "contract": "b0b7a4cf3a55871ea2644dca53d3995f6771607ef66b4981ee870ee6c5dbb51e"
   },
   "active_override": null,
   "active_qa_run": null,
-  "qa_revision": null,
-  "qa_evidence": null,
-  "updated_at": "2026-08-23T04:49:55.771Z"
+  "qa_revision": "55204a3e-717f-4568-8314-2c99c90e5d8e",
+  "qa_evidence": {
+    "project_root": "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test",
+    "qa_revision": "55204a3e-717f-4568-8314-2c99c90e5d8e",
+    "report_path": "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/report.json",
+    "report_sha256": "6743f58f8c5a249ff341fe71f0d38b3b82d32066d696b90521941f9a0785485f",
+    "config_path": "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/studio.config.json",
+    "config_sha256": "7a2357b0403c0d315769768123791896fa6de2ecd83eb6be759947ed5b99aff4",
+    "contract_sha256": "b0b7a4cf3a55871ea2644dca53d3995f6771607ef66b4981ee870ee6c5dbb51e",
+    "implementation_metadata_sha256": "0edd718829bf07210ad2a90b1957377e6d296232db51353869a6d96e91d4c0a0",
+    "screenshots": [
+      {
+        "kind": "route",
+        "route": "home",
+        "viewport": "desktop",
+        "viewport_width": 1440,
+        "viewport_height": 1100,
+        "path": "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/home-desktop.png",
+        "sha256": "f0c5a5ef1f21fe9571742b083ecfb625b529100dcfcbed1d07c95ca7480a98c5",
+        "width": 1440,
+        "height": 7492
+      },
+      {
+        "kind": "route",
+        "route": "home",
+        "viewport": "mobile",
+        "viewport_width": 390,
+        "viewport_height": 844,
+        "path": "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/home-mobile.png",
+        "sha256": "768402b0ed3f335a5bf087c549b22925b42301c2440cae12c086d107ed05d208",
+        "width": 390,
+        "height": 16870
+      },
+      {
+        "kind": "flow",
+        "flow": "project-catalog-all",
+        "viewport": "desktop",
+        "path": "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/flows/project-catalog-all/desktop/final.png",
+        "sha256": "53984ac7212b45a47a6112226d3ffef14be254844661ef74c504d110bda622db",
+        "width": 1440,
+        "height": 9138
+      },
+      {
+        "kind": "flow",
+        "flow": "mobile-navigation",
+        "viewport": "desktop",
+        "path": "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/flows/mobile-navigation/desktop/final.png",
+        "sha256": "df3fe95d2b7128c7954c5b10971b8450fd79f95c020289605e32dc6a45ec7271",
+        "width": 1440,
+        "height": 7492
+      },
+      {
+        "kind": "flow",
+        "flow": "contact-validation",
+        "viewport": "desktop",
+        "path": "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/flows/contact-validation/desktop/final.png",
+        "sha256": "4363cf2a7782869dce63d35e029ac1faa1edc7f87c9e35d73b65510490795d50",
+        "width": 1440,
+        "height": 7568
+      },
+      {
+        "kind": "flow",
+        "flow": "theme-dark",
+        "viewport": "desktop",
+        "path": "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/flows/theme-dark/desktop/final.png",
+        "sha256": "93455445795fac2ba77f249d903083e8ee34b422a827c5c9aedc0742c45ec359",
+        "width": 1440,
+        "height": 7492
+      },
+      {
+        "kind": "flow",
+        "flow": "signal-controls",
+        "viewport": "desktop",
+        "path": "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/flows/signal-controls/desktop/final.png",
+        "sha256": "e5324cc5f8ccea404b350ad0fe9a29719dd7583f9c4b2c10b02114fc6309b674",
+        "width": 1440,
+        "height": 7492
+      },
+      {
+        "kind": "flow",
+        "flow": "project-catalog-all",
+        "viewport": "mobile",
+        "path": "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/flows/project-catalog-all/mobile/final.png",
+        "sha256": "7d4cbdd4dd0d65a3b5b5903a0185f1afd72c51ca9d3c100bda28c16557c2ecf9",
+        "width": 390,
+        "height": 26383
+      },
+      {
+        "kind": "flow",
+        "flow": "mobile-navigation",
+        "viewport": "mobile",
+        "path": "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/flows/mobile-navigation/mobile/final.png",
+        "sha256": "c76b26736ba853f8aebddddf770f9dca09dd02a47bcef1f5930d4d295e5db3e2",
+        "width": 390,
+        "height": 16870
+      },
+      {
+        "kind": "flow",
+        "flow": "contact-validation",
+        "viewport": "mobile",
+        "path": "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/flows/contact-validation/mobile/final.png",
+        "sha256": "bf9389b66643151af6023dbc783953b972660b4f71e7b4f2f151db768b211455",
+        "width": 390,
+        "height": 17138
+      },
+      {
+        "kind": "flow",
+        "flow": "theme-dark",
+        "viewport": "mobile",
+        "path": "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/flows/theme-dark/mobile/final.png",
+        "sha256": "9ca49b81f4233a0b641f7917dc36f34f5c0d9d6dfd000366707c14b8a85e51ce",
+        "width": 390,
+        "height": 16870
+      },
+      {
+        "kind": "flow",
+        "flow": "signal-controls",
+        "viewport": "mobile",
+        "path": "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/flows/signal-controls/mobile/final.png",
+        "sha256": "16531e23073df6fb9522b300e36178b388921d930228d5c799c1964c96c081e3",
+        "width": 390,
+        "height": 16870
+      }
+    ],
+    "recorded_at": "2026-08-23T05:37:34.440Z"
+  },
+  "updated_at": "2026-08-23T05:38:00.037Z"
 }
