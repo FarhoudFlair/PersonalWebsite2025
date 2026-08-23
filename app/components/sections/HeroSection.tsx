@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { FaArrowDown } from 'react-icons/fa';
 import { siteData } from '@/data/siteData';
 import Button from '@/components/ui/Button';

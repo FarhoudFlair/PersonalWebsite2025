@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "project_state": {
+    "brief": "draft",
+    "directions": "blocked",
+    "contract": "blocked",
+    "build": "blocked",
+    "qa": "blocked",
+    "release": "blocked"
+  },
+  "selected_direction": null,
+  "approved_artifacts": {},
+  "active_override": {
+    "timestamp": "2026-08-23T02:38:19.762Z",
+    "flag": "--override-approved",
+    "reason": "User authorized a disposable isolated portfolio redesign experiment without artifact approvals.",
+    "state_before_override": {
+      "brief": "draft",
+      "directions": "blocked",
+      "contract": "blocked",
+      "build": "blocked",
+      "qa": "blocked",
+      "release": "blocked"
+    }
+  },
+  "active_qa_run": null,
+  "qa_revision": null,
+  "qa_evidence": null,
+  "updated_at": "2026-08-23T02:38:19.762Z"
+}

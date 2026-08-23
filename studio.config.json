@@ -1,0 +1,21 @@
+{
+  "baseUrl": "http://127.0.0.1:3000",
+  "outputDir": ".studio/qa",
+  "contractPath": ".studio/design-contract.yaml",
+  "routes": [
+    { "name": "home", "path": "/" }
+  ],
+  "viewports": [
+    { "name": "desktop", "width": 1440, "height": 900 },
+    { "name": "mobile", "width": 390, "height": 844 }
+  ],
+  "flows": [],
+  "timeoutMs": 15000,
+  "qa": {
+    "failOnConsoleError": true,
+    "failOnPageError": true,
+    "failOnHorizontalOverflow": true,
+    "failOnSeriousA11y": true,
+    "fullPageScreenshots": true
+  }
+}

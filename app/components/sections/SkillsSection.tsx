@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import {
   FaJs, FaPython, FaJava, FaSwift, FaApple, FaReact, FaHtml5, FaCss3Alt,
   FaAndroid, FaDatabase, FaNetworkWired, FaCogs, FaCode, FaShieldAlt,

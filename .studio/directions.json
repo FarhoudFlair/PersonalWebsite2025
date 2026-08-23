@@ -1,0 +1,47 @@
+[
+  {
+    "id": "field-map",
+    "thesis": "An asymmetric 12-column identity pairs Farhoud's name and credentials with a semantic evidence spine that makes real work and shipped projects readable in the first viewport without turning into a decorative system diagram.",
+    "hero_layout": "Asymmetric 12-column split hero: left rail carries name, title, tagline, bio, current Collins role, location, and contact/resume actions, while a right-side semantic evidence spine labels only repository-supported domains of current work and shipped projects; compact horizontal index navigation sits above the field.",
+    "section_order": [
+      "home",
+      "projects",
+      "experience",
+      "skills",
+      "contact"
+    ],
+    "typography_personality": "Condensed technical display headings with a calm sans body and utility monospace reserved for dates and technology metadata.",
+    "image_strategy": "One large active project image stage on desktop beside indexed project rows; existing project covers only, no portrait.",
+    "interaction_model": "Compact horizontal index navigation with focus/click project switching and a consolidated signal-field control; essential evidence remains readable without operating the map."
+  },
+  {
+    "id": "release-ledger",
+    "thesis": "A full-width typographic manifest presents Farhoud's career and projects as a dense release ledger where verifiable records replace decorative storytelling.",
+    "hero_layout": "Full-width typographic manifest hero with a persistent left rail navigation fixed along the page edge.",
+    "section_order": [
+      "home",
+      "experience",
+      "projects",
+      "skills",
+      "contact"
+    ],
+    "typography_personality": "Wide grotesk display with tabular monospace for dates, versions, and record metadata.",
+    "image_strategy": "Projects rendered as dense release rows with small edge thumbnail stamps rather than large imagery; existing covers only.",
+    "interaction_model": "Expandable detail disclosures per release row plus scroll-progress interaction; the persistent left rail stays available for section jumps."
+  },
+  {
+    "id": "project-cinema",
+    "thesis": "A DeenPath-led cinematic sequence opens on a full-bleed flagship project and moves through projects as full-screen chapters, with skills and experience reached after the project evidence.",
+    "hero_layout": "Full-bleed flagship project first viewport led by DeenPath, with a bottom chapter dock for navigation.",
+    "section_order": [
+      "home",
+      "projects",
+      "skills",
+      "experience",
+      "contact"
+    ],
+    "typography_personality": "Humanist display face with a neutral body for narrative, editorial pacing.",
+    "image_strategy": "Full-bleed project chapter imagery for each project on desktop, led by the DeenPath cover; existing covers only.",
+    "interaction_model": "Desktop chapter/scroll-snap navigation between full-bleed projects with a linear stacked mobile fallback and a bottom chapter dock."
+  }
+]

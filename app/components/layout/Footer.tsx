@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { FaArrowUp, FaGithub, FaLinkedin, FaTwitter, FaHeart } from 'react-icons/fa';
 import { siteData } from '@/data/siteData';
 

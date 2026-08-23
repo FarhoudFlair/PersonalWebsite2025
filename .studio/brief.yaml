@@ -1,0 +1,61 @@
+version: 2
+status: draft
+surface: "Public software-development portfolio"
+audience: "Engineering hiring managers, technical recruiters, and senior developers"
+user_moment: "Decide whether Farhoud's technical range and work warrant a conversation"
+primary_action: "Contact Farhoud"
+business_goal: "Generate qualified engineering conversations"
+required_content:
+  - "Complete factual biography (name, title, tagline, bio, location)"
+  - "Six experience roles with all achievements and technologies"
+  - "All 32 skills across five groups"
+  - "All 16 projects with descriptions, links, statuses, dates, highlights, and technologies"
+  - "Resume link"
+  - "Social links (GitHub, LinkedIn)"
+  - "Contact email and location"
+  - "Footer and navigation actions"
+required_states:
+  - "Contact form: empty/invalid (four validation messages), submitting, success, configuration error, failure error"
+  - "Theme: light and dark (persisted)"
+  - "Project filter: featured and all"
+  - "Particle signal controls: closed and open, interaction mode, five colors"
+  - "Mobile navigation: closed and open"
+viewports:
+  - 1440x900
+  - 390x844
+brand_traits:
+  - "Precise"
+  - "Authored"
+  - "Pragmatic"
+  - "Technically fluent"
+avoid:
+  - "Repeated cards"
+  - "Gradient text"
+  - "Glass panels"
+  - "Decorative pills"
+  - "Fake metrics"
+  - "Timeline dots"
+  - "Floating blobs"
+  - "Hover-only actions"
+  - "Overlapping open particle controls"
+  - "Placeholder or filler copy"
+  - "Generic templated UI (anti-slop)"
+creative_range: 8
+signature_idea: "A semantic evidence spine that connects current work, shipped projects, and career evidence in the first viewport without becoming a decorative system diagram."
+constraints:
+  - "Preserve app/data/siteData.ts unchanged as the single factual source"
+  - "Preserve every external link (GitHub, LinkedIn, employer sites, App Store, live URLs)"
+  - "Preserve EmailJS behavior and environment-variable names/template fields"
+  - "Preserve SEO metadata, Open Graph/Twitter/robots, icon and manifest links"
+  - "Preserve dark/light theme, particle controls, project filter, and anchor navigation"
+  - "Preserve /imposter-hunt/privacy and /imposter-hunt/support routes"
+  - "Keyboard-operable and screen-reader reachable; reduced motion leaves all content visible"
+  - "Local-only disposable experiment; no production deployment"
+  - "Use existing project covers only; no missing-avatar substitute"
+  - "Do not 'correct' factual gaps (missing avatar, divergent Imposter Hunt email, DeenPath date/status, Twitter handle)"
+assumptions:
+  - "Audience and job are inferred from the explicit brief"
+  - "No valid portrait exists (avatar image is absent)"
+  - ".env.local exists in the worktree and was not inspected, copied, or modified; QA must avoid a real EmailJS send and use explicit empty process env values for the configuration-error test"
+  - "No test runner exists; Studio flows plus browser smoke checks are the behavioral tests"
+  - "motion replaces framer-motion as the one essential dependency change"

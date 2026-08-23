@@ -2,7 +2,7 @@
 
 import { useState, FormEvent } from 'react';
 import emailjs from '@emailjs/browser';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaTwitter, FaPaperPlane } from 'react-icons/fa';
 import { siteData } from '@/data/siteData';
 import Button from '@/components/ui/Button';

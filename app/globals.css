@@ -4,85 +4,108 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --canvas: 242 245 243;
+    --ink: 24 34 31;
+    --slate: 82 96 92;
+    --trace: 200 209 205;
+    --signal: 31 107 82;
+    --safety: 178 74 47;
+    --font-display: var(--font-display-source);
+    --font-body: var(--font-body-source);
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --canvas: 24 34 31;
+    --ink: 242 245 243;
+    --slate: 200 209 205;
+    --trace: 82 96 92;
   }
-}
 
-@layer base {
   * {
-    border-color: hsl(var(--border));
-  }
-  
-  body {
-    /* The main background is now applied to the <main> element in page.tsx */
-    background-color: hsl(var(--background)); /* Changed from transparent */
-    color: hsl(var(--foreground));
-    transition: background-color 0.3s ease, color 0.3s ease;
+    border-color: rgb(var(--trace));
   }
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
 
-  /* Custom scrollbar */
+  body {
+    min-width: 320px;
+    background-color: rgb(var(--canvas));
+    color: rgb(var(--ink));
+    font-family: var(--font-body), sans-serif;
+    transition: background-color 200ms ease-out, color 200ms ease-out;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display), sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+  }
+
+  ::selection {
+    background: rgb(var(--signal));
+    color: #f2f5f3;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--safety));
+    outline-offset: 3px;
+  }
+
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 10px;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-surface-light dark:bg-surface-dark;
+    background: rgb(var(--canvas));
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-text-secondary-light dark:bg-text-secondary-dark rounded-full;
+    background: rgb(var(--slate));
+    border: 3px solid rgb(var(--canvas));
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-primary-500;
+    background: rgb(var(--signal));
   }
 }
 
 @layer components {
-  .gradient-text {
-    @apply bg-gradient-to-r from-gradient-from via-gradient-via to-gradient-to bg-clip-text text-transparent;
-    background-size: 200% 100%;
-    animation: gradient-text 4s ease-in-out infinite;
-  }
-
-  .glass-effect {
-    @apply backdrop-blur-md bg-white/10 dark:bg-black/10 border border-white/20 dark:border-white/10;
-  }
-
-  .section-padding {
-    @apply px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24;
+  .field-container {
+    width: min(100%, 1440px);
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 4rem);
   }
 
   .container-custom {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    width: min(100%, 1440px);
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 4rem);
+  }
+
+  .section-padding {
+    padding-block: clamp(4.5rem, 9vw, 8rem);
+  }
+
+  .field-rule {
+    border-top: 1px solid rgb(var(--trace));
+  }
+
+  .metadata {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.03em;
   }
 }
 
@@ -91,32 +114,26 @@
     text-wrap: balance;
   }
 
-  .animation-delay-1000 {
-    animation-delay: 1s;
+  .font-display {
+    font-family: var(--font-display), sans-serif;
   }
 
-  .animation-delay-2000 {
-    animation-delay: 2s;
-  }
-
-  .animation-delay-3000 {
-    animation-delay: 3s;
+  .font-body {
+    font-family: var(--font-body), sans-serif;
   }
 }
 
-/* Focus styles for accessibility */
-@layer base {
-  .focus-visible:focus-visible {
-    @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-background;
-  }
-}
-
-/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-} 
+}

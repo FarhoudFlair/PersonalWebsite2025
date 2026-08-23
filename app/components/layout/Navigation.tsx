@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { FaGithub, FaLinkedin, FaTwitter, FaSun, FaMoon, FaBars, FaTimes, FaDownload } from 'react-icons/fa';
 import { useTheme } from '@/hooks/useTheme';
 import { siteData } from '@/data/siteData';

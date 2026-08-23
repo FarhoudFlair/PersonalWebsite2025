@@ -1,0 +1,135 @@
+{
+  "version": 2,
+  "status": "draft",
+  "identity": {
+    "selected_direction_id": "field-map",
+    "creative_direction": "Agent-selected field-map after evaluating audience identification, first-viewport technical clarity, truthful use of current assets, scanability, keyboard and mobile accessibility, and implementation risk. It exposes real work immediately without release-ledger resume density or project-cinema image and scroll dependence.",
+    "target_user": "Engineering hiring managers, technical recruiters, and senior developers evaluating Farhoud's systems, mobile, and full-stack work.",
+    "emotional_goal": "Precise, authored, pragmatic, and technically fluent confidence that the work warrants a conversation."
+  },
+  "layout": {
+    "sections": [
+      "home",
+      "projects",
+      "experience",
+      "skills",
+      "contact",
+      "footer"
+    ],
+    "container": "Maximum 1440px, asymmetric 12-column desktop field, edge padding clamp(1rem, 4vw, 4rem).",
+    "density": "Dense evidence inside generous outer whitespace; no repeated card grid."
+  },
+  "visual": {
+    "typography": {
+      "display": "Barlow Condensed 600/700",
+      "body": "Work Sans 400/500/600",
+      "metadata": "system monospace"
+    },
+    "colors": {
+      "canvas": "#F2F5F3",
+      "ink": "#18221F",
+      "slate": "#52605C",
+      "trace": "#C8D1CD",
+      "signal": "#1F6B52",
+      "safety": "#B24A2F"
+    },
+    "imagery": "Existing project covers only. No missing-avatar substitute. One large active image stage on desktop and intrinsic-ratio project images in linear mobile articles.",
+    "motion": "One first-viewport signal-line entrance, 180-240 ms project-stage transitions, and restrained section reveals. All content remains visible with reduced motion."
+  },
+  "components": {
+    "allowed": [
+      "site-navigation",
+      "identity-hero",
+      "signal-controls",
+      "project-showcase",
+      "project-index",
+      "career-ledger",
+      "capability-matrix",
+      "contact-panel",
+      "contact-form",
+      "site-footer",
+      "theme-toggle",
+      "resume-link",
+      "social-links"
+    ],
+    "prohibited": [
+      "repeated-card-grid",
+      "gradient-text",
+      "glass-panel",
+      "decorative-pill",
+      "fake-metric",
+      "timeline-dot",
+      "floating-blob",
+      "hover-only-action",
+      "overlapping-particle-controls"
+    ]
+  },
+  "content": {
+    "required": [
+      "Farhoud Talebi",
+      "Software Engineer",
+      "Collins Aerospace",
+      "DeenPath",
+      "farhoudtalebi@gmail.com",
+      "Ottawa, ON, Canada"
+    ],
+    "forbidden": [
+      "Lorem ipsum",
+      "Available for work",
+      "Years of experience"
+    ]
+  },
+  "responsive": {
+    "desktop": "At 1440x1100, split hero places identity left and a readable semantic evidence spine right. A sticky project image stage sits beside a keyboard-operable index, followed by the career ledger, capability matrix, and split contact panel/form.",
+    "mobile": "At 390x844, use a linear hero with no sticky or snap dependency. Every filtered project is a complete stacked article, navigation uses an accessible drawer, signal controls use one closed trigger, and no horizontal overflow is allowed."
+  },
+  "qa": {
+    "required_screens": [
+      "home-desktop",
+      "home-mobile"
+    ],
+    "required_states": [
+      "initial",
+      "project-catalog-all",
+      "mobile-navigation",
+      "contact-validation",
+      "theme-dark",
+      "signal-controls"
+    ],
+    "required_selectors": [
+      "[data-qa=\"primary-action\"]",
+      "[data-qa=\"project-filter-all\"]",
+      "[data-qa=\"mobile-menu-toggle\"]",
+      "[data-qa=\"contact-form\"]",
+      "[data-qa=\"theme-toggle\"]",
+      "[data-qa=\"signal-controls-toggle\"]"
+    ],
+    "prohibited_selectors": [
+      "[data-ui-pattern=\"gradient-text\"]",
+      "[data-ui-pattern=\"glass-panel\"]",
+      "[data-ui-pattern=\"floating-blob\"]"
+    ],
+    "computed_styles": [
+      {
+        "selector": "body",
+        "property": "backgroundColor",
+        "expected": "rgb(242, 245, 243)"
+      },
+      {
+        "selector": "[data-studio-component=\"identity-hero\"] h1",
+        "property": "fontFamily",
+        "expected": "Barlow Condensed"
+      },
+      {
+        "selector": "[data-qa=\"primary-action\"]",
+        "property": "backgroundColor",
+        "expected": "rgb(31, 107, 82)"
+      },
+      {
+        "selector": "[data-qa=\"primary-action\"]",
+        "property": "outlineColor",
+        "expected": "rgb(178, 74, 47)"
+      }
+    ]
+  }
+}

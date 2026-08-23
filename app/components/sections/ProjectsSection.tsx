@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { FaExternalLinkAlt, FaGithub, FaStar, FaClock, FaCheckCircle } from 'react-icons/fa';
 import { siteData } from '@/data/siteData';
 import Badge from '@/components/ui/Badge';
