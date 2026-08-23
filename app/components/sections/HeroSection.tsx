@@ -83,7 +83,7 @@ export default function HeroSection() {
                 data-qa="primary-action"
                 className="inline-flex min-h-11 items-center justify-center bg-signal px-6 py-3 text-sm font-semibold text-canvas outline-safety transition-colors hover:bg-signal/90 dark:text-ink"
               >
-                Contact Farhoud
+                Contact {siteData.personal.name.split(/\s+/)[0]}
               </a>
               <a
                 href={siteData.personal.resume}
