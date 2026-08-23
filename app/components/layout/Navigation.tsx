@@ -1,239 +1,368 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { FaGithub, FaLinkedin, FaTwitter, FaSun, FaMoon, FaBars, FaTimes, FaDownload } from 'react-icons/fa';
-import { useTheme } from '@/hooks/useTheme';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  FaBars,
+  FaDownload,
+  FaGithub,
+  FaLinkedin,
+  FaMoon,
+  FaSun,
+  FaTimes,
+} from 'react-icons/fa';
 import { siteData } from '@/data/siteData';
-import Button from '@/components/ui/Button';
+import { useTheme } from '@/hooks/useTheme';
 import { cn } from '@/utils/cn';
 
+const FIELD_INDEX_ORDER = [
+  '#home',
+  '#projects',
+  '#experience',
+  '#skills',
+  '#contact',
+] as const;
+
+const DESKTOP_MEDIA_QUERY = '(min-width: 1024px)';
+const NAVIGATION_OFFSET = 80;
+
+const fieldIndexItems = FIELD_INDEX_ORDER.reduce<typeof siteData.navigation>(
+  (items, href) => {
+    const item = siteData.navigation.find(
+      (navigationItem) => navigationItem.href === href
+    );
+
+    if (item) {
+      items.push(item);
+    }
+
+    return items;
+  },
+  []
+);
+
+const monogram = siteData.personal.name
+  .split(/\s+/)
+  .map((namePart) => namePart.charAt(0))
+  .join('');
+
+const getSocialIcon = (platform: string) => {
+  if (platform === 'github') {
+    return FaGithub;
+  }
+
+  if (platform === 'linkedin') {
+    return FaLinkedin;
+  }
+
+  return null;
+};
+
+const scrollToSection = (href: string) => {
+  if (!href.startsWith('#')) {
+    return;
+  }
+
+  const element = document.querySelector(href);
+  if (!element) {
+    return;
+  }
+
+  const elementPosition = element.getBoundingClientRect().top;
+  const offsetPosition = elementPosition + window.pageYOffset - NAVIGATION_OFFSET;
+
+  window.scrollTo({
+    top: offsetPosition,
+    behavior: 'smooth',
+  });
+};
+
 export default function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
+  const mobileMenuCloseButtonRef = useRef<HTMLButtonElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
   const { theme, toggleTheme, mounted } = useTheme();
 
+  const closeMobileMenu = useCallback((restoreMenuButtonFocus = true) => {
+    setIsMobileMenuOpen(false);
+
+    if (restoreMenuButtonFocus) {
+      window.requestAnimationFrame(() => {
+        mobileMenuButtonRef.current?.focus();
+      });
+    }
+  }, []);
+
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+    const desktopMediaQuery = window.matchMedia(DESKTOP_MEDIA_QUERY);
+    const handleDesktopChange = (event: MediaQueryListEvent) => {
+      if (event.matches) {
+        setIsMobileMenuOpen(false);
+      }
     };
 
-    handleScroll();
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    desktopMediaQuery.addEventListener('change', handleDesktopChange);
+    return () => desktopMediaQuery.removeEventListener('change', handleDesktopChange);
   }, []);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      return;
+    }
+
+    const previousBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    mobileMenuCloseButtonRef.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeMobileMenu();
+        return;
+      }
+
+      if (event.key !== 'Tab' || !mobileMenuRef.current) {
+        return;
+      }
+
+      const focusableElements = Array.from(
+        mobileMenuRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled])'
+        )
+      );
+
+      if (focusableElements.length === 0) {
+        event.preventDefault();
+        return;
+      }
+
+      const firstFocusableElement = focusableElements[0];
+      const lastFocusableElement = focusableElements[focusableElements.length - 1];
+      const activeElement = document.activeElement;
+
+      if (!mobileMenuRef.current.contains(activeElement)) {
+        event.preventDefault();
+        firstFocusableElement.focus();
+      } else if (event.shiftKey && activeElement === firstFocusableElement) {
+        event.preventDefault();
+        lastFocusableElement.focus();
+      } else if (!event.shiftKey && activeElement === lastFocusableElement) {
+        event.preventDefault();
+        firstFocusableElement.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [closeMobileMenu, isMobileMenuOpen]);
 
   const handleNavClick = (href: string) => {
     setIsMobileMenuOpen(false);
-    
-    if (href.startsWith('#')) {
-      const element = document.querySelector(href);
-      if (element) {
-        const offset = 80; // Account for fixed header
-        const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-      }
-    }
-  };
-
-  const socialIcons = {
-    FaGithub,
-    FaLinkedin,
-    FaTwitter,
+    scrollToSection(href);
   };
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        isScrolled
-          ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200/20 dark:border-gray-700/20'
-          : 'bg-transparent'
-      )}
+    <nav
+      aria-label="Primary navigation"
+      className="fixed inset-x-0 top-0 z-50 border-b border-trace bg-canvas text-ink"
+      data-studio-component="site-navigation"
     >
-      <div className="container-custom">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo/Name */}
-          <motion.a
+      <div className="field-container">
+        <div className="flex h-16 min-w-0 items-center gap-3">
+          <a
+            aria-label={`${siteData.personal.name}, home`}
+            className="group flex h-9 shrink-0 items-center gap-2 text-ink"
             href="#home"
-            onClick={(e) => {
-              e.preventDefault();
+            onClick={(event) => {
+              event.preventDefault();
               handleNavClick('#home');
             }}
-            className="text-xl font-bold text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
-            {siteData.personal.name}
-          </motion.a>
+            <span
+              aria-hidden="true"
+              className="metadata inline-flex h-9 w-9 items-center justify-center border border-ink bg-ink text-xs font-semibold text-canvas group-hover:border-signal group-hover:bg-signal"
+            >
+              {monogram}
+            </span>
+            <span className="hidden text-sm font-semibold sm:inline">
+              {siteData.personal.name}
+            </span>
+          </a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {siteData.navigation.map((item) => (
-              <motion.a
+          <ol className="hidden min-w-0 flex-1 items-center justify-center lg:flex">
+            {fieldIndexItems.map((item, index) => (
+              <li
+                className="border-l border-trace first:border-l-0"
                 key={item.href}
-                href={item.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavClick(item.href);
-                }}
-                className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors relative"
-                whileHover={{ y: -2 }}
-                whileTap={{ y: 0 }}
               >
-                {item.label}
-              </motion.a>
+                <a
+                  className="group flex h-9 items-center gap-2 px-2 text-xs font-semibold uppercase tracking-wide text-ink hover:text-signal xl:px-3"
+                  href={item.href}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    handleNavClick(item.href);
+                  }}
+                >
+                  <span className="metadata text-slate group-hover:text-signal">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span>{item.label}</span>
+                </a>
+              </li>
             ))}
-          </div>
+          </ol>
 
-          {/* Desktop Actions */}
-          <div className="hidden md:flex items-center space-x-4">
-            {/* Social Icons */}
-            <div className="flex items-center space-x-3">
+          <div className="ml-auto flex shrink-0 items-center gap-1">
+            <div
+              aria-label="Social links"
+              className="flex items-center gap-1"
+              data-studio-component="social-links"
+              role="group"
+            >
               {siteData.social.map((social) => {
-                const IconComponent = socialIcons[social.icon as keyof typeof socialIcons];
+                const Icon = getSocialIcon(social.platform);
+                if (!Icon) {
+                  return null;
+                }
+
                 return (
-                  <motion.a
-                    key={social.id}
+                  <a
+                    className="inline-flex h-9 w-9 items-center justify-center border border-transparent text-slate hover:border-trace hover:text-signal"
                     href={social.url}
-                    target="_blank"
+                    key={social.id}
                     rel="noopener noreferrer"
-                    className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    whileTap={{ scale: 0.9 }}
-                    aria-label={social.label}
+                    target="_blank"
                   >
-                    <IconComponent size={18} />
-                  </motion.a>
+                    <Icon aria-hidden="true" className="h-4 w-4" />
+                    <span className="sr-only">{social.label}</span>
+                  </a>
                 );
               })}
             </div>
 
-            {/* CV Download */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => window.open(siteData.personal.resume, '_blank')}
-              className="flex items-center space-x-2"
+            <a
+              aria-label={`Open ${siteData.personal.name}'s resume in a new tab`}
+              className="inline-flex h-9 items-center gap-1 border border-trace px-2 text-xs font-semibold uppercase tracking-wide text-ink hover:border-signal hover:text-signal"
+              data-studio-component="resume-link"
+              href={siteData.personal.resume}
+              rel="noopener noreferrer"
+              target="_blank"
             >
-              <FaDownload size={14} />
-              <span>CV</span>
-            </Button>
+              <FaDownload aria-hidden="true" className="h-3 w-3 shrink-0" />
+              <span>Resume</span>
+            </a>
 
-            {/* Theme Toggle */}
-            {mounted && (
-              <motion.button
-                onClick={toggleTheme}
-                className="p-2 rounded-md text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                aria-label="Toggle theme"
-              >
-                {theme === 'dark' ? <FaSun size={18} /> : <FaMoon size={18} />}
-              </motion.button>
-            )}
+            <button
+              aria-label={
+                theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'
+              }
+              className={cn(
+                'inline-flex h-9 w-9 items-center justify-center border border-transparent text-slate hover:border-trace hover:text-signal disabled:pointer-events-none',
+                !mounted && 'invisible'
+              )}
+              data-qa="theme-toggle"
+              data-studio-component="theme-toggle"
+              disabled={!mounted}
+              onClick={toggleTheme}
+              type="button"
+            >
+              {theme === 'dark' ? (
+                <FaSun aria-hidden="true" className="h-4 w-4" />
+              ) : (
+                <FaMoon aria-hidden="true" className="h-4 w-4" />
+              )}
+            </button>
+
+            <button
+              aria-controls="mobile-navigation-drawer"
+              aria-expanded={isMobileMenuOpen}
+              aria-label={isMobileMenuOpen ? 'Close field index' : 'Open field index'}
+              className="inline-flex h-9 w-9 items-center justify-center border border-trace text-ink hover:border-signal hover:text-signal lg:hidden"
+              data-qa="mobile-menu-toggle"
+              onClick={() => {
+                if (isMobileMenuOpen) {
+                  closeMobileMenu();
+                } else {
+                  setIsMobileMenuOpen(true);
+                }
+              }}
+              ref={mobileMenuButtonRef}
+              type="button"
+            >
+              {isMobileMenuOpen ? (
+                <FaTimes aria-hidden="true" className="h-4 w-4" />
+              ) : (
+                <FaBars aria-hidden="true" className="h-4 w-4" />
+              )}
+            </button>
           </div>
-
-          {/* Mobile Menu Button */}
-          <motion.button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 rounded-md text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            aria-label="Toggle mobile menu"
-          >
-            {isMobileMenuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
-          </motion.button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
       {isMobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
-          className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700"
-        >
-          <div className="container-custom py-4">
-            {/* Navigation Links */}
-            <div className="space-y-4 mb-6">
-              {siteData.navigation.map((item) => (
-                <motion.a
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick(item.href);
-                  }}
-                  className="block text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors py-2"
-                  whileHover={{ x: 10 }}
-                >
-                  {item.label}
-                </motion.a>
-              ))}
+        <div className="fixed inset-x-0 bottom-0 top-16 lg:hidden">
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-canvas/80"
+            onPointerDown={() => closeMobileMenu()}
+          />
+          <div
+            aria-labelledby="mobile-navigation-title"
+            aria-modal="true"
+            className="absolute inset-y-0 right-0 flex w-11/12 max-w-sm flex-col overflow-y-auto border-l border-trace bg-canvas text-ink"
+            id="mobile-navigation-drawer"
+            ref={mobileMenuRef}
+            role="dialog"
+          >
+            <div className="flex items-center justify-between border-b border-trace px-4 py-4">
+              <p
+                className="metadata text-xs font-semibold uppercase tracking-widest text-slate"
+                id="mobile-navigation-title"
+              >
+                Field index
+              </p>
+              <button
+                aria-label="Close field index"
+                className="inline-flex h-9 w-9 items-center justify-center border border-trace text-ink hover:border-signal hover:text-signal"
+                onClick={() => closeMobileMenu()}
+                ref={mobileMenuCloseButtonRef}
+                type="button"
+              >
+                <FaTimes aria-hidden="true" className="h-4 w-4" />
+              </button>
             </div>
 
-            {/* Mobile Actions */}
-            <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
-              {/* Social Icons */}
-              <div className="flex items-center space-x-4">
-                {siteData.social.map((social) => {
-                  const IconComponent = socialIcons[social.icon as keyof typeof socialIcons];
-                  return (
-                    <motion.a
-                      key={social.id}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      aria-label={social.label}
-                    >
-                      <IconComponent size={18} />
-                    </motion.a>
-                  );
-                })}
-              </div>
-
-              {/* CV and Theme Toggle */}
-              <div className="flex items-center space-x-3">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => window.open(siteData.personal.resume, '_blank')}
-                  className="flex items-center space-x-2"
-                >
-                  <FaDownload size={14} />
-                  <span>CV</span>
-                </Button>
-
-                {mounted && (
-                  <motion.button
-                    onClick={toggleTheme}
-                    className="p-2 rounded-md text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    aria-label="Toggle theme"
+            <ol>
+              {fieldIndexItems.map((item, index) => (
+                <li className="border-b border-trace" key={item.href}>
+                  <a
+                    className="group flex items-center gap-3 px-4 py-5 text-ink hover:bg-trace/30 hover:text-signal"
+                    href={item.href}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      handleNavClick(item.href);
+                    }}
                   >
-                    {theme === 'dark' ? <FaSun size={18} /> : <FaMoon size={18} />}
-                  </motion.button>
-                )}
-              </div>
-            </div>
+                    <span className="metadata w-8 shrink-0 text-xs text-slate group-hover:text-signal">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <span className="min-w-0 flex-1 font-display text-2xl font-semibold uppercase">
+                      {item.label}
+                    </span>
+                    <span aria-hidden="true" className="text-slate group-hover:text-signal">
+                      →
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ol>
           </div>
-        </motion.div>
+        </div>
       )}
-      </AnimatePresence>
-    </motion.nav>
+    </nav>
   );
-} 
+}
