@@ -5,7 +5,7 @@ UIZZE product-truth record for the public software-development portfolio. Every 
 ## Platform and surface
 
 - Web platform: a Next.js (React/TypeScript) application.
-- Single-page portfolio with anchored sections in siteData order: Home, Experience, Skills, Projects, Contact.
+- Single-page portfolio with anchored sections in final rendered order: Home, Projects, Experience, Skills, Contact.
 - Two additional routes outside the portfolio surface: `/imposter-hunt/privacy` and `/imposter-hunt/support`.
 
 ## Audience (inferred from the explicit brief)

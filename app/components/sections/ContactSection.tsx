@@ -292,7 +292,7 @@ export default function ContactSection() {
                       role="alert"
                       aria-live="assertive"
                       aria-atomic="true"
-                      className="border-l-2 border-safety py-1 pl-4 text-safety"
+                      className="border-l-2 border-safety py-1 pl-4 text-safety dark:text-ink"
                     >
                       <p className="font-semibold">Please review the highlighted fields.</p>
                       <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">
@@ -365,7 +365,7 @@ export default function ContactSection() {
                       required
                     />
                     {errors.message && (
-                      <p id="contact-message-error" className="text-sm leading-5 text-safety">
+                      <p id="contact-message-error" className="text-sm leading-5 text-safety dark:text-ink">
                         {errors.message}
                       </p>
                     )}
@@ -374,7 +374,7 @@ export default function ContactSection() {
                   {errors.submit && (
                     <p
                       id="contact-submit-error"
-                      className="border-l-2 border-safety py-1 pl-4 text-sm text-safety"
+                      className="border-l-2 border-safety py-1 pl-4 text-sm text-safety dark:text-ink"
                       role="alert"
                       aria-live="assertive"
                     >
