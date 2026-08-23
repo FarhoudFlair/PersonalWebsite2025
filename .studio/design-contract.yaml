@@ -118,7 +118,7 @@
       {
         "selector": "[data-studio-component=\"identity-hero\"] h1",
         "property": "fontFamily",
-        "expected": "Barlow Condensed"
+        "expected": "__Barlow_Condensed_df8909, __Barlow_Condensed_Fallback_df8909, sans-serif"
       },
       {
         "selector": "[data-qa=\"primary-action\"]",
