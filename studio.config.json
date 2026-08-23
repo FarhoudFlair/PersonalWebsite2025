@@ -6,10 +6,160 @@
     { "name": "home", "path": "/" }
   ],
   "viewports": [
-    { "name": "desktop", "width": 1440, "height": 900 },
+    { "name": "desktop", "width": 1440, "height": 1100 },
     { "name": "mobile", "width": 390, "height": 844 }
   ],
-  "flows": [],
+  "flows": [
+    {
+      "name": "project-catalog-all",
+      "route": "/",
+      "steps": [
+        {
+          "type": "click",
+          "selector": "[data-qa=\"project-filter-all\"]"
+        },
+        {
+          "type": "expectVisible",
+          "selector": "[data-qa=\"project-filter-all\"][aria-pressed=\"true\"]"
+        },
+        {
+          "type": "expectVisible",
+          "selector": "[data-studio-component=\"project-index\"] > li:nth-child(16) h3"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-studio-component=\"project-index\"] > li:nth-child(16) h3",
+          "value": "Mechanic Shop"
+        }
+      ]
+    },
+    {
+      "name": "mobile-navigation",
+      "route": "/",
+      "steps": [
+        {
+          "type": "click",
+          "selector": "[data-qa=\"mobile-menu-toggle\"]:visible, [data-studio-component=\"site-navigation\"] a[href=\"#projects\"]:visible"
+        },
+        {
+          "type": "expectVisible",
+          "selector": "[data-qa=\"mobile-menu-toggle\"][aria-expanded=\"true\"]:visible, [data-studio-component=\"site-navigation\"] a[href=\"#projects\"]:visible"
+        },
+        {
+          "type": "press",
+          "value": "Tab"
+        },
+        {
+          "type": "expectVisible",
+          "selector": "#mobile-navigation-drawer a[href=\"#projects\"]:visible, [data-studio-component=\"site-navigation\"] a[href=\"#projects\"]:visible"
+        },
+        {
+          "type": "click",
+          "selector": "#mobile-navigation-drawer a[href=\"#projects\"]:visible, [data-studio-component=\"site-navigation\"] a[href=\"#projects\"]:visible"
+        },
+        {
+          "type": "expectVisible",
+          "selector": "[data-studio-section=\"projects\"]"
+        }
+      ]
+    },
+    {
+      "name": "contact-validation",
+      "route": "/",
+      "steps": [
+        {
+          "type": "click",
+          "selector": "[data-qa=\"contact-form\"] button[type=\"submit\"]"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"contact-form\"]",
+          "value": "Name is required"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"contact-form\"]",
+          "value": "Email is required"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"contact-form\"]",
+          "value": "Subject is required"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"contact-form\"]",
+          "value": "Message is required"
+        }
+      ]
+    },
+    {
+      "name": "theme-dark",
+      "route": "/",
+      "steps": [
+        {
+          "type": "click",
+          "selector": "[data-qa=\"theme-toggle\"]"
+        },
+        {
+          "type": "expectVisible",
+          "selector": "html.dark"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"theme-toggle\"]",
+          "value": "Switch to light theme"
+        }
+      ]
+    },
+    {
+      "name": "signal-controls",
+      "route": "/",
+      "steps": [
+        {
+          "type": "click",
+          "selector": "[data-qa=\"signal-controls-toggle\"]"
+        },
+        {
+          "type": "expectVisible",
+          "selector": "[data-qa=\"signal-controls-toggle\"][aria-expanded=\"true\"]"
+        },
+        {
+          "type": "expectVisible",
+          "selector": "#particle-signal-controls-panel"
+        },
+        {
+          "type": "click",
+          "selector": "#particle-signal-controls-panel fieldset:first-of-type button:nth-of-type(2)"
+        },
+        {
+          "type": "expectVisible",
+          "selector": "#particle-signal-controls-panel fieldset:first-of-type button:nth-of-type(2)[aria-pressed=\"true\"]"
+        },
+        {
+          "type": "click",
+          "selector": "#particle-signal-controls-panel fieldset:last-of-type button:nth-child(2)"
+        },
+        {
+          "type": "expectVisible",
+          "selector": "#particle-signal-controls-panel fieldset:last-of-type button:nth-child(2)[aria-pressed=\"true\"]"
+        },
+        {
+          "type": "press",
+          "value": "Escape"
+        },
+        {
+          "type": "waitFor",
+          "selector": "#particle-signal-controls-panel",
+          "state": "detached"
+        },
+        {
+          "type": "expectVisible",
+          "selector": "[data-qa=\"signal-controls-toggle\"][aria-expanded=\"false\"]"
+        }
+      ]
+    }
+  ],
   "timeoutMs": 15000,
   "qa": {
     "failOnConsoleError": true,

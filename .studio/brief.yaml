@@ -21,7 +21,7 @@ required_states:
   - "Particle signal controls: closed and open, interaction mode, five colors"
   - "Mobile navigation: closed and open"
 viewports:
-  - 1440x900
+  - 1440x1100
   - 390x844
 brand_traits:
   - "Precise"
