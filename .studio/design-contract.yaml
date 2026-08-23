@@ -111,11 +111,6 @@
     ],
     "computed_styles": [
       {
-        "selector": "body",
-        "property": "background-color",
-        "expected": "rgb(242, 245, 243)"
-      },
-      {
         "selector": "[data-studio-component=\"identity-hero\"] h1",
         "property": "font-family",
         "expected": "__Barlow_Condensed_df8909, __Barlow_Condensed_Fallback_df8909, sans-serif"

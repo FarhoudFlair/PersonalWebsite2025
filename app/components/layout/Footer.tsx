@@ -78,7 +78,7 @@ export default function Footer() {
       <div className="field-container">
         <div className="flex flex-col gap-6 py-8 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="metadata text-xs font-semibold uppercase tracking-widest text-canvas/60">
+            <p className="metadata text-xs font-semibold uppercase tracking-widest text-canvas/70">
               Field index / end
             </p>
             <h2 className="mt-2 text-3xl font-semibold uppercase tracking-tight">
@@ -110,7 +110,7 @@ export default function Footer() {
                     scrollToSection(item.href);
                   }}
                 >
-                  <span className="metadata text-xs text-canvas/60 group-hover:text-ink/60">
+                  <span className="metadata text-xs text-canvas/70 group-hover:text-ink/70">
                     {String(index + 1).padStart(2, '0')}
                   </span>
                   <span>{item.label}</span>
