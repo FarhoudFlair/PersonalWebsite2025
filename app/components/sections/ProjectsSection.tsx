@@ -1,295 +1,382 @@
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'motion/react';
-import { FaExternalLinkAlt, FaGithub, FaStar, FaClock, FaCheckCircle } from 'react-icons/fa';
+import Image from 'next/image';
+import { useRef, useState, type KeyboardEvent } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
+import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
 import { siteData } from '@/data/siteData';
-import Badge from '@/components/ui/Badge';
-import Button from '@/components/ui/Button';
-import Card from '@/components/ui/Card';
-import ScrollReveal from '@/components/animations/ScrollReveal';
-import { staggerContainer } from '@/utils/motionVariants';
+import type { Project } from '@/types';
+import { cn } from '@/utils/cn';
+
+type ProjectFilter = 'featured' | 'all';
+
+const FILTER_OPTIONS = [
+  {
+    value: 'featured',
+    label: 'Featured',
+    qa: 'project-filter-featured',
+  },
+  {
+    value: 'all',
+    label: 'All projects',
+    qa: 'project-filter-all',
+  },
+] as const;
+
+const FEATURED_PROJECTS = siteData.projects.filter(
+  (project) => project.featured
+);
+
+const getProjectsForFilter = (filter: ProjectFilter) =>
+  filter === 'featured' ? FEATURED_PROJECTS : siteData.projects;
+
+function ProjectMetadata({ project }: { project: Project }) {
+  const statusLabel =
+    project.status === 'in-progress'
+      ? 'In progress'
+      : project.status.charAt(0).toUpperCase() + project.status.slice(1);
+
+  return (
+    <div className="metadata flex flex-wrap items-center gap-x-3 gap-y-1 text-xs uppercase text-slate">
+      <span>{statusLabel}</span>
+      <span aria-hidden="true" className="text-trace">
+        /
+      </span>
+      <span>
+        {project.endDate
+          ? `${project.startDate} — ${project.endDate}`
+          : project.startDate}
+      </span>
+      {project.featured && (
+        <>
+          <span aria-hidden="true" className="text-trace">
+            /
+          </span>
+          <span className="font-semibold text-ink">Featured</span>
+        </>
+      )}
+    </div>
+  );
+}
+
+function ProjectActions({ project }: { project: Project }) {
+  if (!project.githubUrl && !project.liveUrl) return null;
+
+  const isAppStore = project.liveUrl?.includes('apps.apple.com');
+  const liveLabel = isAppStore ? 'App Store' : 'Live project';
+
+  return (
+    <div className="flex flex-wrap gap-x-6 gap-y-3 border-t border-trace pt-5">
+      {project.githubUrl && (
+        <a
+          href={project.githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`View ${project.title} source code on GitHub`}
+          className="inline-flex min-h-11 items-center gap-2 border-b border-ink text-sm font-semibold text-ink transition-colors duration-200 hover:border-signal"
+        >
+          <FaGithub aria-hidden="true" />
+          Source code
+        </a>
+      )}
+      {project.liveUrl && (
+        <a
+          href={project.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={
+            isAppStore
+              ? `Open ${project.title} on the App Store`
+              : `Open the live ${project.title} project`
+          }
+          className="inline-flex min-h-11 items-center gap-2 border-b border-ink text-sm font-semibold text-ink transition-colors duration-200 hover:border-signal"
+        >
+          <FaExternalLinkAlt aria-hidden="true" className="text-xs" />
+          {liveLabel}
+        </a>
+      )}
+    </div>
+  );
+}
+
+function ProjectBody({ project }: { project: Project }) {
+  return (
+    <div className="space-y-6">
+      <p className="max-w-3xl text-sm leading-7 text-slate">
+        {project.longDescription}
+      </p>
+
+      <div className="grid gap-6 sm:grid-cols-2">
+        <div>
+          <h4 className="metadata mb-3 text-xs uppercase text-ink">Highlights</h4>
+          <ul className="space-y-3">
+            {project.highlights.map((highlight) => (
+              <li
+                key={`${project.id}-${highlight}`}
+                className="flex items-start gap-3 text-sm leading-6 text-slate"
+              >
+                <span
+                  aria-hidden="true"
+                  className="mt-3 h-px w-3 shrink-0 bg-signal"
+                />
+                <span>{highlight}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="metadata mb-3 text-xs uppercase text-ink">
+            Technologies
+          </h4>
+          <ul className="flex flex-wrap gap-x-4 gap-y-3">
+            {project.technologies.map((technology) => (
+              <li
+                key={`${project.id}-${technology}`}
+                className="metadata border-l border-trace pl-3 text-xs text-slate"
+              >
+                {technology}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <ProjectActions project={project} />
+    </div>
+  );
+}
 
 export default function ProjectsSection() {
-  const [filter, setFilter] = useState<'featured' | 'all'>('featured');
+  const initialProjectId =
+    siteData.projects.find((project) => project.featured)?.id ??
+    siteData.projects[0]?.id ??
+    '';
+  const [filter, setFilter] = useState<ProjectFilter>('featured');
+  const [activeProjectId, setActiveProjectId] = useState(initialProjectId);
+  const projectButtonRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const shouldReduceMotion = useReducedMotion();
 
-  const statusIcons = {
-    completed: FaCheckCircle,
-    'in-progress': FaClock,
-    concept: FaStar,
+  const filteredProjects = getProjectsForFilter(filter);
+  const activeProject =
+    filteredProjects.find((project) => project.id === activeProjectId) ??
+    filteredProjects[0];
+
+  const handleFilterChange = (nextFilter: ProjectFilter) => {
+    const nextProjects = getProjectsForFilter(nextFilter);
+
+    setFilter(nextFilter);
+    setActiveProjectId((currentProjectId) =>
+      nextProjects.some((project) => project.id === currentProjectId)
+        ? currentProjectId
+        : nextProjects[0]?.id ?? ''
+    );
   };
 
-  const statusColors = {
-    completed: 'text-green-500',
-    'in-progress': 'text-yellow-500',
-    concept: 'text-blue-500',
-  };
+  const handleProjectKeyDown = (
+    event: KeyboardEvent<HTMLButtonElement>,
+    projectIndex: number
+  ) => {
+    let nextIndex: number | null = null;
 
-  const filteredProjects = siteData.projects.filter(project => {
-    if (filter === 'all') return true;
-    if (filter === 'featured') return project.featured;
-    return true;
-  });
+    if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+      nextIndex = (projectIndex + 1) % filteredProjects.length;
+    } else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
+      nextIndex =
+        (projectIndex - 1 + filteredProjects.length) % filteredProjects.length;
+    } else if (event.key === 'Home') {
+      nextIndex = 0;
+    } else if (event.key === 'End') {
+      nextIndex = filteredProjects.length - 1;
+    }
 
-  const projectVariants = {
-    hidden: { opacity: 0, y: 20, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.5,
-        ease: 'easeOut',
-      },
-    },
+    if (nextIndex === null) return;
+
+    event.preventDefault();
+    projectButtonRefs.current[nextIndex]?.focus();
   };
 
   return (
-    <section id="projects" className="section-padding bg-surface-light dark:bg-surface-dark">
-      <div className="container-custom">
-        <ScrollReveal>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-primary-light dark:text-text-primary-dark mb-4">
+    <section
+      id="projects"
+      data-studio-section="projects"
+      data-studio-component="project-showcase"
+      className="section-padding field-rule bg-canvas"
+    >
+      <div className="field-container">
+        <header className="grid gap-8 border-b border-trace pb-8 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-7">
+            <p className="metadata mb-3 text-xs uppercase text-slate">
+              Project catalog
+            </p>
+            <h2 className="text-5xl font-bold uppercase leading-none text-ink sm:text-6xl">
               Projects
             </h2>
-            <p className="text-lg sm:text-xl text-text-secondary-light dark:text-text-secondary-dark max-w-2xl mx-auto">
-              A showcase of my recent work and personal projects that demonstrate my skills and passion for development.
-            </p>
           </div>
-        </ScrollReveal>
 
-        {/* Filter Buttons */}
-        <ScrollReveal delay={0.2}>
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
-            {[
-              { key: 'featured', label: 'Featured' },
-              { key: 'all', label: 'All Projects' },
-            ].map((filterOption) => (
-              <Button
-                key={filterOption.key}
-                onClick={() => setFilter(filterOption.key as any)}
-                variant={filter === filterOption.key ? 'primary' : 'outline'}
-                size="sm"
-                className="transition-all duration-300"
-              >
-                {filterOption.label}
-              </Button>
-            ))}
-          </div>
-        </ScrollReveal>
-
-        {/* Projects Grid */}
-        <motion.div
-          layout
-          initial="hidden"
-          animate="visible"
-          variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {filteredProjects.map((project, index) => {
-            const StatusIcon = statusIcons[project.status];
-            
-            return (
-              <motion.div
-                key={project.id}
-                layout
-                variants={projectVariants}
-                whileHover={{ y: -10 }}
-                className="group relative"
-              >
-                <Card variant="elevated" className="h-full overflow-hidden">
-                  {/* Project Image */}
-                  <div className="relative h-48 bg-gradient-to-br from-primary-100 to-purple-100 dark:from-primary-900 dark:to-purple-900 overflow-hidden">
-                    {/* Project cover */}
-                    <img
-                      src={project.image}
-                      alt={`${project.title} project cover`}
-                      loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-
-                    {/* Featured Badge */}
-                    {project.featured && (
-                      <div className="absolute top-4 left-4">
-                        <Badge variant="default" size="sm" className="bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
-                          <FaStar className="mr-1" size={12} />
-                          Featured
-                        </Badge>
-                      </div>
-                    )}
-
-                    {/* Status Badge */}
-                    <div className="absolute top-4 right-4">
-                      <Badge 
-                        variant="outline" 
-                        size="sm"
-                        className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm"
-                      >
-                        <StatusIcon className={`mr-1 ${statusColors[project.status]}`} size={12} />
-                        {project.status.charAt(0).toUpperCase() + project.status.slice(1).replace('-', ' ')}
-                      </Badge>
-                    </div>
-
-                    {/* Hover Overlay */}
-                    <div
-                      className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-300"
-                    >
-                      <div className="flex space-x-4">
-                        {project.liveUrl && (
-                          <Button
-                            onClick={() => window.open(project.liveUrl, '_blank')}
-                            size="sm"
-                            className="bg-white text-black hover:bg-gray-100"
-                          >
-                            <FaExternalLinkAlt className="mr-2" size={14} />
-                            Live Demo
-                          </Button>
-                        )}
-                        {project.githubUrl && (
-                          <Button
-                            onClick={() => window.open(project.githubUrl, '_blank')}
-                            variant="outline"
-                            size="sm"
-                            className="bg-transparent border-white text-white hover:bg-white hover:text-black"
-                          >
-                            <FaGithub className="mr-2" size={14} />
-                            Code
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Project Content */}
-                  <div className="p-6">
-                    {/* Project Title and Description (title shown on the cover above) */}
-                    <div className="mb-4">
-                      <h3 className="sr-only">{project.title}</h3>
-                      {(project.githubUrl || project.liveUrl) && (
-                        <div className="flex items-center justify-end gap-3 mb-2">
-                          {project.githubUrl && (
-                            <a
-                              href={project.githubUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              aria-label={`View ${project.title} source code on GitHub`}
-                              className="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-                            >
-                              <FaGithub size={18} />
-                            </a>
-                          )}
-                          {project.liveUrl && (
-                            <a
-                              href={project.liveUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              aria-label={`Open live demo of ${project.title}`}
-                              className="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-                            >
-                              <FaExternalLinkAlt size={16} />
-                            </a>
-                          )}
-                        </div>
-                      )}
-                      <p className="text-text-secondary-light dark:text-text-secondary-dark text-sm leading-relaxed">
-                        {project.description}
-                      </p>
-                    </div>
-
-                    {/* Project Highlights */}
-                    <div className="mb-4">
-                      <h4 className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark mb-2">
-                        Key Features:
-                      </h4>
-                      <ul className="space-y-1">
-                        {project.highlights.slice(0, 2).map((highlight, hIndex) => (
-                          <li key={hIndex} className="flex items-start space-x-2 text-xs text-text-secondary-light dark:text-text-secondary-dark">
-                            <span className="w-1 h-1 bg-primary-500 rounded-full mt-1.5 flex-shrink-0" />
-                            <span>{highlight}</span>
-                          </li>
-                        ))}
-                        {project.highlights.length > 2 && (
-                          <li className="text-xs text-primary-600 dark:text-primary-400">
-                            +{project.highlights.length - 2} more features
-                          </li>
-                        )}
-                      </ul>
-                    </div>
-
-                    {/* Technologies */}
-                    <div className="mb-4">
-                      <h4 className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark mb-2">
-                        Technologies:
-                      </h4>
-                      <div className="flex flex-wrap gap-1">
-                        {project.technologies.slice(0, 4).map((tech, techIndex) => (
-                          <Badge key={techIndex} variant="secondary" size="sm" className="text-xs">
-                            {tech}
-                          </Badge>
-                        ))}
-                        {project.technologies.length > 4 && (
-                          <Badge variant="outline" size="sm" className="text-xs">
-                            +{project.technologies.length - 4}
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Project Timeline */}
-                    <div className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
-                      {project.startDate} {project.endDate && `- ${project.endDate}`}
-                    </div>
-                  </div>
-                </Card>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-
-        {/* Empty State */}
-        {filteredProjects.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center py-16"
-          >
-            <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-xl font-semibold text-text-primary-light dark:text-text-primary-dark mb-2">
-              No projects found
-            </h3>
-            <p className="text-text-secondary-light dark:text-text-secondary-dark">
-              Try adjusting your filter to see more projects.
+          <div className="space-y-5 lg:col-span-5">
+            <p className="text-sm leading-6 text-slate lg:max-w-md">
+              <span className="lg:hidden">
+                Each record includes complete project notes and available links.
+              </span>
+              <span className="hidden lg:inline">
+                Focus or select a record to update the project stage.
+              </span>
             </p>
-          </motion.div>
-        )}
 
-        {/* Call to Action */}
-        <ScrollReveal delay={0.6}>
-          <div className="text-center mt-16">
-            <h3 className="text-2xl font-bold text-text-primary-light dark:text-text-primary-dark mb-4">
-              Have a project in mind?
-            </h3>
-            <p className="text-lg text-text-secondary-light dark:text-text-secondary-dark mb-6 max-w-2xl mx-auto">
-              I'm always interested in new opportunities and exciting projects. Let's discuss how we can work together to bring your ideas to life.
-            </p>
-            <Button
-              onClick={() => {
-                const element = document.querySelector('#contact');
-                if (element) {
-                  const offset = 80;
-                  const elementPosition = element.getBoundingClientRect().top;
-                  const offsetPosition = elementPosition + window.pageYOffset - offset;
-                  window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-                }
-              }}
-              size="lg"
-              className="min-w-[200px]"
+            <div
+              role="group"
+              aria-label="Filter projects"
+              className="flex flex-wrap gap-x-6 border-t border-trace"
             >
-              Let's Talk
-            </Button>
+              {FILTER_OPTIONS.map((option) => {
+                const isSelected = filter === option.value;
+                const count = getProjectsForFilter(option.value).length;
+
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    data-qa={option.qa}
+                    aria-pressed={isSelected}
+                    aria-controls="project-catalog"
+                    onClick={() => handleFilterChange(option.value)}
+                    className={cn(
+                      'metadata border-t-2 px-0 py-3 text-xs uppercase transition-colors duration-200',
+                      isSelected
+                        ? '-mt-px border-signal text-ink'
+                        : '-mt-px border-transparent text-slate hover:border-trace hover:text-ink'
+                    )}
+                  >
+                    {option.label} ({String(count).padStart(2, '0')})
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        </ScrollReveal>
+        </header>
+
+        <div className="grid gap-10 pt-10 lg:grid-cols-12 lg:items-start lg:gap-12">
+          <ol
+            id="project-catalog"
+            data-studio-component="project-index"
+            aria-label={`${filter === 'featured' ? 'Featured' : 'All'} projects`}
+            className="border-b border-trace lg:col-span-5 lg:col-start-8 lg:row-start-1"
+          >
+            {filteredProjects.map((project, projectIndex) => {
+              const isActive = project.id === activeProject?.id;
+              const headingId = `project-heading-${project.id}`;
+
+              return (
+                <li key={project.id} className="border-t border-trace">
+                  <article
+                    aria-labelledby={headingId}
+                    className={cn(
+                      'py-8 transition-colors duration-200 lg:px-5 lg:py-6',
+                      isActive && 'lg:bg-signal/10'
+                    )}
+                  >
+                    <header className="relative">
+                      <div className="flex items-start gap-4">
+                        <span
+                          aria-hidden="true"
+                          className={cn(
+                            'metadata mt-1 w-7 shrink-0 text-xs',
+                            isActive ? 'text-ink' : 'text-slate'
+                          )}
+                        >
+                          {String(projectIndex + 1).padStart(2, '0')}
+                        </span>
+                        <div className="min-w-0 flex-1">
+                          <ProjectMetadata project={project} />
+                          <h3
+                            id={headingId}
+                            className="mt-3 text-3xl font-bold uppercase leading-none text-ink"
+                          >
+                            {project.title}
+                          </h3>
+                          <p className="mt-3 text-sm leading-6 text-slate">
+                            {project.description}
+                          </p>
+                        </div>
+                      </div>
+
+                      <button
+                        ref={(element) => {
+                          projectButtonRefs.current[projectIndex] = element;
+                        }}
+                        type="button"
+                        aria-label={`Show ${project.title} in the project stage`}
+                        aria-controls="project-stage-panel"
+                        aria-pressed={isActive}
+                        tabIndex={isActive ? 0 : -1}
+                        onClick={() => setActiveProjectId(project.id)}
+                        onFocus={() => setActiveProjectId(project.id)}
+                        onKeyDown={(event) =>
+                          handleProjectKeyDown(event, projectIndex)
+                        }
+                        className="absolute inset-0 z-10 hidden cursor-pointer lg:block"
+                      />
+                    </header>
+
+                    <div className={cn('mt-6', !isActive && 'lg:hidden')}>
+                      <div className="relative aspect-[16/9] overflow-hidden border border-trace bg-trace/30 lg:hidden">
+                        <Image
+                          src={project.image}
+                          alt={`${project.title} project cover`}
+                          fill
+                          sizes="(max-width: 1023px) calc(100vw - 2rem), 1px"
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className={cn('pt-6', isActive && 'lg:border-t lg:border-trace')}>
+                        <ProjectBody project={project} />
+                      </div>
+                    </div>
+                  </article>
+                </li>
+              );
+            })}
+          </ol>
+          {activeProject && (
+            <div
+              id="project-stage-panel"
+              role="region"
+              aria-labelledby={`project-heading-${activeProject.id}`}
+              className="sticky top-24 hidden self-start lg:col-span-7 lg:col-start-1 lg:row-start-1 lg:block"
+            >
+              <motion.figure
+                key={activeProject.id}
+                initial={shouldReduceMotion ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={
+                  shouldReduceMotion
+                    ? { duration: 0 }
+                    : { duration: 0.22, ease: [0.22, 1, 0.36, 1] }
+                }
+              >
+                <div className="relative aspect-[16/9] overflow-hidden border border-trace bg-trace/30">
+                  <Image
+                    src={activeProject.image}
+                    alt={`${activeProject.title} project cover`}
+                    fill
+                    sizes="(min-width: 1024px) 58vw, 1px"
+                    className="object-cover"
+                  />
+                </div>
+                <figcaption className="flex items-baseline justify-between gap-6 border-x border-b border-trace px-4 py-3">
+                  <span className="metadata text-xs uppercase text-slate">
+                    Active cover
+                  </span>
+                  <span className="font-display text-xl font-bold uppercase text-ink">
+                    {activeProject.title}
+                  </span>
+                </figcaption>
+              </motion.figure>
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
-} 
+}
