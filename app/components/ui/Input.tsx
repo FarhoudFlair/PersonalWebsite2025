@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, forwardRef } from 'react';
+import { InputHTMLAttributes, forwardRef, useId } from 'react';
 import { cn } from '@/utils/cn';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -8,35 +8,62 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, label, error, helperText, type = 'text', ...props }, ref) => {
+  (
+    {
+      className,
+      id,
+      label,
+      error,
+      helperText,
+      type = 'text',
+      'aria-describedby': ariaDescribedBy,
+      'aria-invalid': ariaInvalid,
+      ...props
+    },
+    ref
+  ) => {
+    const generatedId = useId();
+    const inputId = id ?? `input-${generatedId.replace(/:/g, '')}`;
+    const helperId = `${inputId}-helper`;
+    const errorId = `${inputId}-error`;
+    const describedBy = [
+      ariaDescribedBy,
+      helperText ? helperId : undefined,
+      error ? errorId : undefined,
+    ].filter(Boolean).join(' ') || undefined;
+
     return (
-      <div className="relative">
-        <input
-          type={type}
-          className={cn(
-            'peer w-full rounded-md border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2 text-sm placeholder-transparent focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:cursor-not-allowed disabled:opacity-50',
-            error && 'border-red-500 focus:border-red-500 focus:ring-red-500',
-            className
-          )}
-          placeholder={label || ''}
-          ref={ref}
-          {...props}
-        />
+      <div className="space-y-2">
         {label && (
           <label
-            className={cn(
-              'absolute left-3 -top-2.5 bg-white dark:bg-gray-900 px-1 text-xs font-medium text-gray-600 dark:text-gray-400 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-primary-500',
-              error && 'text-red-500 peer-focus:text-red-500'
-            )}
+            htmlFor={inputId}
+            className="block text-sm font-semibold text-ink"
           >
             {label}
           </label>
         )}
-        {error && (
-          <p className="mt-1 text-xs text-red-500">{error}</p>
+        <input
+          {...props}
+          id={inputId}
+          type={type}
+          className={cn(
+            'w-full border border-trace bg-canvas px-4 py-3 text-base text-ink transition-colors placeholder:text-slate hover:border-slate focus-visible:border-safety disabled:cursor-not-allowed disabled:opacity-50',
+            error && 'border-safety',
+            className
+          )}
+          aria-invalid={error ? true : ariaInvalid ?? false}
+          aria-describedby={describedBy}
+          ref={ref}
+        />
+        {helperText && (
+          <p id={helperId} className="text-sm leading-5 text-slate">
+            {helperText}
+          </p>
         )}
-        {helperText && !error && (
-          <p className="mt-1 text-xs text-gray-500">{helperText}</p>
+        {error && (
+          <p id={errorId} className="text-sm leading-5 text-safety">
+            {error}
+          </p>
         )}
       </div>
     );
