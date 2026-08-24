@@ -95,7 +95,7 @@
   }
 
   .section-padding {
-    padding-block: clamp(4.5rem, 9vw, 8rem);
+    padding-block: clamp(6rem, 10vw, 10rem);
   }
 
   .field-rule {
@@ -106,6 +106,12 @@
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 39.999rem) {
+    body:has(#mobile-navigation-drawer) [data-qa='signal-controls-toggle'] {
+      visibility: hidden;
+    }
   }
 }
 

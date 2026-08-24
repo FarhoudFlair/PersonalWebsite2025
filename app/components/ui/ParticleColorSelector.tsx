@@ -81,7 +81,7 @@ function ParticleColorSelector({
   }, [isOpen]);
 
   return (
-    <div ref={controlsRef} className="fixed right-4 top-20 z-40 flex flex-col items-end sm:bottom-4 sm:top-auto">
+    <div ref={controlsRef} className="fixed right-4 top-20 z-20 flex flex-col items-end sm:z-40">
       <button
         ref={triggerRef}
         type="button"
@@ -115,7 +115,7 @@ function ParticleColorSelector({
             animate="open"
             exit="closed"
             transition={prefersReducedMotion ? reducedMotionPanelTransition : panelTransition}
-            className="absolute right-0 top-full mt-2 w-80 max-w-[calc(100vw-2rem)] border border-trace bg-canvas text-ink will-change-transform sm:bottom-full sm:top-auto sm:mb-2 sm:mt-0"
+            className="absolute right-0 top-full mt-2 w-80 max-w-[calc(100vw-2rem)] border border-trace bg-canvas text-ink will-change-transform sm:bottom-auto sm:top-full sm:mb-0 sm:mt-2"
           >
             <div className="flex items-end justify-between gap-4 border-b border-trace px-4 py-3">
               <div>

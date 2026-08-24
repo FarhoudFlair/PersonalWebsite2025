@@ -3,8 +3,8 @@
   "directions": [
     {
       "id": "field-map",
-      "thesis": "An asymmetric 12-column identity pairs Farhoud's name and credentials with a semantic evidence spine that makes real work and shipped projects readable in the first viewport without turning into a decorative system diagram.",
-      "hero_layout": "Asymmetric 12-column split hero: left rail carries name, title, tagline, bio, current Collins role, location, and contact/resume actions, while a right-side semantic evidence spine labels only repository-supported domains of current work and shipped projects; compact horizontal index navigation sits above the field.",
+      "thesis": "The final hybrid restores an original identity-first hero and navigation, then places four compact detailed project cards and a complete visible archive in a direct document flow. It preserves the current Bolder Experience and Skills sections and uses factual evidence without giant case studies or interaction gates.",
+      "hero_layout": "Original identity-first hero: Farhoud Talebi, Software Engineer, existing tagline, Contact and Résumé actions, and subtle particle field; simple original-inspired navigation leads into the document flow with no project preview or current-evidence column.",
       "section_order": [
         "home",
         "projects",
@@ -13,8 +13,8 @@
         "contact"
       ],
       "typography_personality": "Condensed technical display headings with a calm sans body and utility monospace reserved for dates and technology metadata.",
-      "image_strategy": "One large active project image stage on desktop beside indexed project rows; existing project covers only, no portrait.",
-      "interaction_model": "Compact horizontal index navigation with focus/click project switching and a consolidated signal-field control; essential evidence remains readable without operating the map.",
+      "image_strategy": "Four featured assets use real DeenPath App Store screenshots at /images/projects/featured/deenpath-store.webp, a factual StockScanner editorial cover at /images/projects/featured/stockscanner-cover.webp, a factual Remote Admin Toolkit editorial cover at /images/projects/featured/rat-cover.webp, and the real Imposter Hunt icon at /images/projects/imposter-hunt.webp; the remaining 13 projects use existing factual covers in a visible compact alphabetical archive with Rental Cash Dam immediately before Rental Property Calculator.",
+      "interaction_model": "Direct document-flow interaction: all four featured cards, archive entries, evidence, and actions remain visible without project filters, selectors, giant/full-width case studies, or interaction-gated evidence; consolidated signal controls remain available.",
       "scores": {
         "brief_fit": 5,
         "distinctiveness": 5,
@@ -66,10 +66,10 @@
     }
   ],
   "selection": {
-    "mode": "autonomous",
-    "autonomous_selection_authorized": true,
-    "authority_evidence": "The approved execution plan explicitly authorizes autonomous direction selection for this disposable isolated experiment.",
+    "mode": "user",
+    "autonomous_selection_authorized": false,
+    "authority_evidence": "",
     "selected_direction_id": "field-map",
-    "rationale": "Field-map makes real work visible immediately with strong audience identification, truthful use of current assets, scanability, and keyboard/mobile accessibility, without release-ledger résumé density or project-cinema image and scroll dependence."
+    "rationale": "The user explicitly selected the final hybrid: restore the original identity-first hero and navigation; show four compact detailed cards followed by the visible 13-item archive; preserve the current Bolder Experience and Skills sections; use factual DeenPath screenshots, StockScanner/RAT editorial covers, and the real Imposter Hunt icon in a direct document flow."
   }
 }

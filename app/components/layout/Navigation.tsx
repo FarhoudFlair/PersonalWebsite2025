@@ -14,37 +14,8 @@ import { siteData } from '@/data/siteData';
 import { useTheme } from '@/hooks/useTheme';
 import { cn } from '@/utils/cn';
 
-const FIELD_INDEX_ORDER = [
-  '#home',
-  '#projects',
-  '#experience',
-  '#skills',
-  '#contact',
-] as const;
-
-const DESKTOP_MEDIA_QUERY = '(min-width: 1024px)';
 const NAVIGATION_OFFSET = 80;
-
-const fieldIndexItems = FIELD_INDEX_ORDER.reduce<typeof siteData.navigation>(
-  (items, href) => {
-    const item = siteData.navigation.find(
-      (navigationItem) => navigationItem.href === href
-    );
-
-    if (item) {
-      items.push(item);
-    }
-
-    return items;
-  },
-  []
-);
-
-const monogram = siteData.personal.name
-  .split(/\s+/)
-  .map((namePart) => namePart.charAt(0))
-  .join('');
-
+const DESKTOP_MEDIA_QUERY = '(min-width: 1024px)';
 const getSocialIcon = (platform: string) => {
   if (platform === 'github') {
     return FaGithub;
@@ -72,11 +43,14 @@ const scrollToSection = (href: string) => {
 
   window.scrollTo({
     top: offsetPosition,
-    behavior: 'smooth',
+    behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      ? 'auto'
+      : 'smooth',
   });
 };
 
 export default function Navigation() {
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
   const mobileMenuCloseButtonRef = useRef<HTMLButtonElement>(null);
@@ -91,6 +65,17 @@ export default function Navigation() {
         mobileMenuButtonRef.current?.focus();
       });
     }
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 12);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
@@ -184,58 +169,49 @@ export default function Navigation() {
   return (
     <nav
       aria-label="Primary navigation"
-      className="fixed inset-x-0 top-0 z-50 border-b border-trace bg-canvas text-ink"
+      className={cn(
+        'fixed inset-x-0 top-0 z-50 border-b transition-colors duration-200',
+        isScrolled || isMobileMenuOpen
+          ? 'border-trace bg-canvas'
+          : 'border-transparent bg-canvas/95'
+      )}
       data-studio-component="site-navigation"
     >
-      <div className="field-container">
+      <div className="container-custom">
         <div className="flex h-16 min-w-0 items-center gap-3">
           <a
             aria-label={`${siteData.personal.name}, home`}
-            className="group flex h-9 shrink-0 items-center gap-2 text-ink"
+            className="shrink-0 text-lg font-semibold tracking-tight text-ink transition-colors hover:text-signal sm:text-xl"
             href="#home"
             onClick={(event) => {
               event.preventDefault();
               handleNavClick('#home');
             }}
           >
-            <span
-              aria-hidden="true"
-              className="metadata inline-flex h-9 w-9 items-center justify-center border border-ink bg-ink text-xs font-semibold text-canvas group-hover:border-signal group-hover:bg-signal"
-            >
-              {monogram}
-            </span>
-            <span className="hidden text-sm font-semibold sm:inline">
-              {siteData.personal.name}
-            </span>
+            {siteData.personal.name}
           </a>
 
-          <ol className="hidden min-w-0 flex-1 items-center justify-center lg:flex">
-            {fieldIndexItems.map((item, index) => (
-              <li
-                className="border-l border-trace first:border-l-0"
-                key={item.href}
-              >
+          <ul className="hidden min-w-0 flex-1 items-center justify-center gap-5 lg:flex xl:gap-7">
+            {siteData.navigation.map((item) => (
+              <li key={item.href}>
                 <a
-                  className="group flex h-9 items-center gap-2 px-2 text-xs font-semibold uppercase tracking-wide text-ink hover:text-signal xl:px-3"
+                  className="text-sm font-medium text-slate transition-colors hover:text-signal"
                   href={item.href}
                   onClick={(event) => {
                     event.preventDefault();
                     handleNavClick(item.href);
                   }}
                 >
-                  <span className="metadata text-slate group-hover:text-signal">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  <span>{item.label}</span>
+                  {item.label}
                 </a>
               </li>
             ))}
-          </ol>
+          </ul>
 
-          <div className="ml-auto flex shrink-0 items-center gap-1">
+          <div className="ml-auto flex shrink-0 items-center gap-1 sm:gap-2">
             <div
               aria-label="Social links"
-              className="flex items-center gap-1"
+              className="hidden items-center gap-1 lg:flex"
               data-studio-component="social-links"
               role="group"
             >
@@ -247,7 +223,7 @@ export default function Navigation() {
 
                 return (
                   <a
-                    className="inline-flex h-9 w-9 items-center justify-center border border-transparent text-slate hover:border-trace hover:text-signal"
+                    className="inline-flex h-9 w-9 items-center justify-center text-slate transition-colors hover:text-signal"
                     href={social.url}
                     key={social.id}
                     rel="noopener noreferrer"
@@ -261,15 +237,15 @@ export default function Navigation() {
             </div>
 
             <a
-              aria-label={`Open ${siteData.personal.name}'s resume in a new tab`}
-              className="inline-flex h-9 items-center gap-1 border border-trace px-2 text-xs font-semibold uppercase tracking-wide text-ink hover:border-signal hover:text-signal"
+              aria-label={`Open ${siteData.personal.name}'s résumé in a new tab`}
+              className="hidden h-9 items-center gap-2 border border-trace px-3 text-sm font-medium text-ink transition-colors hover:border-signal hover:text-signal lg:inline-flex"
               data-studio-component="resume-link"
               href={siteData.personal.resume}
               rel="noopener noreferrer"
               target="_blank"
             >
               <FaDownload aria-hidden="true" className="h-3 w-3 shrink-0" />
-              <span>Resume</span>
+              <span>Résumé</span>
             </a>
 
             <button
@@ -277,7 +253,7 @@ export default function Navigation() {
                 theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'
               }
               className={cn(
-                'inline-flex h-9 w-9 items-center justify-center border border-transparent text-slate hover:border-trace hover:text-signal disabled:pointer-events-none',
+                'inline-flex h-9 w-9 items-center justify-center text-slate transition-colors hover:text-signal disabled:pointer-events-none',
                 !mounted && 'invisible'
               )}
               data-qa="theme-toggle"
@@ -296,8 +272,8 @@ export default function Navigation() {
             <button
               aria-controls="mobile-navigation-drawer"
               aria-expanded={isMobileMenuOpen}
-              aria-label={isMobileMenuOpen ? 'Close field index' : 'Open field index'}
-              className="inline-flex h-9 w-9 items-center justify-center border border-trace text-ink hover:border-signal hover:text-signal lg:hidden"
+              aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              className="inline-flex h-9 w-9 items-center justify-center text-ink transition-colors hover:text-signal lg:hidden"
               data-qa="mobile-menu-toggle"
               onClick={() => {
                 if (isMobileMenuOpen) {
@@ -321,10 +297,7 @@ export default function Navigation() {
 
       {isMobileMenuOpen && (
         <div className="fixed inset-x-0 bottom-0 top-16 lg:hidden">
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 bg-canvas/80"
-          />
+          <div aria-hidden="true" className="absolute inset-0 bg-ink/20" />
           <div
             aria-labelledby="mobile-navigation-title"
             aria-modal="true"
@@ -334,15 +307,12 @@ export default function Navigation() {
             role="dialog"
           >
             <div className="flex items-center justify-between border-b border-trace px-4 py-4">
-              <p
-                className="metadata text-xs font-semibold uppercase tracking-widest text-slate"
-                id="mobile-navigation-title"
-              >
-                Field index
+              <p className="text-lg font-semibold" id="mobile-navigation-title">
+                Navigation
               </p>
               <button
-                aria-label="Close field index"
-                className="inline-flex h-9 w-9 items-center justify-center border border-trace text-ink hover:border-signal hover:text-signal"
+                aria-label="Close navigation menu"
+                className="inline-flex h-9 w-9 items-center justify-center text-ink transition-colors hover:text-signal"
                 onClick={() => closeMobileMenu()}
                 ref={mobileMenuCloseButtonRef}
                 type="button"
@@ -351,30 +321,63 @@ export default function Navigation() {
               </button>
             </div>
 
-            <ol>
-              {fieldIndexItems.map((item, index) => (
-                <li className="border-b border-trace" key={item.href}>
+            <ul className="px-4 py-4">
+              {siteData.navigation.map((item) => (
+                <li key={item.href}>
                   <a
-                    className="group flex items-center gap-3 px-4 py-5 text-ink hover:bg-trace/30 hover:text-signal"
+                    className="block border-b border-trace px-3 py-4 text-lg font-medium text-ink transition-colors hover:border-signal hover:text-signal"
                     href={item.href}
                     onClick={(event) => {
                       event.preventDefault();
                       handleNavClick(item.href);
                     }}
                   >
-                    <span className="metadata w-8 shrink-0 text-xs text-slate group-hover:text-signal">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                    <span className="min-w-0 flex-1 font-display text-2xl font-semibold uppercase">
-                      {item.label}
-                    </span>
-                    <span aria-hidden="true" className="text-slate group-hover:text-signal">
-                      →
-                    </span>
+                    {item.label}
                   </a>
                 </li>
               ))}
-            </ol>
+            </ul>
+
+            <div className="mt-auto border-t border-trace px-4 py-4">
+              <div
+                aria-label="Social links"
+                className="flex items-center gap-1"
+                data-studio-component="social-links"
+                role="group"
+              >
+                {siteData.social.map((social) => {
+                  const Icon = getSocialIcon(social.platform);
+                  if (!Icon) {
+                    return null;
+                  }
+
+                  return (
+                    <a
+                      className="inline-flex h-9 w-9 items-center justify-center text-slate transition-colors hover:text-signal"
+                      href={social.url}
+                      key={social.id}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      <Icon aria-hidden="true" className="h-4 w-4" />
+                      <span className="sr-only">{social.label}</span>
+                    </a>
+                  );
+                })}
+              </div>
+
+              <a
+                aria-label={`Open ${siteData.personal.name}'s résumé in a new tab`}
+                className="mt-4 inline-flex h-9 items-center gap-2 border border-trace px-3 text-sm font-medium text-ink transition-colors hover:border-signal hover:text-signal"
+                data-studio-component="resume-link"
+                href={siteData.personal.resume}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <FaDownload aria-hidden="true" className="h-3 w-3 shrink-0" />
+                <span>Résumé</span>
+              </a>
+            </div>
           </div>
         </div>
       )}

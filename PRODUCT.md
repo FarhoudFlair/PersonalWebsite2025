@@ -54,28 +54,39 @@ Every role carries achievements and technologies in `siteData`; all must be pres
 
 No proficiency levels are recorded in the data.
 
-## Projects — 16 (verified)
+## Projects — 17 (verified)
 
 | Title | Status | Dates | GitHub | Live/App Store |
 |---|---|---|---|---|
 | DeenPath | completed | 2026-02 to Present | — | App Store (id6749211036) |
 | StockScanner | completed | 2023-10 to 2023-11 | yes | — |
-| MazeSolver | completed | 2020-04 to 2020-05 | yes | — |
-| Rental Property Calculator | completed | 2025-03 | yes | — |
-| Mortgage Scenario Comparisons | completed | 2025-03 | yes | — |
-| Animal Adoption Center | completed | 2020-04 to 2020-05 | yes | — |
-| FlickrViewer | completed | 2020-05 | yes | — |
-| PersonalWebsite2025 | completed | 2025-06 | yes | — |
 | Remote Admin Toolkit (RAT) | completed | 2025-05 | yes | — |
-| Purchase Calculator | completed | 2025-04 | yes | — |
-| Rental Cash Dam | completed | 2025-04 | yes | — |
-| ChatServer | completed | 2020-05 | yes | — |
-| SwiftProjectileCalculationApp | completed | 2020-01 | yes | — |
+| Imposter Hunt | — | — | yes | — |
+| Animal Adoption Center | completed | 2020-04 to 2020-05 | yes | — |
 | AndroidQuizApp | completed | 2020-01 | yes | — |
-| Recipe Adventure | completed | 2018-10 | yes | — |
+| ChatServer | completed | 2020-05 | yes | — |
+| FlickrViewer | completed | 2020-05 | yes | — |
+| MazeSolver | completed | 2020-04 to 2020-05 | yes | — |
 | Mechanic Shop | completed | 2018-10 | yes | — |
+| Mortgage Scenario Comparisons | completed | 2025-03 | yes | — |
+| PersonalWebsite2025 | completed | 2025-06 | yes | — |
+| Purchase Calculator | completed | 2025-04 | yes | — |
+| Recipe Adventure | completed | 2018-10 | yes | — |
+| Rental Cash Dam | completed | 2025-04 | yes | — |
+| Rental Property Calculator | completed | 2025-03 | yes | — |
+| SwiftProjectileCalculationApp | completed | 2020-01 | yes | — |
 
-Six projects are marked `featured`: DeenPath, StockScanner, Rental Property Calculator, Animal Adoption Center, Remote Admin Toolkit, and Rental Cash Dam. Every project carries a description, long description, technologies, and highlights in `siteData`; all must be preserved.
+Every project carries a description, long description, technologies, and highlights in `siteData`; all must be preserved.
+
+## Approved presentation refinement
+
+- **Original hero:** Restore the identity-first hero with Farhoud Talebi, Software Engineer, the existing tagline, Contact and Résumé actions, and a subtle particle field. There is no project preview or current-evidence column in the hero.
+- **Preserved sections:** Keep the current Bolder Experience and Skills sections unchanged, including their factual records, hierarchy, and behavior.
+- **Featured order and layout:** Show exactly four compact detailed cards in this order: DeenPath, StockScanner, Remote Admin Toolkit, Imposter Hunt. Use a 2x2 grid at 1440x1100 and a single-column flow at 390x844.
+- **Visible archive:** Show exactly 13 remaining projects as a compact static alphabetical archive in this order: Animal Adoption Center, AndroidQuizApp, ChatServer, FlickrViewer, MazeSolver, Mechanic Shop, Mortgage Scenario Comparisons, PersonalWebsite2025, Purchase Calculator, Recipe Adventure, Rental Cash Dam, Rental Property Calculator, SwiftProjectileCalculationApp. Rental Cash Dam remains immediately before Rental Property Calculator.
+- **Image strategy:** Use real DeenPath App Store screenshots at `/images/projects/featured/deenpath-store.webp`, factual editorial covers for StockScanner and Remote Admin Toolkit at `/images/projects/featured/stockscanner-cover.webp` and `/images/projects/featured/rat-cover.webp`, and the real Imposter Hunt icon at `/images/projects/imposter-hunt.webp`. Archive entries retain the existing factual project covers.
+- **Interaction boundaries:** No project filters, selectors, giant/full-width case studies, or interaction-gated evidence. Featured and archive evidence, links, and actions remain visible.
+- **QA markers:** `project-published-product` identifies DeenPath, `project-selected-work` wraps the four-card grid, and `project-archive` identifies the 13-item archive. Existing contact/footer behavior, navigation, theme, signal controls, reduced motion, and privacy/support routes remain required.
 
 ## Links and social (verified)
 
@@ -88,7 +99,7 @@ Six projects are marked `featured`: DeenPath, StockScanner, Rental Property Calc
 ## Assets (verified on the filesystem)
 
 - Portrait: none valid — `public/images/avatar.jpg` does not exist.
-- Project covers: 16 cover images exist under `public/images/projects/` (one per project).
+- Project covers: 17 cover images exist under `public/images/projects/` (one per project).
 - Open Graph image: `public/images/og-image.jpg` exists.
 
 ## Accessibility and local-only constraints

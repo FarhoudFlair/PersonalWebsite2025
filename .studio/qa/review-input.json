@@ -1,13 +1,11 @@
 {
-  "version": 2,
-  "reviewer": "IndependentVisualReviewer (designer agent)",
+  "reviewer": "TerraRefinementVisual (Terra)",
   "verdict": "pass",
-  "model_family": "openai-codex/gpt-5.6-sol",
-  "implementation_model_family": "openai-codex/gpt-5.6-sol",
-  "fallback_reason": "No different model family was available in the mounted reviewer roster.",
+  "model_family": "Terra",
+  "implementation_model_family": "Luna Max",
   "screenshot_paths": [
-    "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/home-desktop.png",
-    "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-redesign-test/.studio/qa/home-mobile.png"
+    "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-bolder/.studio/qa/home-desktop.png",
+    "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-bolder/.studio/qa/home-mobile.png"
   ],
   "findings": []
 }

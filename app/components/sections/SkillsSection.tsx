@@ -103,8 +103,8 @@ export default function SkillsSection() {
     >
       <div className="field-container">
         <ScrollReveal direction="left" duration={0.4}>
-          <header className="mb-10 grid md:grid-cols-12">
-            <h2 className="font-display text-4xl font-bold leading-none text-ink sm:text-5xl md:col-span-5 md:text-6xl">
+          <header className="mb-14 grid md:grid-cols-12 lg:mb-20">
+            <h2 className="font-display text-6xl font-bold uppercase leading-none text-ink sm:text-7xl md:col-span-6 lg:text-8xl">
               Skills
             </h2>
           </header>
@@ -117,13 +117,13 @@ export default function SkillsSection() {
             return (
               <li
                 key={group.category}
-                className="grid gap-6 border-b border-trace py-8 md:grid-cols-12 lg:gap-8"
+                className="grid gap-8 border-b border-trace py-10 md:grid-cols-12 lg:gap-8 lg:py-14"
               >
-                <h3 className="font-display text-2xl font-semibold leading-tight text-ink md:col-span-3">
+                <h3 className="font-display text-4xl font-semibold uppercase leading-none text-ink sm:text-5xl md:col-span-4 lg:text-6xl">
                   {group.label}
                 </h3>
 
-                <ul className="grid sm:grid-cols-2 md:col-span-9 lg:grid-cols-3">
+                <ul className="grid sm:grid-cols-2 md:col-span-8 lg:grid-cols-3">
                   {skills.map((skill) => {
                     const IconComponent =
                       iconMap[skill.icon as keyof typeof iconMap] ?? FaCode;
@@ -132,7 +132,7 @@ export default function SkillsSection() {
                     return (
                       <li
                         key={skill.id}
-                        className="flex items-center gap-3 border-t border-trace py-3"
+                        className="flex items-center gap-3 border-t border-trace py-4"
                       >
                         <span
                           className="flex w-8 shrink-0 items-center border-r border-trace pr-3"

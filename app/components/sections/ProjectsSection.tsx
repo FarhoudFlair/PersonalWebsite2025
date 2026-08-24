@@ -1,82 +1,117 @@
-'use client';
-
 import Image from 'next/image';
-import { useRef, useState, type KeyboardEvent } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
 import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
 import { siteData } from '@/data/siteData';
 import type { Project } from '@/types';
-import { cn } from '@/utils/cn';
 
-type ProjectFilter = 'featured' | 'all';
-
-const FILTER_OPTIONS = [
+const FEATURED_PROJECTS = [
   {
-    value: 'featured',
-    label: 'Featured',
-    qa: 'project-filter-featured',
+    id: 'deenpath',
+    category: 'Published iOS product',
+    image: '/images/projects/featured/deenpath-store.webp',
+    alt: 'DeenPath iOS app store cover',
+    containImage: false,
   },
   {
-    value: 'all',
-    label: 'All projects',
-    qa: 'project-filter-all',
+    id: 'stockscanner',
+    category: 'Market analysis',
+    image: '/images/projects/featured/stockscanner-cover.webp',
+    alt: 'StockScanner project cover',
+    containImage: false,
+  },
+  {
+    id: 'rat',
+    category: 'Systems tooling',
+    image: '/images/projects/featured/rat-cover.webp',
+    alt: 'Remote Admin Toolkit project cover',
+    containImage: false,
+  },
+  {
+    id: 'imposter-hunt',
+    category: 'iOS party game',
+    image: '/images/projects/imposter-hunt.webp',
+    alt: 'Imposter Hunt app icon',
+    containImage: true,
   },
 ] as const;
 
-const FEATURED_PROJECTS = siteData.projects.filter(
-  (project) => project.featured
+const projectsById = siteData.projects.reduce<Record<string, Project>>(
+  (projects, project) => {
+    projects[project.id] = project;
+    return projects;
+  },
+  {}
 );
 
-const getProjectsForFilter = (filter: ProjectFilter) =>
-  filter === 'featured' ? FEATURED_PROJECTS : siteData.projects;
+const featuredProjects = FEATURED_PROJECTS.map((featuredProject) => ({
+  ...featuredProject,
+  project: projectsById[featuredProject.id],
+}));
+
+const FEATURED_PROJECT_IDS: Record<string, true> = {
+  deenpath: true,
+  stockscanner: true,
+  rat: true,
+  'imposter-hunt': true,
+};
+const archiveProjects = siteData.projects
+  .filter((project) => !FEATURED_PROJECT_IDS[project.id])
+  .sort((firstProject, secondProject) =>
+    firstProject.title.localeCompare(secondProject.title)
+  );
+
+const STATUS_LABELS: Record<NonNullable<Project['status']>, string> = {
+  completed: 'Completed',
+  'in-progress': 'In progress',
+  concept: 'Concept',
+};
 
 function ProjectMetadata({ project }: { project: Project }) {
-  const statusLabel =
-    project.status === 'in-progress'
-      ? 'In progress'
-      : project.status.charAt(0).toUpperCase() + project.status.slice(1);
+  const metadata = [
+    project.status ? STATUS_LABELS[project.status] : null,
+    project.startDate
+      ? project.endDate
+        ? `${project.startDate} — ${project.endDate}`
+        : project.startDate
+      : null,
+  ].filter((value): value is string => Boolean(value));
+
+  if (!metadata.length) {
+    return null;
+  }
 
   return (
-    <div className="metadata flex flex-wrap items-center gap-x-3 gap-y-1 text-xs uppercase text-slate">
-      <span>{statusLabel}</span>
-      <span aria-hidden="true" className="text-trace">
-        /
-      </span>
-      <span>
-        {project.endDate
-          ? `${project.startDate} — ${project.endDate}`
-          : project.startDate}
-      </span>
-      {project.featured && (
-        <>
-          <span aria-hidden="true" className="text-trace">
-            /
-          </span>
-          <span className="font-semibold text-ink">Featured</span>
-        </>
-      )}
-    </div>
+    <p className="metadata flex flex-wrap items-center gap-x-3 gap-y-1 text-xs uppercase text-slate">
+      {metadata.map((value, index) => (
+        <span key={`${project.id}-${value}`}>
+          {index > 0 && <span aria-hidden="true">/ </span>}
+          {value}
+        </span>
+      ))}
+    </p>
   );
 }
 
 function ProjectActions({ project }: { project: Project }) {
-  if (!project.githubUrl && !project.liveUrl) return null;
+  if (!project.githubUrl && !project.liveUrl) {
+    return null;
+  }
 
   const isAppStore = project.liveUrl?.includes('apps.apple.com');
-  const liveLabel = isAppStore ? 'App Store' : 'Live project';
+  const actionClassName =
+    'inline-flex min-h-10 items-center gap-2 border border-trace px-3 py-2 text-xs font-semibold text-ink outline-safety transition-colors duration-200 hover:border-signal hover:bg-signal hover:text-canvas dark:hover:text-ink';
 
   return (
-    <div className="flex flex-wrap gap-x-6 gap-y-3 border-t border-trace pt-5">
+    <div className="flex flex-wrap gap-2">
       {project.githubUrl && (
         <a
           href={project.githubUrl}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`View ${project.title} source code on GitHub`}
-          className="inline-flex min-h-11 items-center gap-2 border-b border-ink text-sm font-semibold text-ink transition-colors duration-200 hover:border-signal"
+          aria-label={`View the ${project.title} repository on GitHub (opens in a new tab)`}
+          className={actionClassName}
         >
-          <FaGithub aria-hidden="true" />
-          Source code
+          <FaGithub aria-hidden="true" className="h-3.5 w-3.5" />
+          <span>Repository</span>
         </a>
       )}
       {project.liveUrl && (
@@ -86,116 +121,106 @@ function ProjectActions({ project }: { project: Project }) {
           rel="noopener noreferrer"
           aria-label={
             isAppStore
-              ? `Open ${project.title} on the App Store`
-              : `Open the live ${project.title} project`
+              ? `View ${project.title} on the App Store (opens in a new tab)`
+              : `Open ${project.title} (opens in a new tab)`
           }
-          className="inline-flex min-h-11 items-center gap-2 border-b border-ink text-sm font-semibold text-ink transition-colors duration-200 hover:border-signal"
+          className={actionClassName}
         >
-          <FaExternalLinkAlt aria-hidden="true" className="text-xs" />
-          {liveLabel}
+          <FaExternalLinkAlt aria-hidden="true" className="h-3 w-3" />
+          <span>{isAppStore ? 'View on the App Store' : 'Open project'}</span>
         </a>
       )}
     </div>
   );
 }
 
-function ProjectBody({ project }: { project: Project }) {
+function ProjectImage({
+  src,
+  alt,
+  sizes,
+  contain = false,
+}: {
+  src: string;
+  alt: string;
+  sizes: string;
+  contain?: boolean;
+}) {
   return (
-    <div className="space-y-6">
-      <p className="max-w-3xl text-sm leading-7 text-slate">
-        {project.longDescription}
-      </p>
+    <div className="relative min-h-52 overflow-hidden bg-ink/5 sm:min-h-56">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes={sizes}
+        className={contain ? 'object-contain p-8' : 'object-cover'}
+      />
+    </div>
+  );
+}
 
-      <div className="grid gap-6 sm:grid-cols-2">
-        <div>
-          <h4 className="metadata mb-3 text-xs uppercase text-ink">Highlights</h4>
-          <ul className="space-y-3">
-            {project.highlights.map((highlight) => (
-              <li
-                key={`${project.id}-${highlight}`}
-                className="flex items-start gap-3 text-sm leading-6 text-slate"
-              >
-                <span
-                  aria-hidden="true"
-                  className="mt-3 h-px w-3 shrink-0 bg-signal"
-                />
-                <span>{highlight}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+function FeaturedProjectCard({
+  featuredProject,
+}: {
+  featuredProject: (typeof featuredProjects)[number];
+}) {
+  const { project, category, image, alt, containImage } = featuredProject;
+  const headingId = `project-heading-${project.id}`;
 
-        <div>
-          <h4 className="metadata mb-3 text-xs uppercase text-ink">
-            Technologies
+  return (
+    <article
+      aria-labelledby={headingId}
+      data-qa={project.id === 'deenpath' ? 'project-published-product' : undefined}
+      className="h-full border border-trace bg-canvas transition-colors duration-200 hover:border-signal"
+    >
+      <div className="grid h-full grid-cols-1 sm:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+        <figure>
+          <ProjectImage
+            src={image}
+            alt={alt}
+            contain={containImage}
+            sizes="(min-width: 1024px) 20vw, (min-width: 640px) 34vw, calc(100vw - 2rem)"
+          />
+        </figure>
+
+        <div className="flex min-w-0 flex-col p-4 sm:p-5">
+          <p className="metadata text-xs font-semibold uppercase tracking-widest text-signal">
+            {category}
+          </p>
+          <h4
+            id={headingId}
+            className="mt-2 break-words font-display text-2xl font-bold leading-none text-ink sm:text-3xl"
+          >
+            {project.title}
           </h4>
-          <ul className="flex flex-wrap gap-x-4 gap-y-3">
+          <ProjectMetadata project={project} />
+          <p className="mt-4 break-words text-sm leading-6 text-slate [overflow-wrap:anywhere]">
+            {project.description}
+          </p>
+
+          <ul
+            aria-label={`${project.title} technologies`}
+            className="metadata mt-4 min-w-0 flex flex-wrap gap-x-3 gap-y-2 border-t border-trace pt-3 text-xs leading-5 text-slate"
+          >
             {project.technologies.map((technology) => (
               <li
                 key={`${project.id}-${technology}`}
-                className="metadata border-l border-trace pl-3 text-xs text-slate"
+                className="min-w-0 break-words border-l border-trace pl-2 [overflow-wrap:anywhere]"
               >
                 {technology}
               </li>
             ))}
           </ul>
+
+          <div className="mt-auto pt-5">
+            <ProjectActions project={project} />
+          </div>
         </div>
       </div>
-
-      <ProjectActions project={project} />
-    </div>
+    </article>
   );
 }
 
 export default function ProjectsSection() {
-  const initialProjectId =
-    siteData.projects.find((project) => project.featured)?.id ??
-    siteData.projects[0]?.id ??
-    '';
-  const [filter, setFilter] = useState<ProjectFilter>('featured');
-  const [activeProjectId, setActiveProjectId] = useState(initialProjectId);
-  const projectButtonRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const shouldReduceMotion = useReducedMotion();
-
-  const filteredProjects = getProjectsForFilter(filter);
-  const activeProject =
-    filteredProjects.find((project) => project.id === activeProjectId) ??
-    filteredProjects[0];
-
-  const handleFilterChange = (nextFilter: ProjectFilter) => {
-    const nextProjects = getProjectsForFilter(nextFilter);
-
-    setFilter(nextFilter);
-    setActiveProjectId((currentProjectId) =>
-      nextProjects.some((project) => project.id === currentProjectId)
-        ? currentProjectId
-        : nextProjects[0]?.id ?? ''
-    );
-  };
-
-  const handleProjectKeyDown = (
-    event: KeyboardEvent<HTMLButtonElement>,
-    projectIndex: number
-  ) => {
-    let nextIndex: number | null = null;
-
-    if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
-      nextIndex = (projectIndex + 1) % filteredProjects.length;
-    } else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
-      nextIndex =
-        (projectIndex - 1 + filteredProjects.length) % filteredProjects.length;
-    } else if (event.key === 'Home') {
-      nextIndex = 0;
-    } else if (event.key === 'End') {
-      nextIndex = filteredProjects.length - 1;
-    }
-
-    if (nextIndex === null) return;
-
-    event.preventDefault();
-    projectButtonRefs.current[nextIndex]?.focus();
-  };
-
   return (
     <section
       id="projects"
@@ -204,134 +229,100 @@ export default function ProjectsSection() {
       className="section-padding field-rule bg-canvas"
     >
       <div className="field-container">
-        <header className="grid gap-8 border-b border-trace pb-8 lg:grid-cols-12 lg:items-end">
-          <div className="lg:col-span-7">
-            <p className="metadata mb-3 text-xs uppercase text-slate">
-              Project catalog
-            </p>
-            <h2 className="text-5xl font-bold uppercase leading-none text-ink sm:text-6xl">
-              Projects
-            </h2>
-          </div>
-
-          <div className="space-y-5 lg:col-span-5">
-            <p className="text-sm leading-6 text-slate lg:max-w-md">
-              <span className="lg:hidden">
-                Each record includes complete project notes and available links.
-              </span>
-              <span className="hidden lg:inline">
-                Focus or select a record to update the project stage.
-              </span>
-            </p>
-
-            <div
-              role="group"
-              aria-label="Filter projects"
-              className="flex flex-wrap gap-x-6 border-t border-trace"
-            >
-              {FILTER_OPTIONS.map((option) => {
-                const isSelected = filter === option.value;
-                const count = getProjectsForFilter(option.value).length;
-
-                return (
-                  <button
-                    key={option.value}
-                    type="button"
-                    data-qa={option.qa}
-                    aria-pressed={isSelected}
-                    aria-controls="project-catalog"
-                    onClick={() => handleFilterChange(option.value)}
-                    className={cn(
-                      'metadata border-t-2 px-0 py-3 text-xs uppercase transition-colors duration-200',
-                      isSelected
-                        ? '-mt-px border-signal text-ink'
-                        : '-mt-px border-transparent text-slate hover:border-trace hover:text-ink'
-                    )}
-                  >
-                    {option.label} ({String(count).padStart(2, '0')})
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+        <header className="grid gap-6 border-b border-trace pb-10 lg:grid-cols-12 lg:items-end">
+          <h2 className="font-display text-6xl font-bold uppercase leading-none text-ink sm:text-7xl lg:col-span-8 lg:text-8xl">
+            Projects
+          </h2>
+          <p className="max-w-md text-sm leading-6 text-slate lg:col-span-4">
+            Four featured projects, followed by every remaining project in a
+            compact archive.
+          </p>
         </header>
 
-        <div className="grid gap-10 pt-10 lg:grid-cols-12 lg:items-start lg:gap-12">
-          <ol
-            id="project-catalog"
-            data-studio-component="project-index"
-            aria-label={`${filter === 'featured' ? 'Featured' : 'All'} projects`}
-            className="min-w-0 border-b border-trace lg:col-span-5 lg:col-start-8 lg:row-start-1"
-          >
-            {filteredProjects.map((project, projectIndex) => {
-              const isActive = project.id === activeProject?.id;
+        <section
+          aria-labelledby="project-selected-work-heading"
+          data-qa="project-selected-work"
+          className="mt-12 lg:mt-16"
+        >
+          <header className="mb-6 flex flex-col gap-3 border-b border-trace pb-5 sm:flex-row sm:items-end sm:justify-between">
+            <h3
+              id="project-selected-work-heading"
+              className="font-display text-3xl font-bold leading-none text-ink sm:text-4xl"
+            >
+              Selected work
+            </h3>
+            <p className="metadata text-xs uppercase text-slate">
+              Featured projects
+            </p>
+          </header>
+
+          <ul className="grid gap-5 md:grid-cols-2">
+            {featuredProjects.map((featuredProject) => (
+              <li key={featuredProject.project.id} className="min-w-0">
+                <FeaturedProjectCard featuredProject={featuredProject} />
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section
+          aria-labelledby="project-archive-heading"
+          data-qa="project-archive"
+          className="mt-16 lg:mt-20"
+        >
+          <header className="grid gap-4 border-b border-ink pb-5 md:grid-cols-12 md:items-end">
+            <h3
+              id="project-archive-heading"
+              className="font-display text-3xl font-bold leading-none text-ink sm:text-4xl md:col-span-7"
+            >
+              Archive
+            </h3>
+            <p className="max-w-md text-sm leading-6 text-slate md:col-span-5">
+              All other projects, listed alphabetically with their repository
+              links and technical details.
+            </p>
+          </header>
+
+          <ol className="border-t border-trace">
+            {archiveProjects.map((project) => {
               const headingId = `project-heading-${project.id}`;
 
               return (
-                <li key={project.id} className="border-t border-trace">
+                <li key={project.id} className="border-b border-trace">
                   <article
                     aria-labelledby={headingId}
-                    className={cn(
-                      'py-8 transition-colors duration-200 lg:px-5 lg:py-6',
-                      isActive && 'lg:bg-signal/10'
-                    )}
+                    className="grid gap-5 py-5 lg:grid-cols-12 lg:items-start lg:gap-8"
                   >
-                    <header className="relative">
-                      <div className="flex items-start gap-4">
-                        <span
-                          aria-hidden="true"
-                          className={cn(
-                            'metadata mt-1 w-7 shrink-0 text-xs',
-                            isActive ? 'text-ink' : 'text-slate'
-                          )}
-                        >
-                          {String(projectIndex + 1).padStart(2, '0')}
-                        </span>
-                        <div className="min-w-0 flex-1">
-                          <ProjectMetadata project={project} />
-                          <h3
-                            id={headingId}
-                            className="mt-3 break-words text-3xl font-bold uppercase leading-none text-ink"
+                    <div className="min-w-0 lg:col-span-4">
+                      <ProjectMetadata project={project} />
+                      <h4
+                        id={headingId}
+                        className="mt-2 break-words font-display text-2xl font-semibold leading-none text-ink sm:text-3xl"
+                      >
+                        {project.title}
+                      </h4>
+                    </div>
+
+                    <p className="min-w-0 max-w-prose break-words text-sm leading-6 text-slate [overflow-wrap:anywhere] lg:col-span-4">
+                      {project.description}
+                    </p>
+
+                    <div className="min-w-0 lg:col-span-4">
+                      <h5 className="metadata text-xs uppercase text-ink">
+                        Technologies
+                      </h5>
+                      <ul className="metadata mt-3 min-w-0 flex flex-wrap gap-x-3 gap-y-2 text-xs leading-5 text-slate">
+                        {project.technologies.map((technology) => (
+                          <li
+                            key={`${project.id}-${technology}`}
+                            className="min-w-0 break-words border-l border-trace pl-2 [overflow-wrap:anywhere]"
                           >
-                            {project.title}
-                          </h3>
-                          <p className="mt-3 text-sm leading-6 text-slate">
-                            {project.description}
-                          </p>
-                        </div>
-                      </div>
-
-                      <button
-                        ref={(element) => {
-                          projectButtonRefs.current[projectIndex] = element;
-                        }}
-                        type="button"
-                        aria-label={`Show ${project.title} in the project stage`}
-                        aria-controls="project-stage-panel"
-                        aria-pressed={isActive}
-                        tabIndex={isActive ? 0 : -1}
-                        onClick={() => setActiveProjectId(project.id)}
-                        onFocus={() => setActiveProjectId(project.id)}
-                        onKeyDown={(event) =>
-                          handleProjectKeyDown(event, projectIndex)
-                        }
-                        className="absolute inset-0 z-10 hidden cursor-pointer lg:block"
-                      />
-                    </header>
-
-                    <div className={cn('mt-6', !isActive && 'lg:hidden')}>
-                      <div className="relative aspect-[16/9] overflow-hidden border border-trace bg-trace/30 lg:hidden">
-                        <Image
-                          src={project.image}
-                          alt={`${project.title} project cover`}
-                          loading="eager"
-                          fill
-                          sizes="(max-width: 1023px) calc(100vw - 2rem), 1px"
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className={cn('pt-6', isActive && 'lg:border-t lg:border-trace')}>
-                        <ProjectBody project={project} />
+                            {technology}
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="mt-4">
+                        <ProjectActions project={project} />
                       </div>
                     </div>
                   </article>
@@ -339,44 +330,7 @@ export default function ProjectsSection() {
               );
             })}
           </ol>
-          {activeProject && (
-            <div
-              id="project-stage-panel"
-              role="region"
-              aria-labelledby={`project-heading-${activeProject.id}`}
-              className="sticky top-24 hidden self-start lg:col-span-7 lg:col-start-1 lg:row-start-1 lg:block"
-            >
-              <motion.figure
-                key={activeProject.id}
-                initial={shouldReduceMotion ? false : { opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={
-                  shouldReduceMotion
-                    ? { duration: 0 }
-                    : { duration: 0.22, ease: [0.22, 1, 0.36, 1] }
-                }
-              >
-                <div className="relative aspect-[16/9] overflow-hidden border border-trace bg-trace/30">
-                  <Image
-                    src={activeProject.image}
-                    alt={`${activeProject.title} project cover`}
-                    fill
-                    sizes="(min-width: 1024px) 58vw, 1px"
-                    className="object-cover"
-                  />
-                </div>
-                <figcaption className="flex items-baseline justify-between gap-6 border-x border-b border-trace px-4 py-3">
-                  <span className="metadata text-xs uppercase text-slate">
-                    Active cover
-                  </span>
-                  <span className="font-display text-xl font-bold uppercase text-ink">
-                    {activeProject.title}
-                  </span>
-                </figcaption>
-              </motion.figure>
-            </div>
-          )}
-        </div>
+        </section>
       </div>
     </section>
   );

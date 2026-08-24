@@ -76,24 +76,14 @@
         "purpose": "Canvas and Ink background/foreground role swap."
       },
       {
-        "name": "project-selection",
-        "value": "200ms cubic-bezier(0.4, 0, 0.2, 1)",
-        "purpose": "Filter, action, and active project-record color changes."
-      },
-      {
-        "name": "project-stage",
-        "value": "220ms cubic-bezier(0.22, 1, 0.36, 1)",
-        "purpose": "Opacity transition between active desktop project covers."
+        "name": "project-card-state",
+        "value": "150ms cubic-bezier(0.4, 0, 0.2, 1)",
+        "purpose": "Direct link and card affordance color changes; evidence and actions remain visible without project selection."
       },
       {
         "name": "signal-panel",
         "value": "180ms easeOut; translateY(8px)",
         "purpose": "Open and close the particle signal controls panel."
-      },
-      {
-        "name": "hero-signal-line",
-        "value": "700ms cubic-bezier(0.16, 1, 0.3, 1)",
-        "purpose": "One-time first-viewport horizontal signal-line entrance."
       },
       {
         "name": "career-reveal",
@@ -132,6 +122,14 @@
   },
   "components": [
     {
+      "name": "Identity Hero",
+      "kind": "hero",
+      "refersTo": "identity-hero",
+      "description": "Original identity-first hero restored as the first viewport: Farhoud Talebi, Software Engineer, existing tagline, Contact and Résumé actions, and a subtle particle field with no project preview or evidence column.",
+      "html": "<section data-studio-component='identity-hero' aria-labelledby='identity-heading'><p>Software Engineer</p><h1 id='identity-heading'>Farhoud Talebi</h1><p>I build innovative software solutions</p><a data-qa='primary-action' href='#contact'>Contact Farhoud</a><a href='/Farhoud Resume.pdf'>Résumé (PDF)</a></section>",
+      "css": "[data-studio-component='identity-hero'] { display: grid; min-height: 70vh; place-content: center; background: rgb(var(--canvas)); color: rgb(var(--ink)); }"
+    },
+    {
       "name": "Primary Action",
       "kind": "button",
       "refersTo": "button-primary",
@@ -164,28 +162,44 @@
       "css": ".ds-field-label { display: block; margin-bottom: 8px; color: rgb(var(--ink)); font-family: var(--font-body, \"Work Sans\"), sans-serif; font-size: 14px; font-weight: 600; line-height: 20px; } .ds-input { width: 100%; border: 1px solid rgb(var(--trace)); border-radius: 0; background: rgb(var(--canvas)); color: rgb(var(--ink)); padding: 12px 16px; font-family: var(--font-body, \"Work Sans\"), sans-serif; font-size: 16px; line-height: 24px; transition: border-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-input::placeholder { color: rgb(var(--slate)); } .ds-input:hover { border-color: rgb(var(--slate)); } .ds-input:focus-visible { border-color: rgb(var(--safety)); outline: 2px solid rgb(var(--safety)); outline-offset: 3px; } .ds-input[aria-invalid=\"true\"] { border-color: rgb(var(--safety)); } .ds-input:disabled { cursor: not-allowed; opacity: 0.5; }"
     },
     {
-      "name": "Project Filter",
-      "kind": "chip",
-      "refersTo": "project-filter",
-      "description": "Ruled two-option project filter that avoids a pill or filled segmented track.",
-      "html": "<div class=\"ds-project-filter\" role=\"group\" aria-label=\"Filter projects\"><button aria-pressed=\"true\">Featured (06)</button><button aria-pressed=\"false\">All projects (16)</button></div>",
-      "css": ".ds-project-filter { display: flex; flex-wrap: wrap; gap: 24px; border-top: 1px solid rgb(var(--trace)); } .ds-project-filter button { margin-top: -1px; border: 0; border-top: 2px solid transparent; border-radius: 0; background: rgb(var(--canvas)); color: rgb(var(--slate)); padding: 12px 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", monospace; font-size: 12px; line-height: 16px; letter-spacing: 0.03em; text-transform: uppercase; transition: color 200ms cubic-bezier(0.4, 0, 0.2, 1), border-color 200ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-project-filter button:hover { border-color: rgb(var(--trace)); color: rgb(var(--ink)); } .ds-project-filter button:focus-visible { outline: 2px solid rgb(var(--safety)); outline-offset: 3px; } .ds-project-filter button[aria-pressed=\"true\"] { border-color: rgb(var(--signal)); color: rgb(var(--ink)); }"
+      "name": "Published Product Card",
+      "kind": "custom",
+      "refersTo": "project-published-product",
+      "description": "Compact detailed DeenPath featured card with real App Store screenshots, factual capabilities, stack, dates, status, highlights, and a direct App Store action.",
+      "html": "<article data-qa='project-published-product'><img src='/images/projects/featured/deenpath-store.webp' alt='DeenPath App Store screenshots'><p>Published product · 01/04</p><h3>DeenPath</h3><p>Real App Store product evidence</p><h4>Capabilities</h4><h4>Stack and actions</h4></article>",
+      "css": "[data-qa='project-published-product'] { min-width: 0; border: 1px solid rgb(var(--trace)); background: rgb(var(--canvas)); color: rgb(var(--ink)); }"
     },
     {
-      "name": "Project Index Record",
-      "kind": "card",
-      "refersTo": "project-record-active",
-      "description": "Flat selected project record from the desktop index, organized by rules rather than a card shell.",
-      "html": "<article class=\"ds-project-record\"><button class=\"ds-project-record-hit\" type=\"button\" aria-label=\"Show DeenPath in the project stage\" aria-pressed=\"true\"></button><span class=\"ds-project-number\">01</span><div><p class=\"ds-project-meta\">Completed / 2026-02 — Present / Featured</p><h3>DeenPath</h3><p class=\"ds-project-copy\">Faith companion app for Muslims on iOS: accurate prayer times, qibla compass, prayer tracking, and a dhikr counter — ad-free and privacy-first.</p></div></article>",
-      "css": ".ds-project-record { position: relative; display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 16px; border-top: 1px solid rgb(var(--trace)); background: rgb(var(--signal) / 0.1); color: rgb(var(--ink)); padding: 24px 20px; transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-project-record-hit { position: absolute; inset: 0; z-index: 1; border: 0; background: transparent; cursor: pointer; } .ds-project-record-hit:focus-visible { outline: 2px solid rgb(var(--safety)); outline-offset: 3px; } .ds-project-number, .ds-project-meta { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", monospace; font-size: 12px; line-height: 16px; letter-spacing: 0.03em; text-transform: uppercase; } .ds-project-number { color: rgb(var(--ink)); } .ds-project-meta { margin: 0; color: rgb(var(--slate)); } .ds-project-record h3 { margin: 12px 0 0; color: rgb(var(--ink)); font-family: var(--font-display, \"Barlow Condensed\"), sans-serif; font-size: 30px; font-weight: 700; line-height: 1; letter-spacing: -0.025em; text-transform: uppercase; } .ds-project-copy { margin: 12px 0 0; color: rgb(var(--slate)); font-family: var(--font-body, \"Work Sans\"), sans-serif; font-size: 14px; line-height: 24px; }"
+      "name": "Featured Project Card",
+      "kind": "custom",
+      "refersTo": "featured-project-card",
+      "description": "Reusable compact detailed card for StockScanner, Remote Admin Toolkit, and Imposter Hunt; use factual editorial covers at /images/projects/featured/stockscanner-cover.webp and /images/projects/featured/rat-cover.webp plus the real icon at /images/projects/imposter-hunt.webp. Factual evidence, technologies, dates/status when verified, direct links, and visible actions are always present.",
+      "html": "<article class='ds-featured-card'><img src='/images/projects/featured/stockscanner-cover.webp' alt='StockScanner editorial cover'><p>Selected work · 02/04</p><h3>StockScanner</h3><p>Factual project description</p><h4>Highlights</h4><h4>Stack and actions</h4></article>",
+      "css": ".ds-featured-card { min-width: 0; border: 1px solid rgb(var(--trace)); background: rgb(var(--canvas)); color: rgb(var(--ink)); } .ds-featured-card img { aspect-ratio: 16 / 9; display: block; width: 100%; object-fit: cover; }"
     },
     {
-      "name": "Field Index Navigation",
+      "name": "Featured Project Grid",
+      "kind": "custom",
+      "refersTo": "project-selected-work",
+      "description": "Static wrapper for exactly four compact detailed featured cards in the approved order: DeenPath, StockScanner, Remote Admin Toolkit, and Imposter Hunt. It has no filter, selector, or interaction-gated evidence.",
+      "html": "<section data-qa='project-selected-work' aria-labelledby='project-stories-heading'><h3 id='project-stories-heading'>Selected work</h3><div class='ds-featured-grid'><article>DeenPath</article><article>StockScanner</article><article>Remote Admin Toolkit</article><article>Imposter Hunt</article></div></section>",
+      "css": "[data-qa='project-selected-work'] { border-top: 1px solid rgb(var(--trace)); } .ds-featured-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; } @media (max-width: 639px) { .ds-featured-grid { grid-template-columns: minmax(0, 1fr); } }"
+    },
+    {
+      "name": "Static Project Archive",
+      "kind": "custom",
+      "refersTo": "project-archive",
+      "description": "Visible compact archive of exactly 13 remaining projects in alphabetical order: Animal Adoption Center, AndroidQuizApp, ChatServer, FlickrViewer, MazeSolver, Mechanic Shop, Mortgage Scenario Comparisons, PersonalWebsite2025, Purchase Calculator, Recipe Adventure, Rental Cash Dam, Rental Property Calculator, SwiftProjectileCalculationApp. Rental Cash Dam remains immediately before Rental Property Calculator.",
+      "html": "<section data-qa='project-archive' aria-labelledby='project-archive-heading'><h3 id='project-archive-heading'>Archive · 13 projects</h3><ol><li>Animal Adoption Center</li><li>AndroidQuizApp</li><li>ChatServer</li><li>FlickrViewer</li><li>MazeSolver</li><li>Mechanic Shop</li><li>Mortgage Scenario Comparisons</li><li>PersonalWebsite2025</li><li>Purchase Calculator</li><li>Recipe Adventure</li><li>Rental Cash Dam</li><li>Rental Property Calculator</li><li>SwiftProjectileCalculationApp</li></ol></section>",
+      "css": "[data-qa='project-archive'] { border-top: 1px solid rgb(var(--trace)); } [data-qa='project-archive'] li { border-bottom: 1px solid rgb(var(--trace)); padding: 16px 0; }"
+    },
+    {
+      "name": "Simple Site Navigation",
       "kind": "nav",
       "refersTo": "navigation-link",
-      "description": "Numbered desktop field index with narrow labels and Trace dividers.",
-      "html": "<nav class=\"ds-field-index\" aria-label=\"Primary navigation\"><a href=\"#home\"><span>01</span>Home</a><a href=\"#projects\"><span>02</span>Projects</a><a href=\"#experience\"><span>03</span>Experience</a><a href=\"#skills\"><span>04</span>Skills</a><a href=\"#contact\"><span>05</span>Contact</a></nav>",
-      "css": ".ds-field-index { display: flex; align-items: center; border-bottom: 1px solid rgb(var(--trace)); background: rgb(var(--canvas)); color: rgb(var(--ink)); } .ds-field-index a { display: inline-flex; height: 36px; align-items: center; gap: 8px; border-left: 1px solid rgb(var(--trace)); color: rgb(var(--ink)); padding: 0 8px; font-family: var(--font-body, \"Work Sans\"), sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.025em; text-decoration: none; text-transform: uppercase; transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-field-index a:first-child { border-left: 0; } .ds-field-index span { color: rgb(var(--slate)); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", monospace; font-weight: 400; letter-spacing: 0.03em; } .ds-field-index a:hover, .ds-field-index a:hover span { color: rgb(var(--signal)); } .ds-field-index a:focus-visible { outline: 2px solid rgb(var(--safety)); outline-offset: 3px; }"
+      "description": "Original-inspired desktop navigation with a name home link and simple section links; an accessible mobile drawer presents the same section links and closes on Escape or outside press.",
+      "html": "<nav data-studio-component=\"site-navigation\" aria-label=\"Primary navigation\"><div class=\"container-custom\"><a href=\"#home\">Farhoud Talebi</a><ul><li><a href=\"#home\">Home</a></li><li><a href=\"#projects\">Projects</a></li><li><a href=\"#experience\">Experience</a></li><li><a href=\"#skills\">Skills</a></li><li><a href=\"#contact\">Contact</a></li></ul></div></nav><div id=\"mobile-navigation-drawer\" role=\"dialog\" aria-label=\"Navigation\"><a href=\"#home\">Home</a><a href=\"#projects\">Projects</a><a href=\"#experience\">Experience</a><a href=\"#skills\">Skills</a><a href=\"#contact\">Contact</a></div>",
+      "css": "[data-studio-component=\"site-navigation\"] { border-bottom: 1px solid rgb(var(--trace)); background: rgb(var(--canvas)); color: rgb(var(--ink)); } [data-studio-component=\"site-navigation\"] ul { display: flex; align-items: center; gap: 20px; } [data-studio-component=\"site-navigation\"] a { color: rgb(var(--slate)); font-family: var(--font-body, \"Work Sans\"), sans-serif; font-size: 14px; font-weight: 500; text-decoration: none; transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1); } [data-studio-component=\"site-navigation\"] a:hover { color: rgb(var(--signal)); }"
     },
     {
       "name": "Career Ledger Row",
@@ -199,20 +213,20 @@
       "name": "Signal Controls Trigger",
       "kind": "button",
       "refersTo": "signal-trigger",
-      "description": "Closed particle-field control exposing its current color and explicit open state.",
-      "html": "<button class=\"ds-signal-trigger\" type=\"button\" aria-expanded=\"false\"><span>Signal</span><i aria-hidden=\"true\"></i><b aria-hidden=\"true\">+</b></button>",
-      "css": ".ds-signal-trigger { display: flex; height: 44px; align-items: center; gap: 8px; border: 1px solid rgb(var(--ink)); border-radius: 0; background: rgb(var(--ink)); color: rgb(var(--canvas)); padding: 0 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", monospace; font-size: 12px; font-weight: 600; line-height: 16px; letter-spacing: 0.1em; text-transform: uppercase; transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), border-color 150ms cubic-bezier(0.4, 0, 0.2, 1), background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-signal-trigger i { width: 12px; height: 12px; border: 1px solid currentColor; background: #00C896; } .ds-signal-trigger b { font-family: var(--font-body, \"Work Sans\"), sans-serif; font-size: 16px; font-weight: 400; line-height: 1; } .ds-signal-trigger:hover { border-color: rgb(var(--signal)); background: rgb(var(--signal)); } .ds-signal-trigger:focus-visible { outline: 2px solid rgb(var(--safety)); outline-offset: 3px; } :host-context(.dark) .ds-signal-trigger:hover { color: rgb(var(--ink)); }"
+      "description": "Fixed top-right particle-field control below the header; it exposes its current color and explicit open state, hides while the mobile navigation drawer is open, and opens its panel downward.",
+      "html": "<div class=\"ds-signal-controls\"><button class=\"ds-signal-trigger\" data-qa=\"signal-controls-toggle\" type=\"button\" aria-expanded=\"false\" aria-controls=\"particle-signal-controls-panel\"><span>Signal</span><i aria-hidden=\"true\"></i><b aria-hidden=\"true\">+</b></button><section id=\"particle-signal-controls-panel\" aria-label=\"Signal controls\"></section></div>",
+      "css": ".ds-signal-controls { position: fixed; top: 80px; right: 16px; z-index: 20; } .ds-signal-trigger { display: flex; height: 44px; align-items: center; gap: 8px; border: 1px solid rgb(var(--ink)); border-radius: 0; background: rgb(var(--ink)); color: rgb(var(--canvas)); padding: 0 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", monospace; font-size: 12px; font-weight: 600; line-height: 16px; letter-spacing: 0.1em; text-transform: uppercase; transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), border-color 150ms cubic-bezier(0.4, 0, 0.2, 1), background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-signal-controls:has(#particle-signal-controls-panel) #particle-signal-controls-panel { position: absolute; top: calc(100% + 8px); right: 0; width: min(320px, calc(100vw - 32px)); border: 1px solid rgb(var(--trace)); background: rgb(var(--canvas)); color: rgb(var(--ink)); } body:has(#mobile-navigation-drawer) .ds-signal-controls { visibility: hidden; }"
     }
   ],
   "narrative": {
     "northStar": "The Evidence Field",
-    "overview": "The Evidence Field presents engineering work as an authored field of connected proof: precise enough for technical evaluation, pragmatic enough to scan quickly, and confident without spectacle. Condensed display type gives identity and section markers a clear voice; restrained body copy and monospaced metadata make the evidence feel technically fluent.\n\nThe system is dense inside generous outer whitespace. A flat semantic spine of rules, ledgers, indexes, and rectangular controls carries hierarchy instead of card stacks or decorative effects. Signal Green marks action and selection, Safety Rust protects focus and error states, and real project covers provide the only large image texture.",
+    "overview": "The Evidence Field restores an original identity-first first viewport: Farhoud's name, Software Engineer role, existing tagline, Contact and Résumé actions, and a subtle particle field. It presents engineering work as authored, factual proof that technical evaluators can scan without spectacle. Condensed display type gives identity and section markers a clear voice; restrained body copy and monospaced metadata make the evidence technically fluent.\n\nThe system is dense inside generous outer whitespace. A compact four-card featured grid leads with DeenPath, StockScanner, Remote Admin Toolkit, and Imposter Hunt in that order, followed by a visible 13-item archive. The current Bolder Experience and Skills sections remain unchanged. Signal Green marks action and selection, Safety Rust protects focus and error states, and verified project imagery provides the only large image texture.",
     "keyCharacteristics": [
       "Six semantic color roles with a four-role dark-mode swap.",
       "Condensed display type, readable body type, and tabular monospaced metadata.",
       "Fluid outer gutters around an asymmetric twelve-column desktop field.",
       "Flat one-pixel dividers, predominantly square geometry, and no shadows.",
-      "Dense, complete evidence records that become linear below the desktop breakpoint."
+      "Compact detailed featured cards in a 2x2 desktop grid and a single-column mobile flow, followed by a complete visible 13-item archive."
     ],
     "rules": [
       {
@@ -246,11 +260,13 @@
       "Do keep Signal for action/selection and Safety for focus/validation/error.",
       "Do preserve the three typography registers and the observed spacing rhythm.",
       "Do use Trace rules, whitespace, and role inversion to organize dense evidence.",
+      "Do keep featured evidence and actions visible without filters, selectors, or interaction gates.",
       "Do keep controls keyboard-visible and content fully visible when motion is reduced."
     ],
     "donts": [
       "Don't add gradients, glass blur, shadows, glow borders, or decorative blobs.",
-      "Don't turn evidence records into a repeated grid of rounded cards or decorative pills.",
+      "Don't turn featured projects into oversized case studies or generic card walls; use the approved compact four-card grid.",
+      "Don't add project filters, selectors, or interaction-gated evidence.",
       "Don't use Safety as a general accent or Signal as an error color.",
       "Don't hide actions or essential details behind hover-only behavior.",
       "Don't introduce a second palette, type family, radius scale, or spacing scale beside the captured system."

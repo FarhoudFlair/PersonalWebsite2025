@@ -11,25 +11,159 @@
   ],
   "flows": [
     {
-      "name": "project-catalog-all",
+      "name": "initial",
       "route": "/",
       "steps": [
         {
-          "type": "click",
-          "selector": "[data-qa=\"project-filter-all\"]"
-        },
-        {
           "type": "expectVisible",
-          "selector": "[data-qa=\"project-filter-all\"][aria-pressed=\"true\"]"
-        },
-        {
-          "type": "expectVisible",
-          "selector": "[data-studio-component=\"project-index\"] > li:nth-child(16) h3"
+          "selector": "[data-studio-component=\"identity-hero\"]"
         },
         {
           "type": "expectText",
-          "selector": "[data-studio-component=\"project-index\"] > li:nth-child(16) h3",
+          "selector": "[data-studio-component=\"identity-hero\"]",
+          "value": "Farhoud Talebi"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-studio-component=\"identity-hero\"]",
+          "value": "Software Engineer"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-studio-component=\"identity-hero\"]",
+          "value": "I build innovative software solutions"
+        },
+        {
+          "type": "expectVisible",
+          "selector": "[data-studio-component=\"identity-hero\"] [data-studio-component=\"resume-link\"]"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-studio-component=\"identity-hero\"] [data-studio-component=\"resume-link\"]",
+          "value": "Résumé"
+        },
+        {
+          "type": "expectVisible",
+          "selector": "[data-qa=\"primary-action\"]"
+        }
+      ]
+    },
+    {
+      "name": "project-catalog-static",
+      "route": "/",
+      "steps": [
+        {
+          "type": "expectVisible",
+          "selector": "[data-qa=\"project-published-product\"]"
+        },
+        {
+          "type": "expectVisible",
+          "selector": "[data-qa=\"project-selected-work\"]"
+        },
+        {
+          "type": "expectVisible",
+          "selector": "[data-qa=\"project-archive\"]"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"project-selected-work\"] > ul > li:nth-child(1) h4",
+          "value": "DeenPath"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"project-selected-work\"] > ul > li:nth-child(2) h4",
+          "value": "StockScanner"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"project-selected-work\"] > ul > li:nth-child(3) h4",
+          "value": "Remote Admin Toolkit"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"project-selected-work\"] > ul > li:nth-child(4):last-child h4",
+          "value": "Imposter Hunt"
+        },
+        {
+          "type": "expectVisible",
+          "selector": "[data-qa=\"project-selected-work\"] > ul > li:nth-child(1) img[src*=\"deenpath-store.webp\"]"
+        },
+        {
+          "type": "expectVisible",
+          "selector": "[data-qa=\"project-selected-work\"] > ul > li:nth-child(2) img[src*=\"stockscanner-cover.webp\"]"
+        },
+        {
+          "type": "expectVisible",
+          "selector": "[data-qa=\"project-selected-work\"] > ul > li:nth-child(3) img[src*=\"rat-cover.webp\"]"
+        },
+        {
+          "type": "expectVisible",
+          "selector": "[data-qa=\"project-selected-work\"] > ul > li:nth-child(4):last-child img[src*=\"imposter-hunt.webp\"]"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"project-archive\"] > ol > li:nth-child(1)",
+          "value": "AndroidQuizApp"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"project-archive\"] > ol > li:nth-child(2)",
+          "value": "Animal Adoption Center"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"project-archive\"] > ol > li:nth-child(3)",
+          "value": "ChatServer"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"project-archive\"] > ol > li:nth-child(4)",
+          "value": "FlickrViewer"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"project-archive\"] > ol > li:nth-child(5)",
+          "value": "MazeSolver"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"project-archive\"] > ol > li:nth-child(6)",
           "value": "Mechanic Shop"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"project-archive\"] > ol > li:nth-child(7)",
+          "value": "Mortgage Scenario Comparisons"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"project-archive\"] > ol > li:nth-child(8)",
+          "value": "PersonalWebsite2025"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"project-archive\"] > ol > li:nth-child(9)",
+          "value": "Purchase Calculator"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"project-archive\"] > ol > li:nth-child(10)",
+          "value": "Recipe Adventure"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"project-archive\"] > ol > li:nth-child(11)",
+          "value": "Rental Cash Dam"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"project-archive\"] > ol > li:nth-child(12)",
+          "value": "Rental Property Calculator"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"project-archive\"] > ol > li:nth-child(13):last-child",
+          "value": "SwiftProjectileCalculationApp"
         }
       ]
     },
@@ -39,11 +173,11 @@
       "steps": [
         {
           "type": "click",
-          "selector": "[data-qa=\"mobile-menu-toggle\"]:visible, [data-studio-component=\"site-navigation\"] > .field-container ol a[href=\"#projects\"]:visible"
+          "selector": "[data-qa=\"mobile-menu-toggle\"]:visible, [data-studio-component=\"site-navigation\"] > .container-custom > div > ul a[href=\"#projects\"]:visible"
         },
         {
           "type": "expectVisible",
-          "selector": "[data-qa=\"mobile-menu-toggle\"][aria-expanded=\"true\"]:visible, [data-studio-component=\"site-navigation\"] > .field-container ol a[href=\"#projects\"]:visible"
+          "selector": "[data-qa=\"mobile-menu-toggle\"][aria-expanded=\"true\"]:visible, [data-studio-component=\"site-navigation\"] > .container-custom > div > ul a[href=\"#projects\"]:visible"
         },
         {
           "type": "press",
@@ -51,11 +185,11 @@
         },
         {
           "type": "expectVisible",
-          "selector": "#mobile-navigation-drawer a[href=\"#projects\"]:visible, [data-studio-component=\"site-navigation\"] > .field-container ol a[href=\"#projects\"]:visible"
+          "selector": "#mobile-navigation-drawer a[href=\"#projects\"]:visible, [data-studio-component=\"site-navigation\"] > .container-custom > div > ul a[href=\"#projects\"]:visible"
         },
         {
           "type": "click",
-          "selector": "#mobile-navigation-drawer a[href=\"#projects\"]:visible, [data-studio-component=\"site-navigation\"] > .field-container ol a[href=\"#projects\"]:visible"
+          "selector": "#mobile-navigation-drawer a[href=\"#projects\"]:visible, [data-studio-component=\"site-navigation\"] > .container-custom > div > ul a[href=\"#projects\"]:visible"
         },
         {
           "type": "expectVisible",

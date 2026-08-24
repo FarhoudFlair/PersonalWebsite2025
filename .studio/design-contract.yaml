@@ -3,10 +3,11 @@
   "status": "approved",
   "identity": {
     "selected_direction_id": "field-map",
-    "creative_direction": "Agent-selected field-map after evaluating audience identification, first-viewport technical clarity, truthful use of current assets, scanability, keyboard and mobile accessibility, and implementation risk. It exposes real work immediately without release-ledger resume density or project-cinema image and scroll dependence.",
+    "creative_direction": "Final hybrid field-map: restore the original identity-first hero and navigation, retain the current Bolder Experience and Skills sections, and present a compact four-project card grid with a complete visible archive. It favors factual proof, scanability, keyboard access, and low implementation risk over giant case studies or interaction-gated evidence.",
     "target_user": "Engineering hiring managers, technical recruiters, and senior developers evaluating Farhoud's systems, mobile, and full-stack work.",
     "emotional_goal": "Precise, authored, pragmatic, and technically fluent confidence that the work warrants a conversation."
   },
+
   "layout": {
     "sections": [
       "home",
@@ -17,7 +18,7 @@
       "footer"
     ],
     "container": "Maximum 1440px, asymmetric 12-column desktop field, edge padding clamp(1rem, 4vw, 4rem).",
-    "density": "Dense evidence inside generous outer whitespace; no repeated card grid."
+    "density": "Identity-first hero with generous whitespace; compact detailed project cards in a 2x2 desktop grid and one-column mobile flow; no oversized case-study canvas."
   },
   "visual": {
     "typography": {
@@ -33,8 +34,8 @@
       "signal": "#1F6B52",
       "safety": "#B24A2F"
     },
-    "imagery": "Existing project covers only. No missing-avatar substitute. One large active image stage on desktop and intrinsic-ratio project images in linear mobile articles.",
-    "motion": "One first-viewport signal-line entrance, 180-240 ms project-stage transitions, and restrained section reveals. All content remains visible with reduced motion."
+    "imagery": "Use the four approved featured assets only: real DeenPath App Store screenshots at /images/projects/featured/deenpath-store.webp, a factual editorial cover for StockScanner at /images/projects/featured/stockscanner-cover.webp, a factual editorial cover for Remote Admin Toolkit at /images/projects/featured/rat-cover.webp, and the real Imposter Hunt icon at /images/projects/imposter-hunt.webp.",
+    "motion": "Restrained section reveals and subtle particle movement; no scroll-snap or sticky dependence. Reduced motion removes meaningful displacement and duration while keeping all content visible."
   },
   "components": {
     "allowed": [
@@ -42,7 +43,9 @@
       "identity-hero",
       "signal-controls",
       "project-showcase",
-      "project-index",
+      "featured-project-grid",
+      "featured-project-card",
+      "project-archive-list",
       "career-ledger",
       "capability-matrix",
       "contact-panel",
@@ -53,21 +56,25 @@
       "social-links"
     ],
     "prohibited": [
-      "repeated-card-grid",
-      "gradient-text",
+      "oversized-case-study",
+      "full-width-case-study",
+      "project-filter",
+      "project-selector",
+      "interaction-gated-evidence",
       "glass-panel",
       "decorative-pill",
       "fake-metric",
       "timeline-dot",
-      "floating-blob",
       "hover-only-action",
       "overlapping-particle-controls"
     ]
   },
+
   "content": {
     "required": [
       "Farhoud Talebi",
       "Software Engineer",
+      "I build innovative software solutions",
       "Collins Aerospace",
       "DeenPath",
       "farhoudtalebi@gmail.com",
@@ -80,8 +87,8 @@
     ]
   },
   "responsive": {
-    "desktop": "At 1440x1100, split hero places identity left and a readable semantic evidence spine right. A sticky project image stage sits beside a keyboard-operable index, followed by the career ledger, capability matrix, and split contact panel/form.",
-    "mobile": "At 390x844, use a linear hero with no sticky or snap dependency. Every filtered project is a complete stacked article, navigation uses an accessible drawer, signal controls use one closed trigger, and no horizontal overflow is allowed."
+    "desktop": "At 1440x1100, restore the original identity-first hero: Farhoud's name, Software Engineer role, existing tagline, Contact and Résumé actions, and a subtle particle field. The fixed original-inspired header pairs the name link with simple section links, social links, résumé action, and theme control. Signal controls sit fixed at the top-right below the header and their panel opens downward. Projects then show exactly four compact detailed cards in this order—DeenPath, StockScanner, Remote Admin Toolkit, Imposter Hunt—in a 2x2 grid, followed by a visible 13-item compact archive in the stated order; the existing Bolder Experience and Skills sections, contact panel/form, and footer remain unchanged.",
+    "mobile": "At 390x844, retain the original identity-first hero with the name, role, existing tagline, Contact and Résumé actions, and subtle particle field without sticky or snap dependency. Navigation uses an accessible mobile drawer; while it is open, signal controls are hidden. The same four featured cards stack in one column in the approved order, followed by the complete visible 13-item archive; the existing Bolder Experience and Skills sections remain unchanged and no horizontal overflow is allowed."
   },
   "qa": {
     "required_screens": [
@@ -90,7 +97,7 @@
     ],
     "required_states": [
       "initial",
-      "project-catalog-all",
+      "project-catalog-static",
       "mobile-navigation",
       "contact-validation",
       "theme-dark",
@@ -98,16 +105,27 @@
     ],
     "required_selectors": [
       "[data-qa=\"primary-action\"]",
-      "[data-qa=\"project-filter-all\"]",
+      "[data-qa=\"project-published-product\"]",
+      "[data-qa=\"project-selected-work\"]",
+      "[data-qa=\"project-archive\"]",
       "[data-qa=\"mobile-menu-toggle\"]",
       "[data-qa=\"contact-form\"]",
       "[data-qa=\"theme-toggle\"]",
       "[data-qa=\"signal-controls-toggle\"]"
     ],
     "prohibited_selectors": [
-      "[data-ui-pattern=\"gradient-text\"]",
       "[data-ui-pattern=\"glass-panel\"]",
-      "[data-ui-pattern=\"floating-blob\"]"
+      "[data-ui-pattern=\"project-filter\"]",
+      "[data-ui-pattern=\"project-selector\"]",
+      "[data-ui-pattern=\"interaction-gated-evidence\"]"
+    ],
+    "assertions": [
+      "Initial desktop and mobile states restore the original identity-first hero with Farhoud Talebi, Software Engineer, the existing tagline, Contact and Résumé actions, and a subtle particle field.",
+      "The [data-qa=\"project-selected-work\"] region contains exactly four compact detailed cards in this order: DeenPath, StockScanner, Remote Admin Toolkit, Imposter Hunt.",
+      "The four featured cards use a 2x2 grid at 1440x1100 and a single-column stack at 390x844; evidence and actions are visible without filters, selectors, or interaction gates.",
+      "The [data-qa=\"project-archive\"] region contains exactly 13 visible compact entries in alphabetical order: AndroidQuizApp, Animal Adoption Center, ChatServer, FlickrViewer, MazeSolver, Mechanic Shop, Mortgage Scenario Comparisons, PersonalWebsite2025, Purchase Calculator, Recipe Adventure, Rental Cash Dam, Rental Property Calculator, SwiftProjectileCalculationApp. Rental Cash Dam remains immediately before Rental Property Calculator.",
+      "Featured imagery uses only /images/projects/featured/deenpath-store.webp, /images/projects/featured/stockscanner-cover.webp, /images/projects/featured/rat-cover.webp, and /images/projects/imposter-hunt.webp.",
+      "The current Bolder Experience and Skills sections remain unchanged, as do contact/footer behavior, theme, navigation, signal controls, reduced motion, and privacy/support routes."
     ],
     "computed_styles": [
       {

@@ -99,24 +99,12 @@ components:
     typography: "{typography.body}"
     rounded: "{rounded.none}"
     padding: "0.75rem 1rem"
-  project-filter:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.slate}"
-    typography: "{typography.metadata}"
-    rounded: "{rounded.none}"
-    padding: "0.75rem 0px"
-  project-filter-active:
+  project-hierarchy:
     backgroundColor: "{colors.canvas}"
     textColor: "{colors.ink}"
     typography: "{typography.metadata}"
-  project-record:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.ink}"
     rounded: "{rounded.none}"
     padding: "2rem 0px"
-  project-record-active:
-    backgroundColor: "rgb(31 107 82 / 0.1)"
-    textColor: "{colors.ink}"
   navigation-link:
     backgroundColor: "{colors.canvas}"
     textColor: "{colors.ink}"
@@ -144,23 +132,23 @@ components:
 
 **Creative North Star: "The Evidence Field"**
 
-The Evidence Field presents engineering work as an authored field of connected proof: precise enough for technical evaluation, pragmatic enough to scan quickly, and confident without spectacle. Condensed display type gives identity and section markers a clear voice; restrained body copy and monospaced metadata make the evidence feel technically fluent.
+The Evidence Field restores the original identity-first hero before the evidence: Farhoud Talebi's name, Software Engineer role, existing tagline, Contact and Résumé actions, and a subtle particle field. The current Bolder Experience and Skills sections remain unchanged. Projects use four compact detailed cards and a complete visible archive so technical proof stays scanable without turning into a giant case study.
 
-The system is dense inside generous outer whitespace. A flat semantic spine of rules, ledgers, indexes, and rectangular controls carries hierarchy instead of card stacks or decorative effects. Signal Green marks action and selection, Safety Rust protects focus and error states, and real project covers provide the only large image texture.
+The system is dense inside generous outer whitespace. A flat semantic spine of rules, compact cards, archive rows, ledgers, section links, and rectangular controls carries hierarchy. Signal Green marks action and selection, Safety Rust protects focus and error states, and verified project imagery provides the only large image texture.
 
 **Key Characteristics:**
 - Six semantic color roles with a four-role dark-mode swap.
 - Condensed display type, readable body type, and tabular monospaced metadata.
 - Fluid outer gutters around an asymmetric twelve-column desktop field.
 - Flat one-pixel dividers, predominantly square geometry, and no shadows.
-- Dense, complete evidence records that become linear below the desktop breakpoint.
+- Compact four-card featured evidence and 13-item archive records that become linear below the desktop breakpoint while keeping all project details and actions visible.
 
 ## Colors
 
 A restrained six-role palette treats color as interface semantics rather than decoration.
 
 ### Primary
-- **Signal Green** (token: `signal`): Primary actions, selected states, link emphasis, signal lines, and active controls. Translucent Signal is limited to selected-record fields.
+- **Signal Green** (token: `signal`): Primary actions, selected states, link emphasis, and active controls. Translucent Signal is reserved for controlled-state fields.
 
 ### Secondary
 - **Safety Rust** (token: `safety`): Global keyboard focus outlines, focused field borders, validation summaries, and error text. It is not an ornamental accent.
@@ -202,9 +190,16 @@ A restrained six-role palette treats color as interface semantics rather than de
 
 The field container is fluid to a maximum width of `1440px`, centered with inline padding `clamp(1rem, 4vw, 4rem)`. Major sections use block padding `clamp(4.5rem, 9vw, 8rem)`. The recurring rhythm is the observed Tailwind spacing sequence captured in frontmatter, with `0.5rem`, `0.75rem`, `1rem`, `1.5rem`, `2rem`, `2.5rem`, `3rem`, and `4rem` doing most grouping work.
 
-At `lg` (`1024px`), the layout becomes an asymmetric twelve-column field. Identity and current evidence split seven/five columns; the project stage and index use the same proportions in reverse reading order. `sm` is `640px`, `md` is `768px`, and `xl` is `1280px`. The navigation is fixed at `4rem` high, and anchor scrolling accounts for a `5rem` offset.
+At `lg` (`1024px`) and above, the original identity-first hero stays centered around Farhoud's name, Software Engineer role, existing tagline, Contact/Résumé actions, and subtle particles; it has no project preview or current-evidence column. Projects then show exactly four compact detailed cards in this order—DeenPath, StockScanner, Remote Admin Toolkit, Imposter Hunt—in a 2x2 grid at `1440px`, followed by a visible 13-item archive. `sm` is `640px`, `md` is `768px`, and `xl` is `1280px`. The navigation is fixed at `4rem` high, and anchor scrolling accounts for a `5rem` offset.
 
-Below `lg`, the evidence becomes linear rather than mimicking the desktop composition. The project stage is removed from flow and each project record carries its own bordered `16:9` cover, full description, highlights, technologies, and actions. The navigation becomes a right-side drawer; the signal trigger moves below the header on narrow screens. The root supports a `320px` minimum width, and the passing `390px` evidence has no horizontal overflow.
+Below `lg`, the hero remains identity-first and the four featured cards become a single-column flow in the same order; all card evidence and actions stay visible. The complete 13-item archive follows as static content, with Rental Cash Dam before Rental Property Calculator. The current Bolder Experience and Skills sections remain unchanged. The navigation becomes an accessible right-side drawer; signal controls remain fixed at the top-right below the header and hide while that drawer is open. The root supports a `320px` minimum width with no horizontal overflow.
+
+### Project Image Strategy
+
+- DeenPath uses real App Store screenshots at `/images/projects/featured/deenpath-store.webp`.
+- StockScanner and Remote Admin Toolkit use factual editorial covers at `/images/projects/featured/stockscanner-cover.webp` and `/images/projects/featured/rat-cover.webp`.
+- Imposter Hunt uses its real icon at `/images/projects/imposter-hunt.webp`.
+- Archive entries retain the existing factual project covers from `siteData.ts`; no portrait substitute or fabricated imagery is allowed.
 
 ## Elevation & Depth
 
@@ -218,7 +213,7 @@ This is a flat system: the shipped field-map surface uses no box shadows, drop s
 
 ## Shapes
 
-The field language is predominantly rectilinear. Navigation controls, calls to action, filters, inputs, image stages, drawers, ledger rows, and signal controls use square corners (`0px`) with one-pixel Trace borders. Project media is clipped to a bordered `16:9` rectangle; active filters use a two-pixel Signal top rule, and keyboard focus uses a two-pixel Safety outline with a three-pixel offset.
+The field language is predominantly rectilinear. Navigation controls, calls to action, inputs, media frames, drawers, ledger rows, and signal controls use square corners (`0px`) with one-pixel Trace borders. Project media is clipped to a bordered `16:9` rectangle, and keyboard focus uses a two-pixel Safety outline with a three-pixel offset.
 
 The rendered contact submit button is the incumbent exception: the shared Button primitive retains its medium radius (`0.375rem`). No pill container, circular icon badge, or rounded card silhouette is part of the field-map vocabulary.
 
@@ -231,15 +226,22 @@ Components feel instrumental and explicit: every state is visible through semant
 - **Secondary action:** Square transparent Canvas control with Ink text and a one-pixel Trace border using the same minimum height and padding. Hover changes the border to Signal.
 - **Contact submit:** The shared primary Button is full width, `2.75rem` high, horizontally padded by `2rem`, set at `1.125rem`, and rounded by `0.375rem`. Loading disables the control, lowers opacity to `70%`, and adds the inline spinner; disabled controls use `50%` opacity and block pointer events.
 
-### Project Filters
-- **Style:** Two metadata buttons sit on a shared Trace top rule with no enclosing pill or filled track. Each uses `0.75rem` vertical padding.
-- **State:** The selected filter moves a two-pixel Signal rule onto the shared edge and uses Ink text. Unselected filters remain Slate, then move toward Trace/Ink on hover. `aria-pressed` carries selection.
+### Project Hierarchy & Components
+- **Featured grid:** Exactly four compact detailed cards in this order: DeenPath, StockScanner, Remote Admin Toolkit, Imposter Hunt. The desktop grid is 2x2; it becomes one column on mobile.
+- **Published product card:** DeenPath is the first featured card and uses real App Store screenshots, verified status/dates, highlights, technologies, and a direct App Store action.
+- **Editorial featured cards:** StockScanner and Remote Admin Toolkit use factual editorial covers; Imposter Hunt uses its real icon. Each card keeps its evidence and direct link visible.
+- **Archive list:** Exactly 13 remaining projects are always visible in a compact static list in alphabetical order: Animal Adoption Center, AndroidQuizApp, ChatServer, FlickrViewer, MazeSolver, Mechanic Shop, Mortgage Scenario Comparisons, PersonalWebsite2025, Purchase Calculator, Recipe Adventure, Rental Cash Dam, Rental Property Calculator, SwiftProjectileCalculationApp. Rental Cash Dam remains immediately before Rental Property Calculator. It is never filtered or revealed by selection.
+- **Evidence rule:** No filters, selectors, giant/full-width case studies, interaction-gated evidence, or hover-only actions.
+
+### Preserved Experience & Skills
+- **Bolder Experience:** Keep the current Experience section, career records, achievements, technologies, and behavior unchanged.
+- **Bolder Skills:** Keep the current Skills section, five groups, 32 skills, icon rail, and behavior unchanged.
 
 ### Records / Containers
-- **Project records:** Flat articles separated by Trace rules. The desktop active record receives a `10%` Signal field; complete body content remains visible for the active desktop record and for every mobile record.
-- **Project stage:** A sticky desktop `16:9` cover frame and bordered caption update with a `220ms` opacity transition using `cubic-bezier(0.22, 1, 0.36, 1)`. On mobile, each record owns an eagerly loaded `16:9` cover.
-- **Career ledger:** Rows divide date/location, role/company, achievements, and technologies across the twelve-column field. Additional achievements use a native `details` disclosure with a Trace left rule.
-- **Capability matrix:** Category rows feed a two- or three-column list whose skill records use top dividers and an icon rail instead of tiles or cards.
+- **Project records:** Flat compact articles separated by Trace rules. Featured cards and archive records remain complete and visible at every breakpoint.
+- **Project media:** Featured imagery uses the approved real/editorial assets; archive entries retain existing factual covers in bordered rectangles.
+- **Career ledger:** The current Bolder rows divide date/location, role/company, achievements, and technologies across the twelve-column field. Additional achievements use a native `details` disclosure with a Trace left rule.
+- **Capability matrix:** The current Bolder category rows feed a two- or three-column list whose skill records use top dividers and an icon rail instead of tiles or cards.
 
 ### Inputs / Fields
 - **Style:** Square Canvas fields with a one-pixel Trace stroke, Ink text, Slate placeholders, and `0.75rem 1rem` padding. Labels use the Work Sans label register.
@@ -247,13 +249,13 @@ Components feel instrumental and explicit: every state is visible through semant
 - **Error / Disabled:** Error strokes and messages use Safety. Disabled fields block interaction and use `50%` opacity. Textarea styling mirrors the input and does not resize.
 
 ### Navigation
-- **Desktop:** A fixed, bordered Canvas bar uses a square Ink monogram, a numbered field index, social links, résumé action, and theme control. Links are compact, uppercase, and move to Signal on hover.
-- **Mobile:** The field index opens as an accessible right drawer below the `4rem` header. It is `11/12` of the viewport up to `24rem`, uses full-width ruled rows, traps focus, closes on Escape or outside press, and restores trigger focus.
-- **Footer:** Ink and Canvas invert the page field. A five-column numbered index becomes a divided linear list before `md`; hover inverts each row back to Canvas/Ink.
+- **Desktop:** A fixed Canvas bar uses Farhoud Talebi’s name as the home link, simple section links, social links, a résumé action, and theme control. Links remain compact and move to Signal on hover.
+- **Mobile:** The same section links open in an accessible right drawer below the `4rem` header. It is `11/12` of the viewport up to `24rem`, uses full-width ruled rows, traps focus, closes on Escape or outside press, and restores trigger focus.
+- **Footer:** Ink and Canvas invert the page field. A divided section-link list becomes linear before `md`; hover inverts each row back to Canvas/Ink.
 
 ### Signal Controls
-- **Trigger:** A square `2.75rem`-high Ink control with metadata label, current-color square, and explicit open/close sign. It sits `1rem` from the right, below the header on narrow screens and at the bottom edge from `sm` upward.
-- **Panel:** A square bordered Canvas panel, `20rem` wide and capped to the viewport, contains a two-state interaction selector and five complete color rows. It opens downward on narrow screens and upward from `sm`.
+- **Trigger:** A square `2.75rem`-high Ink control with metadata label, current-color square, and explicit open/close sign. It is fixed `1rem` from the right, below the header, and is hidden while the mobile navigation drawer is open.
+- **Panel:** A square bordered Canvas panel, `20rem` wide and capped to the viewport, contains a two-state interaction selector and five complete color rows. It opens downward below its trigger at every breakpoint.
 - **State and motion:** Escape and outside press close the panel; selection uses `aria-pressed`. The panel transition is `180ms` `easeOut` with an eight-pixel vertical offset, and reduced motion changes it to a zero-duration, zero-offset state.
 
 ## Do's and Don'ts
@@ -263,11 +265,13 @@ Components feel instrumental and explicit: every state is visible through semant
 - Do keep Signal for action/selection and Safety for focus/validation/error.
 - Do preserve the three typography registers and the observed spacing rhythm.
 - Do use Trace rules, whitespace, and role inversion to organize dense evidence.
+- Do keep the original identity-first hero and the current Bolder Experience and Skills sections unchanged.
+- Do keep featured evidence, archive entries, and direct actions visible without filters, selectors, or interaction gates.
 - Do keep controls keyboard-visible and content fully visible when motion is reduced.
 
 ### Don't:
 - Don't add gradients, glass blur, shadows, glow borders, or decorative blobs.
-- Don't turn evidence records into a repeated grid of rounded cards or decorative pills.
+- Don't turn the approved compact four-card grid into oversized cards, a generic card wall, or a full-width case study.
+- Don't add project filters, selectors, interaction-gated evidence, or hover-only actions.
 - Don't use Safety as a general accent or Signal as an error color.
-- Don't hide actions or essential details behind hover-only behavior.
 - Don't introduce a second palette, type family, radius scale, or spacing scale beside the captured system.
