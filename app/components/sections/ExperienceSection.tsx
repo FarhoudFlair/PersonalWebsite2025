@@ -32,11 +32,9 @@ export default function ExperienceSection() {
         <ScrollReveal>
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-primary-light dark:text-text-primary-dark mb-4">
-              Professional Experience
+              Experience
             </h2>
-            <p className="text-lg sm:text-xl text-text-secondary-light dark:text-text-secondary-dark max-w-2xl mx-auto">
-              My journey through various roles and the impact I've made along the way.
-            </p>
+
           </div>
         </ScrollReveal>
 
@@ -75,7 +73,7 @@ export default function ExperienceSection() {
                 />
 
                 {/* Content Card */}
-                <div className={`w-full md:w-5/12 ml-10 mr-4 md:mx-0 ${ // Adjusted margins for mobile
+                <div className={`w-[calc(100%_-_3.5rem)] md:w-5/12 ml-10 mr-4 md:mx-0 ${ // Adjusted margins for mobile
                   index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'
                 }`}>
                   <motion.div

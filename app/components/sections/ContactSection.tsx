@@ -347,6 +347,9 @@ export default function ContactSection() {
                   <motion.div variants={itemVariants}>
                     <div className="relative">
                       <textarea
+                        id="contact-message"
+                        aria-invalid={Boolean(errors.message)}
+                        aria-describedby={errors.message ? "contact-message-error" : undefined}
                         value={formData.message}
                         onChange={(e) => handleInputChange('message', e.target.value)}
                         placeholder="Message"
@@ -354,18 +357,18 @@ export default function ContactSection() {
                         className="peer w-full rounded-md border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2 text-sm placeholder-transparent focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:cursor-not-allowed disabled:opacity-50 resize-none"
                         required
                       />
-                      <label className="absolute left-3 -top-2.5 bg-white dark:bg-gray-900 px-1 text-xs font-medium text-gray-600 dark:text-gray-400 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-primary-500">
+                      <label htmlFor="contact-message" className="absolute left-3 -top-2.5 bg-white dark:bg-gray-900 px-1 text-xs font-medium text-gray-600 dark:text-gray-400 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-primary-500">
                         Message
                       </label>
                       {errors.message && (
-                        <p className="mt-1 text-xs text-red-500">{errors.message}</p>
+                        <p id="contact-message-error" className="mt-1 text-xs text-red-500">{errors.message}</p>
                       )}
                     </div>
                   </motion.div>
 
                   {errors.submit && (
                     <motion.div variants={itemVariants} className="mb-4">
-                      <p className="text-sm text-red-500 text-center">{errors.submit}</p>
+                      <p role="alert" className="text-sm text-red-500 text-center">{errors.submit}</p>
                     </motion.div>
                   )}
                   <motion.div variants={itemVariants}>

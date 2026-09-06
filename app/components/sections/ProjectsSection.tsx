@@ -53,7 +53,7 @@ export default function ProjectsSection() {
               Projects
             </h2>
             <p className="text-lg sm:text-xl text-text-secondary-light dark:text-text-secondary-dark max-w-2xl mx-auto">
-              A showcase of my recent work and personal projects that demonstrate my skills and passion for development.
+              Selected work in web, mobile, and security.
             </p>
           </div>
         </ScrollReveal>
@@ -270,7 +270,7 @@ export default function ProjectsSection() {
               Have a project in mind?
             </h3>
             <p className="text-lg text-text-secondary-light dark:text-text-secondary-dark mb-6 max-w-2xl mx-auto">
-              I'm always interested in new opportunities and exciting projects. Let's discuss how we can work together to bring your ideas to life.
+              Have a project in mind? Send me a message.
             </p>
             <Button
               onClick={() => {

@@ -32,7 +32,7 @@ export default function Footer() {
                 {siteData.personal.name}
               </h3>
               <p className="text-gray-400 leading-relaxed">
-                {siteData.personal.title} passionate about creating amazing digital experiences and solving complex problems through code.
+                {siteData.personal.title} in {siteData.personal.location}.
               </p>
               <div className="flex space-x-4">
                 {siteData.social.map((social) => {

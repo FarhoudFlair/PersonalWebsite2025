@@ -4,8 +4,8 @@ export const siteData: SiteData = {
   personal: {
     name: 'Farhoud Talebi',
     title: 'Software Engineer',
-    tagline: 'I build innovative software solutions',
-    bio: 'Passionate software engineer with expertise in full-stack development, cybersecurity, and mobile applications. Bachelor of Computer Science with Honours from Carleton University, specializing in Security with a 98% CGPA and Senate Medal recognition (Top 3%).',
+    tagline: 'Web applications, iOS apps, and security.',
+    bio: 'I work across full-stack development, cybersecurity, and mobile applications. Bachelor of Computer Science with Honours from Carleton University, specializing in Security with a 98% CGPA and Senate Medal recognition (Top 3%).',
     location: 'Ottawa, ON, Canada',
     email: 'farhoudtalebi@gmail.com',
     avatar: '/images/avatar.jpg',

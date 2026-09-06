@@ -28,7 +28,7 @@ const TsParticleBackground: React.FC<TsParticleBackgroundProps> = ({
             value: "transparent",
           },
         },
-        fpsLimit: 120,
+        fpsLimit: 60,
         interactivity: {
           events: {
             onClick: {
@@ -64,7 +64,7 @@ const TsParticleBackground: React.FC<TsParticleBackgroundProps> = ({
             color: particleColor, 
             distance: 150,
             enable: true,
-            opacity: 0.25,
+            opacity: 0.12,
             width: 1,
           },
           collisions: {
@@ -85,7 +85,7 @@ const TsParticleBackground: React.FC<TsParticleBackgroundProps> = ({
               enable: true,
               area: 800,
             },
-            value: 80,
+            value: 32,
           },
           opacity: {
             value: 0.25,
