@@ -50,9 +50,8 @@ export interface Project {
   technologies: string[];
   liveUrl?: string;
   githubUrl?: string;
-  featured: boolean;
-  status: 'completed' | 'in-progress' | 'concept';
-  startDate: string;
+  status?: 'completed' | 'in-progress' | 'concept';
+  startDate?: string;
   endDate?: string;
   highlights: string[];
 }

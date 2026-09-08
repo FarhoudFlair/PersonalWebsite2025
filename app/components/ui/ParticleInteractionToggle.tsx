@@ -1,25 +1,51 @@
 'use client';
 
-import React from 'react';
+import { cn } from '@/utils/cn';
 
 interface ParticleInteractionToggleProps {
   currentMode: 'repulse' | 'attract';
   onToggle: () => void;
 }
 
-const ParticleInteractionToggle: React.FC<ParticleInteractionToggleProps> = ({ currentMode, onToggle }) => {
-  const isAttractMode = currentMode === 'attract'; // 'attract' corresponds to "Pull Towards"
+const interactionModes = [
+  { label: 'Attract', value: 'attract' },
+  { label: 'Repulse', value: 'repulse' },
+] as const;
+
+function ParticleInteractionToggle({
+  currentMode,
+  onToggle,
+}: ParticleInteractionToggleProps) {
   return (
-    <button
-      type="button" // Added type attribute
-      onClick={onToggle}
-      className="fixed bottom-5 right-5 z-50 p-3 bg-slate-700 hover:bg-slate-600 text-white text-sm rounded-lg shadow-lg transition-colors duration-150 ease-in-out"
-      aria-label={`Toggle particle interaction mode, current mode: ${currentMode === 'repulse' ? 'Push Away' : 'Pull Towards'}`}
-      aria-pressed={isAttractMode} // Added ARIA pressed state
-    >
-      Mode: {currentMode === 'repulse' ? 'Push Away' : 'Pull Towards'}
-    </button>
+    <fieldset className="m-0 min-w-0 border-0 p-0">
+      <legend className="metadata text-xs font-semibold uppercase tracking-widest text-slate">
+        Interaction
+      </legend>
+      <div className="mt-2 grid grid-cols-2 border border-trace">
+        {interactionModes.map((mode, index) => {
+          const isSelected = currentMode === mode.value;
+
+          return (
+            <button
+              key={mode.value}
+              type="button"
+              onClick={isSelected ? undefined : onToggle}
+              aria-pressed={isSelected}
+              className={cn(
+                'min-h-11 px-3 py-2 text-sm font-medium transition-colors',
+                index > 0 && 'border-l border-trace',
+                isSelected
+                  ? 'bg-signal text-canvas dark:text-ink'
+                  : 'bg-canvas text-ink hover:bg-trace/40'
+              )}
+            >
+              {mode.label}
+            </button>
+          );
+        })}
+      </div>
+    </fieldset>
   );
-};
+}
 
 export default ParticleInteractionToggle;

@@ -1,174 +1,180 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { FaArrowUp, FaGithub, FaLinkedin, FaTwitter, FaHeart } from 'react-icons/fa';
+import { FaArrowUp, FaDownload, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { siteData } from '@/data/siteData';
+
+const FIELD_INDEX_ORDER = [
+  '#home',
+  '#projects',
+  '#experience',
+  '#skills',
+  '#contact',
+] as const;
+
+const NAVIGATION_OFFSET = 80;
+
+const fieldIndexItems = FIELD_INDEX_ORDER.reduce<typeof siteData.navigation>(
+  (items, href) => {
+    const item = siteData.navigation.find(
+      (navigationItem) => navigationItem.href === href
+    );
+
+    if (item) {
+      items.push(item);
+    }
+
+    return items;
+  },
+  []
+);
+
+const getSocialIcon = (platform: string) => {
+  if (platform === 'github') {
+    return FaGithub;
+  }
+
+  if (platform === 'linkedin') {
+    return FaLinkedin;
+  }
+
+  return null;
+};
+
+const scrollToSection = (href: string) => {
+  if (!href.startsWith('#')) {
+    return;
+  }
+
+  const element = document.querySelector(href);
+  if (!element) {
+    return;
+  }
+
+  const elementPosition = element.getBoundingClientRect().top;
+  const offsetPosition = elementPosition + window.pageYOffset - NAVIGATION_OFFSET;
+
+  window.scrollTo({
+    top: offsetPosition,
+    behavior: 'smooth',
+  });
+};
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
-  const socialIcons = {
-    FaGithub,
-    FaLinkedin,
-    FaTwitter,
-  };
-
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   };
 
   return (
-    <footer className="bg-gray-900 dark:bg-black text-white border-t border-gray-800 dark:border-gray-900">
-      <div className="container-custom">
-        {/* Main Footer Content */}
-        <div className="py-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Brand Section */}
-            <div className="space-y-4">
-              <h3 className="text-xl font-bold">
-                {siteData.personal.name}
-              </h3>
-              <p className="text-gray-400 leading-relaxed">
-                {siteData.personal.title} passionate about creating amazing digital experiences and solving complex problems through code.
-              </p>
-              <div className="flex space-x-4">
-                {siteData.social.map((social) => {
-                  const IconComponent = socialIcons[social.icon as keyof typeof socialIcons];
-                  return (
-                    <motion.a
-                      key={social.id}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.1, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="w-10 h-10 bg-gray-800 dark:bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-primary-600 transition-all duration-300"
-                      aria-label={social.label}
-                    >
-                      <IconComponent size={18} />
-                    </motion.a>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Quick Links */}
-            <div className="space-y-4">
-              <h4 className="text-lg font-semibold">Quick Links</h4>
-              <nav className="space-y-2">
-                {siteData.navigation.map((item) => (
-                  <motion.a
-                    key={item.href}
-                    href={item.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const element = document.querySelector(item.href);
-                      if (element) {
-                        const offset = 80;
-                        const elementPosition = element.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - offset;
-                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-                      }
-                    }}
-                    whileHover={{ x: 5 }}
-                    className="block text-gray-400 hover:text-white transition-colors"
-                  >
-                    {item.label}
-                  </motion.a>
-                ))}
-              </nav>
-            </div>
-
-            {/* Contact Info */}
-            <div className="space-y-4">
-              <h4 className="text-lg font-semibold">Get in Touch</h4>
-              <div className="space-y-2 text-gray-400">
-                <p>{siteData.personal.location}</p>
-                <a 
-                  href={`mailto:${siteData.personal.email}`}
-                  className="block hover:text-white transition-colors"
-                >
-                  {siteData.personal.email}
-                </a>
-                {siteData.personal.phone && (
-                  <a 
-                    href={`tel:${siteData.personal.phone}`}
-                    className="block hover:text-white transition-colors"
-                  >
-                    {siteData.personal.phone}
-                  </a>
-                )}
-              </div>
-            </div>
+    <footer
+      className="border-t border-trace bg-ink text-canvas"
+      data-studio-component="site-footer"
+      data-studio-section="footer"
+    >
+      <div className="field-container">
+        <div className="flex flex-col gap-6 py-8 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="metadata text-xs font-semibold uppercase tracking-widest text-canvas/70">
+              Field index / end
+            </p>
+            <h2 className="mt-2 text-3xl font-semibold uppercase tracking-tight">
+              {siteData.personal.name}
+            </h2>
+            <p className="mt-1 text-sm text-canvas/70">{siteData.personal.title}</p>
           </div>
-        </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-gray-800 dark:border-gray-900 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            {/* Copyright */}
-            <div className="flex items-center space-x-2 text-gray-400">
-              <span>
-                © {currentYear} {siteData.personal.name}. All rights reserved.
-              </span>
-              <span className="flex items-center space-x-1">
-                <span>Made with</span>
-                <motion.div
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 1, repeat: Infinity }}
-                >
-                  <FaHeart className="text-red-500" size={14} />
-                </motion.div>
-                <span>and lots of ☕</span>
-              </span>
-            </div>
-
-            {/* Back to Top */}
-            <motion.button
-              onClick={scrollToTop}
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center space-x-2 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg transition-colors"
-              aria-label="Back to top"
+          <address className="flex flex-col gap-1 text-sm not-italic md:items-end md:text-right">
+            <a
+              className="font-medium underline decoration-canvas/40 hover:decoration-canvas"
+              href={`mailto:${siteData.personal.email}`}
             >
-              <FaArrowUp size={14} />
-              <span>Back to Top</span>
-            </motion.button>
-          </div>
+              {siteData.personal.email}
+            </a>
+            <span className="text-canvas/70">{siteData.personal.location}</span>
+          </address>
         </div>
-      </div>
 
-      {/* Floating Animation */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <motion.div
-          animate={{
-            y: [0, -10, 0],
-            opacity: [0.3, 0.6, 0.3],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="absolute bottom-4 right-4 w-8 h-8 bg-primary-500/20 rounded-full blur-sm"
-        />
-        <motion.div
-          animate={{
-            y: [0, -15, 0],
-            opacity: [0.2, 0.5, 0.2],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: 'easeInOut',
-            delay: 1,
-          }}
-          className="absolute bottom-8 right-12 w-6 h-6 bg-purple-500/20 rounded-full blur-sm"
-        />
+        <nav aria-label="Footer field index">
+          <ol className="grid divide-y divide-canvas/20 border-y border-canvas/20 md:grid-cols-5 md:divide-x md:divide-y-0">
+            {fieldIndexItems.map((item, index) => (
+              <li key={item.href}>
+                <a
+                  className="group flex min-h-14 items-center justify-between gap-3 px-3 py-3 text-sm font-semibold uppercase tracking-wide hover:bg-canvas hover:text-ink"
+                  href={item.href}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    scrollToSection(item.href);
+                  }}
+                >
+                  <span className="metadata text-xs text-canvas/70 group-hover:text-ink/70">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span>{item.label}</span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+
+        <div className="flex flex-col gap-5 border-b border-canvas/20 py-6 sm:flex-row sm:items-center sm:justify-between">
+          <div
+            aria-label="Social links"
+            className="flex flex-wrap items-center gap-2"
+            data-studio-component="social-links"
+            role="group"
+          >
+            {siteData.social.map((social) => {
+              const Icon = getSocialIcon(social.platform);
+              if (!Icon) {
+                return null;
+              }
+
+              return (
+                <a
+                  className="inline-flex h-9 items-center gap-2 border border-canvas/30 px-3 text-sm font-medium hover:border-canvas hover:bg-canvas hover:text-ink"
+                  href={social.url}
+                  key={social.id}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <Icon aria-hidden="true" className="h-4 w-4" />
+                  <span>{social.label}</span>
+                </a>
+              );
+            })}
+          </div>
+
+          <a
+            aria-label={`Open ${siteData.personal.name}'s resume in a new tab`}
+            className="inline-flex h-9 w-fit items-center gap-2 border border-canvas/30 px-3 text-sm font-medium hover:border-canvas hover:bg-canvas hover:text-ink"
+            data-studio-component="resume-link"
+            href={siteData.personal.resume}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <FaDownload aria-hidden="true" className="h-3 w-3" />
+            <span>Resume</span>
+          </a>
+        </div>
+
+        <div className="flex flex-col gap-4 py-5 text-sm text-canvas/70 sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © {currentYear} {siteData.personal.name}. All rights reserved.
+          </p>
+          <button
+            className="inline-flex w-fit items-center gap-2 border border-canvas/30 px-3 py-2 font-medium text-canvas hover:border-canvas hover:bg-canvas hover:text-ink"
+            onClick={scrollToTop}
+            type="button"
+          >
+            <FaArrowUp aria-hidden="true" className="h-3 w-3" />
+            <span>Back to top</span>
+          </button>
+        </div>
       </div>
     </footer>
   );
-} 
+}

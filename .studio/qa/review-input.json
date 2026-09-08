@@ -1,0 +1,11 @@
+{
+  "reviewer": "TerraRefinementVisual (Terra)",
+  "verdict": "pass",
+  "model_family": "Terra",
+  "implementation_model_family": "Luna Max",
+  "screenshot_paths": [
+    "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-bolder/.studio/qa/home-desktop.png",
+    "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-bolder/.studio/qa/home-mobile.png"
+  ],
+  "findings": []
+}

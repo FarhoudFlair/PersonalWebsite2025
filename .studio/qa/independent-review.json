@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "recorded_at": "2026-08-24T16:06:28.150Z",
+  "reviewer": "TerraRefinementVisual (Terra)",
+  "verdict": "pass",
+  "model_family": "Terra",
+  "implementation_model_family": "Luna Max",
+  "fallback_reason": null,
+  "screenshot_paths": [
+    "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-bolder/.studio/qa/home-desktop.png",
+    "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-bolder/.studio/qa/home-mobile.png"
+  ],
+  "screenshot_sha256": {
+    "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-bolder/.studio/qa/home-desktop.png": "849449276ac791edee226e482e2384f623b94afef9c5971fb316052fb758ed61",
+    "/Users/farhoudtalebi/Repositories/PortfolioWebsite-worktrees/portfolio-studio-bolder/.studio/qa/home-mobile.png": "b6a262e4cc358e3da6e3fbb72fd11ef8f420cded6b2171020f5a1ea58578e449"
+  },
+  "qa_revision": "ac992d39-ff74-4b10-9bd6-947e2a085ec7",
+  "findings": []
+}

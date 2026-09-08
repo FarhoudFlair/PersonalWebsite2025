@@ -1,0 +1,75 @@
+{
+  "version": 2,
+  "directions": [
+    {
+      "id": "field-map",
+      "thesis": "The final hybrid restores an original identity-first hero and navigation, then places four compact detailed project cards and a complete visible archive in a direct document flow. It preserves the current Bolder Experience and Skills sections and uses factual evidence without giant case studies or interaction gates.",
+      "hero_layout": "Original identity-first hero: Farhoud Talebi, Software Engineer, existing tagline, Contact and Résumé actions, and subtle particle field; simple original-inspired navigation leads into the document flow with no project preview or current-evidence column.",
+      "section_order": [
+        "home",
+        "projects",
+        "experience",
+        "skills",
+        "contact"
+      ],
+      "typography_personality": "Condensed technical display headings with a calm sans body and utility monospace reserved for dates and technology metadata.",
+      "image_strategy": "Four featured assets use real DeenPath App Store screenshots at /images/projects/featured/deenpath-store.webp, a factual StockScanner editorial cover at /images/projects/featured/stockscanner-cover.webp, a factual Remote Admin Toolkit editorial cover at /images/projects/featured/rat-cover.webp, and the real Imposter Hunt icon at /images/projects/imposter-hunt.webp; the remaining 13 projects use existing factual covers in a visible compact alphabetical archive with Rental Cash Dam immediately before Rental Property Calculator.",
+      "interaction_model": "Direct document-flow interaction: all four featured cards, archive entries, evidence, and actions remain visible without project filters, selectors, giant/full-width case studies, or interaction-gated evidence; consolidated signal controls remain available.",
+      "scores": {
+        "brief_fit": 5,
+        "distinctiveness": 5,
+        "usability": 5,
+        "feasibility": 4
+      }
+    },
+    {
+      "id": "release-ledger",
+      "thesis": "A full-width typographic manifest presents Farhoud's career and projects as a dense release ledger where verifiable records replace decorative storytelling.",
+      "hero_layout": "Full-width typographic manifest hero with a persistent left rail navigation fixed along the page edge.",
+      "section_order": [
+        "home",
+        "experience",
+        "projects",
+        "skills",
+        "contact"
+      ],
+      "typography_personality": "Wide grotesk display with tabular monospace for dates, versions, and record metadata.",
+      "image_strategy": "Projects rendered as dense release rows with small edge thumbnail stamps rather than large imagery; existing covers only.",
+      "interaction_model": "Expandable detail disclosures per release row plus scroll-progress interaction; the persistent left rail stays available for section jumps.",
+      "scores": {
+        "brief_fit": 4,
+        "distinctiveness": 4,
+        "usability": 3,
+        "feasibility": 5
+      }
+    },
+    {
+      "id": "project-cinema",
+      "thesis": "A DeenPath-led cinematic sequence opens on a full-bleed flagship project and moves through projects as full-screen chapters, with skills and experience reached after the project evidence.",
+      "hero_layout": "Full-bleed flagship project first viewport led by DeenPath, with a bottom chapter dock for navigation.",
+      "section_order": [
+        "home",
+        "projects",
+        "skills",
+        "experience",
+        "contact"
+      ],
+      "typography_personality": "Humanist display face with a neutral body for narrative, editorial pacing.",
+      "image_strategy": "Full-bleed project chapter imagery for each project on desktop, led by the DeenPath cover; existing covers only.",
+      "interaction_model": "Desktop chapter/scroll-snap navigation between full-bleed projects with a linear stacked mobile fallback and a bottom chapter dock.",
+      "scores": {
+        "brief_fit": 3,
+        "distinctiveness": 5,
+        "usability": 2,
+        "feasibility": 2
+      }
+    }
+  ],
+  "selection": {
+    "mode": "user",
+    "autonomous_selection_authorized": false,
+    "authority_evidence": "",
+    "selected_direction_id": "field-map",
+    "rationale": "The user explicitly selected the final hybrid: restore the original identity-first hero and navigation; show four compact detailed cards followed by the visible 13-item archive; preserve the current Bolder Experience and Skills sections; use factual DeenPath screenshots, StockScanner/RAT editorial covers, and the real Imposter Hunt icon in a direct document flow."
+  }
+}

@@ -1,203 +1,148 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { FaMapMarkerAlt, FaCalendarAlt, FaExternalLinkAlt } from 'react-icons/fa';
-import { useInView } from 'react-intersection-observer';
-import { siteData } from '@/data/siteData';
-import Badge from '@/components/ui/Badge';
 import ScrollReveal from '@/components/animations/ScrollReveal';
-import { slideUpVariants, staggerContainer } from '@/utils/motionVariants';
+import { siteData } from '@/data/siteData';
+import { cn } from '@/utils/cn';
 
 export default function ExperienceSection() {
-  const { ref: timelineRef, inView: timelineInView } = useInView({
-    threshold: 0.1,
-    triggerOnce: true,
-  });
-
-  const formatDate = (dateString: string) => {
-    if (dateString === 'Present') return 'Present';
-    const [year, month] = dateString.split('-');
-    const monthNames = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
-    return `${monthNames[parseInt(month) - 1]} ${year}`;
-  };
-
-
-
   return (
-    <section id="experience" className="section-padding bg-surface-light dark:bg-surface-dark">
-      <div className="container-custom">
-        <ScrollReveal>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-primary-light dark:text-text-primary-dark mb-4">
-              Professional Experience
+    <section
+      id="experience"
+      data-studio-section="experience"
+      data-studio-component="career-ledger"
+      className="section-padding field-rule bg-canvas"
+    >
+      <div className="field-container">
+        <ScrollReveal direction="right" duration={0.45}>
+          <header className="mb-14 grid md:grid-cols-12 lg:mb-20">
+            <h2 className="font-display text-6xl font-bold uppercase leading-none text-ink sm:text-7xl md:col-span-6 lg:text-8xl">
+              Experience
             </h2>
-            <p className="text-lg sm:text-xl text-text-secondary-light dark:text-text-secondary-dark max-w-2xl mx-auto">
-              My journey through various roles and the impact I've made along the way.
-            </p>
-          </div>
+          </header>
         </ScrollReveal>
 
-        {/* Timeline */}
-        <div ref={timelineRef} className="relative max-w-4xl mx-auto">
-          {/* Timeline Line */}
-          <motion.div
-            initial={{ scaleY: 0 }}
-            animate={timelineInView ? { scaleY: 1 } : { scaleY: 0 }}
-            transition={{ duration: 1.5, ease: 'easeOut' }}
-            className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary-500 to-purple-500 transform -translate-x-1/2 origin-top"
-          />
+        <ol className="border-t border-trace">
+          {siteData.experience.map((experience, experienceIndex) => {
+            const isCurrent = experienceIndex === 0;
+            const primaryAchievements = experience.achievements.slice(0, 2);
+            const additionalAchievements = experience.achievements.slice(2);
 
-          {/* Timeline Items */}
-          <motion.div
-            initial="hidden"
-            animate={timelineInView ? "visible" : "hidden"}
-            variants={staggerContainer}
-            className="space-y-12 md:space-y-16"
-          >
-            {siteData.experience.map((exp, index) => (
-              <motion.div
-                key={exp.id}
-                variants={slideUpVariants}
-                className={`relative flex flex-col md:flex-row items-start ${
-                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                }`}
-              >
-                {/* Timeline Dot */}
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={timelineInView ? { scale: 1 } : { scale: 0 }}
-                  transition={{ delay: index * 0.2 + 0.5, duration: 0.5 }}
-                  className="absolute left-4 md:left-1/2 w-4 h-4 bg-primary-500 rounded-full border-4 border-white dark:border-gray-900 transform -translate-x-1/2 z-10"
-                  style={{ top: '2rem' }}
-                />
+            return (
+              <li key={experience.id} className="border-b border-trace">
+                <article
+                  aria-labelledby={`role-${experience.id}`}
+                  className={cn(
+                    'grid gap-6 py-10 md:grid-cols-12 lg:gap-8 lg:py-12',
+                    isCurrent && 'border-l-2 border-signal pl-4 sm:pl-5'
+                  )}
+                >
+                  <div className="md:col-span-2">
+                    {isCurrent && (
+                      <p className="metadata mb-2 text-xs font-semibold uppercase tracking-widest text-signal">
+                        Current
+                      </p>
+                    )}
+                    <p className="metadata flex flex-wrap gap-x-2 text-xs text-slate">
+                      <time dateTime={experience.startDate}>{experience.startDate}</time>
+                      <span aria-hidden="true">-</span>
+                      {experience.endDate === 'Present' ? (
+                        <span>{experience.endDate}</span>
+                      ) : (
+                        <time dateTime={experience.endDate}>{experience.endDate}</time>
+                      )}
+                    </p>
+                    <div className="mt-3 space-y-1 text-sm text-slate">
+                      <p>{experience.location}</p>
+                      <p>{experience.type}</p>
+                    </div>
+                  </div>
 
-                {/* Content Card */}
-                <div className={`w-full md:w-5/12 ml-10 mr-4 md:mx-0 ${ // Adjusted margins for mobile
-                  index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'
-                }`}>
-                  <motion.div
-                    whileHover={{ y: -5, scale: 1.02 }}
-                    transition={{ duration: 0.3 }}
-                    className="bg-white dark:bg-gray-900 rounded-lg p-6 shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300"
-                  >
-                    {/* Company and Role */}
-                    <div className="mb-4">
-                      {/* Changed to flex-wrap and gap for better alignment */}
-                      <div className="flex flex-wrap items-center gap-x-3 mb-2">
-                        <h3 className="text-xl font-bold text-text-primary-light dark:text-text-primary-dark">
-                          {exp.role}
-                        </h3>
-                        {/* <Badge variant="outline" size="sm" className="whitespace-nowrap">
-                          {exp.type}
-                        </Badge> */}
-                      </div>
+                  <header className="md:col-span-3">
+                    <h3
+                      id={`role-${experience.id}`}
+                      className={cn(
+                        'font-display font-semibold leading-none text-ink',
+                        isCurrent ? 'text-3xl lg:text-4xl' : 'text-2xl lg:text-3xl'
+                      )}
+                    >
+                      {experience.role}
+                    </h3>
+                    {experience.companyUrl ? (
+                      <a
+                        href={experience.companyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-3 inline-flex items-baseline gap-2 font-medium text-signal underline decoration-trace underline-offset-4 transition-colors hover:decoration-signal"
+                        aria-label={`${experience.company} website (opens in a new tab)`}
+                      >
+                        <span>{experience.company}</span>
+                        <span aria-hidden="true">↗</span>
+                      </a>
+                    ) : (
+                      <p className="mt-3 font-medium text-signal">
+                        {experience.company}
+                      </p>
+                    )}
+                  </header>
 
-                      {/* Company Link */}
-                      <div className="flex items-center space-x-2 mb-2">
-                        <h4 className="text-lg font-semibold text-primary-600 dark:text-primary-400">
-                          {exp.company}
-                        </h4>
-                        {exp.companyUrl && (
-                          <a
-                            href={exp.companyUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-primary-500 hover:text-primary-600 transition-colors"
-                          >
-                            <FaExternalLinkAlt size={14} />
-                          </a>
-                        )}
-                      </div>
-
-                      {/* Date and Location */}
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-1 sm:space-y-0 text-sm text-text-secondary-light dark:text-text-secondary-dark">
-                        <div className="flex items-center space-x-1">
-                          <FaCalendarAlt size={12} />
-                          <span>
-                            {formatDate(exp.startDate)} - {formatDate(exp.endDate)}
+                  <div className="md:col-span-5">
+                    <h4 className="sr-only">Achievements at {experience.company}</h4>
+                    <ul className="space-y-3 text-sm leading-relaxed text-ink">
+                      {primaryAchievements.map((achievement, achievementIndex) => (
+                        <li
+                          key={`${experience.id}-achievement-${achievementIndex}`}
+                          className="flex gap-3"
+                        >
+                          <span aria-hidden="true" className="text-signal">
+                            -
                           </span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <FaMapMarkerAlt size={12} />
-                          <span>{exp.location}</span>
-                        </div>
-                      </div>
-                    </div>
+                          <span>{achievement}</span>
+                        </li>
+                      ))}
+                    </ul>
 
-                    {/* Achievements */}
-                    <div className="mb-4">
-                      <h5 className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark mb-2">
-                        Key Achievements:
-                      </h5>
-                      <ul className="space-y-2">
-                        {exp.achievements.map((achievement, achIndex) => (
-                          <motion.li
-                            key={achIndex}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={timelineInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                            transition={{ delay: index * 0.2 + achIndex * 0.1 + 0.7 }}
-                            className="flex items-start space-x-2 text-sm text-text-secondary-light dark:text-text-secondary-dark"
-                          >
-                            <span className="w-1.5 h-1.5 bg-primary-500 rounded-full mt-2 flex-shrink-0" />
-                            <span>{achievement}</span>
-                          </motion.li>
-                        ))}
-                      </ul>
-                    </div>
+                    {additionalAchievements.length > 0 && (
+                      <details className="mt-4 border-l border-trace pl-4">
+                        <summary className="w-fit cursor-pointer text-sm font-medium text-signal underline decoration-trace underline-offset-4 marker:text-signal hover:decoration-signal">
+                          Show {additionalAchievements.length} more achievement
+                          {additionalAchievements.length === 1 ? '' : 's'}
+                        </summary>
+                        <ul className="mt-3 space-y-3 text-sm leading-relaxed text-ink">
+                          {additionalAchievements.map((achievement, achievementIndex) => (
+                            <li
+                              key={`${experience.id}-additional-achievement-${achievementIndex}`}
+                              className="flex gap-3"
+                            >
+                              <span aria-hidden="true" className="text-signal">
+                                -
+                              </span>
+                              <span>{achievement}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </details>
+                    )}
+                  </div>
 
-                    {/* Technologies */}
-                    <div>
-                      <h5 className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark mb-2">
-                        Technologies:
-                      </h5>
-                      <div className="flex flex-wrap gap-2">
-                        {exp.technologies.map((tech, techIndex) => (
-                          <motion.div
-                            key={techIndex}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={timelineInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                            transition={{ delay: index * 0.2 + techIndex * 0.05 + 1.2 }}
-                          >
-                            <Badge variant="secondary" size="sm">
-                              {tech}
-                            </Badge>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
-
-                {/* Spacer for alternating layout */}
-                <div className="hidden md:block w-2/12" />
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-
-        {/* Call to Action */}
-        <ScrollReveal delay={0.8}>
-          <div className="text-center mt-16">
-            <p className="text-lg text-text-secondary-light dark:text-text-secondary-dark mb-6">
-              Interested in working together?
-            </p>
-            <motion.a
-              href={siteData.personal.resume}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center space-x-2 bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors"
-            >
-              <span>Download Full Resume</span>
-              <FaExternalLinkAlt size={16} />
-            </motion.a>
-          </div>
-        </ScrollReveal>
+                  <div className="md:col-span-2">
+                    <h4 className="text-xs font-semibold uppercase text-slate">
+                      Technologies
+                    </h4>
+                    <ul className="metadata mt-3 flex flex-wrap gap-x-2 gap-y-1 text-xs leading-relaxed text-slate">
+                      {experience.technologies.map((technology, technologyIndex) => (
+                        <li key={`${experience.id}-${technology}`}>
+                          {technology}
+                          {technologyIndex < experience.technologies.length - 1 ? ',' : ''}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </article>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </section>
   );
-} 
+}

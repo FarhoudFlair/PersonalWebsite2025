@@ -1,0 +1,65 @@
+version: 2
+status: draft
+surface: "Public software-development portfolio"
+audience: "Engineering hiring managers, technical recruiters, and senior developers"
+user_moment: "Decide whether Farhoud's technical range and work warrant a conversation"
+primary_action: "Contact Farhoud"
+business_goal: "Generate qualified engineering conversations"
+required_content:
+  - "Complete factual biography (name, title, tagline, bio, location)"
+  - "Six experience roles with all achievements and technologies"
+  - "All 32 skills across five groups"
+  - "All 17 projects with descriptions, links, technologies, and actions. Feature exactly DeenPath, StockScanner, Remote Admin Toolkit, and Imposter Hunt in that order as compact detailed cards in a 2x2 desktop grid and single-column mobile flow; show the remaining 13 projects in a visible compact alphabetical archive: AndroidQuizApp, Animal Adoption Center, ChatServer, FlickrViewer, MazeSolver, Mechanic Shop, Mortgage Scenario Comparisons, PersonalWebsite2025, Purchase Calculator, Recipe Adventure, Rental Cash Dam, Rental Property Calculator, SwiftProjectileCalculationApp."
+  - "Resume link"
+  - "Social links (GitHub, LinkedIn)"
+  - "Contact email and location"
+  - "Footer and navigation actions"
+
+
+required_states:
+  - "Contact form: empty/invalid (four validation messages), submitting, success, configuration error, failure error"
+  - "Theme: light and dark (persisted)"
+  - "Particle signal controls: closed and open, interaction mode, five colors"
+  - "Mobile navigation: closed and open"
+viewports:
+  - 1440x1100
+  - 390x844
+brand_traits:
+  - "Precise"
+  - "Authored"
+  - "Pragmatic"
+  - "Technically fluent"
+avoid:
+  - "Oversized project presentation"
+  - "Full-width case-study canvas"
+  - "Project filters"
+  - "Project selectors"
+  - "Interaction-gated evidence"
+  - "Glass panels"
+  - "Decorative pills"
+  - "Fake metrics"
+  - "Timeline dots"
+  - "Hover-only actions"
+  - "Overlapping open particle controls"
+  - "Placeholder or filler copy"
+  - "Generic templated UI (anti-slop)"
+creative_range: 8
+signature_idea: "A clear first viewport restores the original identity-first hero: Farhoud's name, Software Engineer role, existing tagline, Contact and Résumé actions, and a subtle particle field."
+constraints:
+  - "Preserve app/data/siteData.ts unchanged as the single factual source"
+  - "Preserve every external link (GitHub, LinkedIn, employer sites, App Store, live URLs)"
+  - "Preserve EmailJS behavior and environment-variable names/template fields"
+  - "Preserve SEO metadata, Open Graph/Twitter/robots, icon and manifest links"
+  - "Preserve dark/light theme, particle controls, and anchor navigation"
+  - "Preserve /imposter-hunt/privacy and /imposter-hunt/support routes"
+  - "Keyboard-operable and screen-reader reachable; reduced motion leaves all content visible"
+  - "Local-only disposable experiment; no production deployment"
+  - "Restore the original identity-first hero composition and preserve the current Bolder Experience and Skills sections unchanged."
+  - "Featured order and layout are fixed: DeenPath, StockScanner, Remote Admin Toolkit, Imposter Hunt; compact 2x2 desktop and single-column mobile cards; 13-item visible alphabetical archive with Rental Cash Dam immediately before Rental Property Calculator."
+  - "Use the four approved featured assets only: real DeenPath App Store screenshots at /images/projects/featured/deenpath-store.webp, a factual editorial cover for StockScanner at /images/projects/featured/stockscanner-cover.webp, a factual editorial cover for Remote Admin Toolkit at /images/projects/featured/rat-cover.webp, and the real Imposter Hunt icon at /images/projects/imposter-hunt.webp."
+assumptions:
+  - "Audience and job are inferred from the explicit brief"
+  - "No valid portrait exists (avatar image is absent)"
+  - ".env.local exists in the worktree and was not inspected, copied, or modified; QA must avoid a real EmailJS send and use explicit empty process env values for the configuration-error test"
+  - "No test runner exists; Studio flows plus browser smoke checks are the behavioral tests"
+  - "motion replaces framer-motion as the one essential dependency change"

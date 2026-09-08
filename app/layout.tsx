@@ -1,11 +1,21 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Barlow_Condensed, Work_Sans } from 'next/font/google';
 import './globals.css';
 import { siteData } from '@/data/siteData';
 import AppClientWrapper from './AppClientWrapper';
 
-const inter = Inter({ subsets: ['latin'] });
+const displayFont = Barlow_Condensed({
+  subsets: ['latin'],
+  weight: ['600', '700'],
+  variable: '--font-display-source',
+});
+
+const bodyFont = Work_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-body-source',
+});
 
 export const metadata: Metadata = {
   title: {
@@ -84,7 +94,7 @@ export default function RootLayout({
         
         {/* Android Chrome Icons */}
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#2563eb" />
+        <meta name="theme-color" content="#1F6B52" />
         
         <script
           dangerouslySetInnerHTML={{
@@ -103,7 +113,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.className} antialiased relative`}>
+      <body className={`${displayFont.variable} ${bodyFont.variable} antialiased relative`}>
         <AppClientWrapper>{children}</AppClientWrapper>
       </body>
     </html>

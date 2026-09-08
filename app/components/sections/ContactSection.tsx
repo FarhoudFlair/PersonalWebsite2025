@@ -1,14 +1,12 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
-import { motion } from 'framer-motion';
-import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaTwitter, FaPaperPlane } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaTwitter, FaPaperPlane } from 'react-icons/fa';
 import { siteData } from '@/data/siteData';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
-import ScrollReveal from '@/components/animations/ScrollReveal';
-import { staggerContainer } from '@/utils/motionVariants';
+import { cn } from '@/utils/cn';
 
 interface FormData {
   name: string;
@@ -22,8 +20,39 @@ interface FormErrors {
   email?: string;
   subject?: string;
   message?: string;
-  submit?: string; // Added to handle general submission errors
+  submit?: string;
 }
+
+const FORM_FIELDS = [
+  { name: 'name', id: 'contact-name' },
+  { name: 'email', id: 'contact-email' },
+  { name: 'subject', id: 'contact-subject' },
+  { name: 'message', id: 'contact-message' },
+] as const;
+
+const SOCIAL_ICONS = {
+  FaGithub,
+  FaLinkedin,
+  FaTwitter,
+};
+
+const CONTACT_INFO = [
+  {
+    label: 'Email',
+    value: siteData.personal.email,
+    href: `mailto:${siteData.personal.email}`,
+  },
+  {
+    label: 'Phone',
+    value: siteData.personal.phone || 'Available upon request',
+    href: siteData.personal.phone ? `tel:${siteData.personal.phone}` : undefined,
+  },
+  {
+    label: 'Location',
+    value: siteData.personal.location,
+    href: undefined,
+  },
+];
 
 export default function ContactSection() {
   const [formData, setFormData] = useState<FormData>({
@@ -32,16 +61,10 @@ export default function ContactSection() {
     subject: '',
     message: '',
   });
-  
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const socialIcons = {
-    FaGithub,
-    FaLinkedin,
-    FaTwitter,
-  };
+  const validationSummaryRef = useRef<HTMLDivElement>(null);
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -66,13 +89,19 @@ export default function ContactSection() {
       newErrors.message = 'Message must be at least 10 characters long';
     }
 
+    const hasErrors = Object.keys(newErrors).length > 0;
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+
+    if (hasErrors) {
+      window.requestAnimationFrame(() => validationSummaryRef.current?.focus());
+    }
+
+    return !hasErrors;
   };
 
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
-    // Clear error when user starts typing
+
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: undefined }));
     }
@@ -80,7 +109,7 @@ export default function ContactSection() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -112,283 +141,267 @@ export default function ContactSection() {
         templateParams,
         publicKey
       );
-      
+
       setIsSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
-      setErrors({}); // Clear errors on successful submission
-      
-      // Reset success state after 5 seconds
+      setErrors({});
+
       setTimeout(() => setIsSubmitted(false), 5000);
     } catch (error) {
       console.error('Error submitting form:', error);
-      // Optionally, set an error state here to show a message to the user
-      setErrors({ submit: 'Failed to send message. Please try again later.' }); 
+      setErrors({ submit: 'Failed to send message. Please try again later.' });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const contactInfo = [
-    {
-      icon: FaEnvelope,
-      label: 'Email',
-      value: siteData.personal.email,
-      href: `mailto:${siteData.personal.email}`,
-    },
-    {
-      icon: FaPhone,
-      label: 'Phone',
-      value: siteData.personal.phone || 'Available upon request',
-      href: siteData.personal.phone ? `tel:${siteData.personal.phone}` : undefined,
-    },
-    {
-      icon: FaMapMarkerAlt,
-      label: 'Location',
-      value: siteData.personal.location,
-      href: undefined,
-    },
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: 'easeOut',
-      },
-    },
-  };
+  const hasValidationErrors = FORM_FIELDS.some(({ name }) => Boolean(errors[name]));
 
   return (
-    <section id="contact" className="section-padding bg-background-light dark:bg-background-dark relative overflow-hidden">
-      {/* Background Animation */}
-      <div className="absolute inset-0 opacity-50">
-        <motion.div
-          animate={{
-            backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-          className="absolute inset-0 bg-gradient-to-r from-primary-500/10 via-purple-500/10 to-pink-500/10"
-          style={{ backgroundSize: '200% 200%' }}
-        />
-      </div>
-
-      <div className="container-custom relative z-10">
-        <ScrollReveal>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-primary-light dark:text-text-primary-dark mb-4">
-              Let's Work Together
-            </h2>
-            <p className="text-lg sm:text-xl text-text-secondary-light dark:text-text-secondary-dark max-w-2xl mx-auto">
-              Ready to bring your next project to life? I'd love to hear from you and discuss how we can create something amazing together.
+    <section
+      id="contact"
+      data-studio-section="contact"
+      data-studio-component="contact-panel"
+      className="section-padding border-t border-trace bg-canvas"
+    >
+      <div className="field-container">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-5">
+            <p className="metadata text-xs font-semibold uppercase text-signal">
+              Contact
             </p>
-          </div>
-        </ScrollReveal>
+            <h2 className="mt-3 text-4xl leading-none text-ink sm:text-5xl lg:text-6xl">
+              Let&apos;s Work Together
+            </h2>
+            <p className="mt-6 max-w-xl text-lg leading-8 text-slate">
+              Ready to bring your next project to life? I&apos;d love to hear from you and discuss how we can create something amazing together.
+            </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Information */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={containerVariants}
-            className="space-y-8"
-          >
-            <motion.div variants={itemVariants}>
-              <h3 className="text-2xl font-bold text-text-primary-light dark:text-text-primary-dark mb-6">
-                Get in Touch
-              </h3>
-              <p className="text-text-secondary-light dark:text-text-secondary-dark mb-8 leading-relaxed">
-                I'm always open to discussing new opportunities, interesting projects, or just having a chat about technology and development. Feel free to reach out through any of the channels below.
+            <div className="mt-12">
+              <h3 className="text-2xl text-ink">Get in Touch</h3>
+              <p className="mt-4 max-w-xl leading-7 text-slate">
+                I&apos;m always open to discussing new opportunities, interesting projects, or just having a chat about technology and development. Feel free to reach out through any of the channels below.
               </p>
-            </motion.div>
 
-            {/* Contact Info Items */}
-            <div className="space-y-6">
-              {contactInfo.map((info, index) => (
-                <motion.div
-                  key={info.label}
-                  variants={itemVariants}
-                  className="group"
-                >
-                  <div className="flex items-center space-x-4 p-4 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300">
-                    <div className="flex items-center justify-center w-12 h-12 bg-primary-100 dark:bg-primary-900/20 rounded-lg group-hover:bg-primary-200 dark:group-hover:bg-primary-900/40 transition-colors">
-                      <info.icon className="text-primary-600 dark:text-primary-400" size={20} />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-text-primary-light dark:text-text-primary-dark">
-                        {info.label}
-                      </h4>
+              <dl className="mt-8 border-t border-trace">
+                {CONTACT_INFO.map((info) => (
+                  <div
+                    key={info.label}
+                    className="grid gap-2 border-b border-trace py-5 sm:grid-cols-3"
+                  >
+                    <dt className="metadata text-xs font-semibold uppercase text-slate">
+                      {info.label}
+                    </dt>
+                    <dd className="break-words font-medium text-ink sm:col-span-2">
                       {info.href ? (
                         <a
                           href={info.href}
-                          className="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                          className="underline decoration-trace transition-colors hover:text-signal hover:decoration-signal"
                         >
                           {info.value}
                         </a>
                       ) : (
-                        <p className="text-text-secondary-light dark:text-text-secondary-dark">
-                          {info.value}
-                        </p>
+                        info.value
                       )}
-                    </div>
+                    </dd>
                   </div>
-                </motion.div>
-              ))}
+                ))}
+              </dl>
             </div>
 
-            {/* Social Links */}
-            <motion.div variants={itemVariants}>
-              <h4 className="font-semibold text-text-primary-light dark:text-text-primary-dark mb-4">
+            <div
+              data-studio-component="social-links"
+              className="mt-10"
+              aria-labelledby="contact-social-title"
+            >
+              <h3
+                id="contact-social-title"
+                className="metadata text-xs font-semibold uppercase text-slate"
+              >
                 Follow Me
-              </h4>
-              <div className="flex space-x-4">
+              </h3>
+              <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-3">
                 {siteData.social.map((social) => {
-                  const IconComponent = socialIcons[social.icon as keyof typeof socialIcons];
+                  const IconComponent = SOCIAL_ICONS[social.icon as keyof typeof SOCIAL_ICONS];
                   return (
-                    <motion.a
-                      key={social.id}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.1, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex items-center justify-center w-12 h-12 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-300 dark:hover:border-primary-700 transition-all duration-300"
-                      aria-label={social.label}
-                    >
-                      <IconComponent size={20} />
-                    </motion.a>
+                    <li key={social.id}>
+                      <a
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 border-b border-trace pb-1 text-sm font-semibold text-ink transition-colors hover:border-signal hover:text-signal"
+                        aria-label={social.label}
+                      >
+                        <IconComponent aria-hidden="true" size={16} />
+                        {social.label}
+                      </a>
+                    </li>
                   );
                 })}
-              </div>
-            </motion.div>
-          </motion.div>
+              </ul>
+            </div>
+          </div>
 
-          {/* Contact Form */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={containerVariants}
-          >
-            <motion.div
-              variants={itemVariants}
-              className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700"
-            >
-              <h3 className="text-2xl font-bold text-text-primary-light dark:text-text-primary-dark mb-6">
+          <div className="border-t border-trace pt-10 lg:col-span-7 lg:border-l lg:border-t-0 lg:pl-16 lg:pt-0">
+            <div className="max-w-2xl">
+              <p className="metadata text-xs font-semibold uppercase text-signal">
+                Direct message
+              </p>
+              <h3 id="contact-form-title" className="mt-3 text-3xl text-ink sm:text-4xl">
                 Send a Message
               </h3>
 
               {isSubmitted ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="text-center py-8"
+                <div
+                  className="mt-8 border-y border-trace py-12"
+                  role="status"
+                  aria-live="polite"
+                  aria-atomic="true"
                 >
-                  <div className="text-6xl mb-4">✅</div>
-                  <h4 className="text-xl font-semibold text-green-600 dark:text-green-400 mb-2">
-                    Message Sent!
-                  </h4>
-                  <p className="text-text-secondary-light dark:text-text-secondary-dark">
-                    Thank you for reaching out. I'll get back to you as soon as possible.
+                  <p className="metadata text-xs font-semibold uppercase text-signal">
+                    Delivered
                   </p>
-                </motion.div>
+                  <h4 className="mt-3 text-2xl text-ink">Message Sent!</h4>
+                  <p className="mt-3 leading-7 text-slate">
+                    Thank you for reaching out. I&apos;ll get back to you as soon as possible.
+                  </p>
+                </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <motion.div variants={itemVariants}>
-                      <Input
-                        label="Name"
-                        value={formData.name}
-                        onChange={(e) => handleInputChange('name', e.target.value)}
-                        error={errors.name}
-                        required
-                      />
-                    </motion.div>
-                    <motion.div variants={itemVariants}>
-                      <Input
-                        label="Email"
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => handleInputChange('email', e.target.value)}
-                        error={errors.email}
-                        required
-                      />
-                    </motion.div>
+                <form
+                  onSubmit={handleSubmit}
+                  noValidate
+                  data-studio-component="contact-form"
+                  data-qa="contact-form"
+                  className="mt-8 space-y-6"
+                  aria-labelledby="contact-form-title"
+                  aria-busy={isSubmitting}
+                >
+                  <div
+                    className="sr-only"
+                    role="status"
+                    aria-live="polite"
+                    aria-atomic="true"
+                  >
+                    {isSubmitting ? 'Sending message.' : ''}
                   </div>
 
-                  <motion.div variants={itemVariants}>
+                  {hasValidationErrors && (
+                    <div
+                      ref={validationSummaryRef}
+                      tabIndex={-1}
+                      role="alert"
+                      aria-live="assertive"
+                      aria-atomic="true"
+                      className="border-l-2 border-safety py-1 pl-4 text-safety dark:text-ink"
+                    >
+                      <p className="font-semibold">Please review the highlighted fields.</p>
+                      <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">
+                        {FORM_FIELDS.map(({ name, id }) => (
+                          errors[name] ? (
+                            <li key={name}>
+                              <a className="underline" href={`#${id}`}>
+                                {errors[name]}
+                              </a>
+                            </li>
+                          ) : null
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  <div className="grid gap-6 sm:grid-cols-2">
                     <Input
-                      label="Subject"
-                      value={formData.subject}
-                      onChange={(e) => handleInputChange('subject', e.target.value)}
-                      error={errors.subject}
+                      id="contact-name"
+                      name="name"
+                      label="Name"
+                      value={formData.name}
+                      onChange={(e) => handleInputChange('name', e.target.value)}
+                      error={errors.name}
+                      autoComplete="name"
                       required
                     />
-                  </motion.div>
+                    <Input
+                      id="contact-email"
+                      name="email"
+                      label="Email"
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => handleInputChange('email', e.target.value)}
+                      error={errors.email}
+                      autoComplete="email"
+                      required
+                    />
+                  </div>
 
-                  <motion.div variants={itemVariants}>
-                    <div className="relative">
-                      <textarea
-                        value={formData.message}
-                        onChange={(e) => handleInputChange('message', e.target.value)}
-                        placeholder="Message"
-                        rows={6}
-                        className="peer w-full rounded-md border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2 text-sm placeholder-transparent focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:cursor-not-allowed disabled:opacity-50 resize-none"
-                        required
-                      />
-                      <label className="absolute left-3 -top-2.5 bg-white dark:bg-gray-900 px-1 text-xs font-medium text-gray-600 dark:text-gray-400 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-primary-500">
-                        Message
-                      </label>
-                      {errors.message && (
-                        <p className="mt-1 text-xs text-red-500">{errors.message}</p>
+                  <Input
+                    id="contact-subject"
+                    name="subject"
+                    label="Subject"
+                    value={formData.subject}
+                    onChange={(e) => handleInputChange('subject', e.target.value)}
+                    error={errors.subject}
+                    required
+                  />
+
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="contact-message"
+                      className="block text-sm font-semibold text-ink"
+                    >
+                      Message
+                    </label>
+                    <textarea
+                      id="contact-message"
+                      name="message"
+                      value={formData.message}
+                      onChange={(e) => handleInputChange('message', e.target.value)}
+                      rows={6}
+                      aria-invalid={Boolean(errors.message)}
+                      aria-describedby={errors.message ? 'contact-message-error' : undefined}
+                      className={cn(
+                        'w-full resize-none border bg-canvas px-4 py-3 text-base text-ink transition-colors placeholder:text-slate hover:border-slate focus-visible:border-safety disabled:cursor-not-allowed disabled:opacity-50',
+                        errors.message ? 'border-safety' : 'border-trace'
                       )}
-                    </div>
-                  </motion.div>
+                      required
+                    />
+                    {errors.message && (
+                      <p id="contact-message-error" className="text-sm leading-5 text-safety dark:text-ink">
+                        {errors.message}
+                      </p>
+                    )}
+                  </div>
 
                   {errors.submit && (
-                    <motion.div variants={itemVariants} className="mb-4">
-                      <p className="text-sm text-red-500 text-center">{errors.submit}</p>
-                    </motion.div>
-                  )}
-                  <motion.div variants={itemVariants}>
-                    <Button
-                      type="submit"
-                      loading={isSubmitting}
-                      className="w-full"
-                      size="lg"
+                    <p
+                      id="contact-submit-error"
+                      className="border-l-2 border-safety py-1 pl-4 text-sm text-safety dark:text-ink"
+                      role="alert"
+                      aria-live="assertive"
                     >
-                      {isSubmitting ? 'Sending...' : (
-                        <>
-                          <FaPaperPlane className="mr-2" size={16} />
-                          Send Message
-                        </>
-                      )}
-                    </Button>
-                  </motion.div>
+                      {errors.submit}
+                    </p>
+                  )}
+
+                  <Button
+                    type="submit"
+                    loading={isSubmitting}
+                    className="w-full"
+                    size="lg"
+                    aria-describedby={errors.submit ? 'contact-submit-error' : undefined}
+                  >
+                    {isSubmitting ? 'Sending...' : (
+                      <>
+                        <FaPaperPlane className="mr-2" size={16} aria-hidden="true" />
+                        Send Message
+                      </>
+                    )}
+                  </Button>
                 </form>
               )}
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
-} 
+}

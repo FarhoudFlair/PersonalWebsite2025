@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaPalette, FaTimes } from 'react-icons/fa';
+import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
+import ParticleInteractionToggle from '@/components/ui/ParticleInteractionToggle';
+import { cn } from '@/utils/cn';
 
 interface ColorOption {
   name: string;
@@ -13,70 +14,179 @@ interface ParticleColorSelectorProps {
   availableColors: ColorOption[];
   currentColor: string;
   onColorChange: (colorValue: string) => void;
+  currentMode: 'repulse' | 'attract';
+  onToggleInteraction: () => void;
+  prefersReducedMotion: boolean;
 }
 
-const ParticleColorSelector: React.FC<ParticleColorSelectorProps> = ({
+const PANEL_ID = 'particle-signal-controls-panel';
+const PANEL_HEADING_ID = 'particle-signal-controls-heading';
+
+const panelVariants = {
+  closed: { opacity: 0, y: 8 },
+  open: { opacity: 1, y: 0 },
+};
+
+const reducedMotionPanelVariants = {
+  closed: { opacity: 1, y: 0 },
+  open: { opacity: 1, y: 0 },
+};
+
+const panelTransition = { duration: 0.18, ease: 'easeOut' as const };
+const reducedMotionPanelTransition = { duration: 0 };
+
+function ParticleColorSelector({
   availableColors,
   currentColor,
   onColorChange,
-}) => {
+  currentMode,
+  onToggleInteraction,
+  prefersReducedMotion,
+}: ParticleColorSelectorProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const controlsRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const selectedColor = availableColors.find((color) => color.value === currentColor);
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') {
+        return;
+      }
+
+      event.preventDefault();
+      setIsOpen(false);
+      triggerRef.current?.focus();
+    };
+
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target;
+
+      if (target instanceof Node && !controlsRef.current?.contains(target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('pointerdown', handlePointerDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('pointerdown', handlePointerDown);
+    };
+  }, [isOpen]);
 
   return (
-    <div className="fixed bottom-16 right-4 z-50 flex flex-col items-end">
-      <AnimatePresence>
+    <div ref={controlsRef} className="fixed right-4 top-20 z-20 flex flex-col items-end sm:z-40">
+      <button
+        ref={triggerRef}
+        type="button"
+        onClick={() => setIsOpen((wasOpen) => !wasOpen)}
+        className="flex h-11 items-center gap-2 border border-ink bg-ink px-3 text-canvas transition-colors hover:border-signal hover:bg-signal dark:hover:text-ink"
+        data-studio-component="signal-controls"
+        data-qa="signal-controls-toggle"
+        aria-label={isOpen ? 'Close particle signal controls' : 'Open particle signal controls'}
+        aria-expanded={isOpen}
+        aria-controls={PANEL_ID}
+      >
+        <span className="metadata text-xs font-semibold uppercase tracking-widest">Signal</span>
+        <span
+          aria-hidden="true"
+          className="h-3 w-3 border border-current"
+          style={{ backgroundColor: currentColor }}
+        />
+        <span aria-hidden="true" className="text-base leading-none">
+          {isOpen ? '−' : '+'}
+        </span>
+      </button>
+
+      <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 10, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            transition={{ duration: 0.2, ease: 'easeInOut' }}
-            className="p-3 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-lg shadow-lg flex flex-col items-center space-y-2 mb-2"
+            id={PANEL_ID}
+            role="region"
+            aria-labelledby={PANEL_HEADING_ID}
+            variants={prefersReducedMotion ? reducedMotionPanelVariants : panelVariants}
+            initial="closed"
+            animate="open"
+            exit="closed"
+            transition={prefersReducedMotion ? reducedMotionPanelTransition : panelTransition}
+            className="absolute right-0 top-full mt-2 w-80 max-w-[calc(100vw-2rem)] border border-trace bg-canvas text-ink will-change-transform sm:bottom-auto sm:top-full sm:mb-0 sm:mt-2"
           >
-            <p className="text-xs font-medium text-gray-700 dark:text-gray-300">Color</p>
-            <div className="flex space-x-2">
-              {availableColors.map((color) => (
-                <button
-                  key={color.value}
-                  type="button"
-                  title={color.name}
-                  aria-label={`Select color ${color.name}`}
-                  onClick={() => onColorChange(color.value)}
-                  className={`w-6 h-6 rounded-full border-2 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-offset-gray-100 dark:focus:ring-offset-gray-900 ${
-                    currentColor === color.value
-                      ? 'ring-2 ring-offset-1 ring-offset-gray-100 dark:ring-offset-gray-900 ring-primary-500'
-                      : 'border-gray-300 dark:border-gray-600 hover:border-gray-500 dark:hover:border-gray-400'
-                  }`}
-                  style={{ backgroundColor: color.value }}
-                />
-              ))}
+            <div className="flex items-end justify-between gap-4 border-b border-trace px-4 py-3">
+              <div>
+                <p className="metadata text-xs uppercase tracking-widest text-slate">
+                  Particle field
+                </p>
+                <h2 id={PANEL_HEADING_ID} className="text-2xl font-semibold leading-none">
+                  Signal controls
+                </h2>
+              </div>
+              {selectedColor && (
+                <p className="text-right text-xs font-medium text-slate">
+                  {selectedColor.name}
+                </p>
+              )}
+            </div>
+
+            <div className="p-4">
+              <ParticleInteractionToggle
+                currentMode={currentMode}
+                onToggle={onToggleInteraction}
+              />
+
+              <fieldset className="m-0 mt-5 min-w-0 border-0 p-0">
+                <legend className="metadata text-xs font-semibold uppercase tracking-widest text-slate">
+                  Signal color
+                </legend>
+                <div className="mt-2 border-y border-trace">
+                  {availableColors.map((color) => {
+                    const isSelected = currentColor === color.value;
+
+                    return (
+                      <button
+                        key={color.value}
+                        type="button"
+                        onClick={() => onColorChange(color.value)}
+                        aria-pressed={isSelected}
+                        className={cn(
+                          'flex min-h-11 w-full items-center gap-3 border-b border-trace px-1 py-2 text-left transition-colors last:border-b-0 hover:bg-trace/30',
+                          isSelected && 'bg-trace/30'
+                        )}
+                      >
+                        <span
+                          aria-hidden="true"
+                          className={cn(
+                            'h-4 w-4 shrink-0 border',
+                            isSelected ? 'border-ink' : 'border-trace'
+                          )}
+                          style={{ backgroundColor: color.value }}
+                        />
+                        <span className="text-sm font-medium">{color.name}</span>
+                        <span
+                          aria-hidden="true"
+                          className={cn(
+                            'metadata ml-auto text-xs uppercase',
+                            isSelected ? 'font-semibold text-ink' : 'text-slate'
+                          )}
+                        >
+                          {isSelected ? 'Selected' : color.value}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </fieldset>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-
-      <motion.button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-12 h-12 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-full shadow-lg flex items-center justify-center text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-2 focus:ring-primary-500"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        aria-label={isOpen ? 'Close color picker' : 'Open color picker'}
-      >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={isOpen ? 'times' : 'palette'}
-            initial={{ opacity: 0, rotate: -45, scale: 0.5 }}
-            animate={{ opacity: 1, rotate: 0, scale: 1 }}
-            exit={{ opacity: 0, rotate: 45, scale: 0.5 }}
-            transition={{ duration: 0.2, ease: 'easeInOut' }}
-          >
-            {isOpen ? <FaTimes size={20} /> : <FaPalette size={20} />}
-          </motion.div>
-        </AnimatePresence>
-      </motion.button>
     </div>
   );
-};
+}
 
 export default ParticleColorSelector;

@@ -1,0 +1,275 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-23T05:25:29Z",
+  "title": "Design System: Farhoud Talebi Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Canvas Mist"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Carbon Ink"
+      },
+      "slate": {
+        "role": "neutral",
+        "displayName": "Field Slate"
+      },
+      "trace": {
+        "role": "neutral",
+        "displayName": "Trace Gray"
+      },
+      "signal": {
+        "role": "primary",
+        "displayName": "Signal Green"
+      },
+      "safety": {
+        "role": "secondary",
+        "displayName": "Safety Rust"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Identity headline and the largest structural statement."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Major section headings."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Project, role, record, and panel titles."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Default narrative and explanatory copy."
+      },
+      "body-small": {
+        "displayName": "Body Small",
+        "purpose": "Compact descriptions, achievements, and actions."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Buttons and compact navigation actions."
+      },
+      "metadata": {
+        "displayName": "Metadata",
+        "purpose": "Dates, counts, status, technologies, and indexes."
+      },
+      "metadata-label": {
+        "displayName": "Metadata Label",
+        "purpose": "Uppercase field labels and control legends."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "color-state",
+        "value": "150ms cubic-bezier(0.4, 0, 0.2, 1)",
+        "purpose": "Default Tailwind color, border, decoration, fill, and stroke transitions."
+      },
+      {
+        "name": "theme-swap",
+        "value": "200ms ease-out",
+        "purpose": "Canvas and Ink background/foreground role swap."
+      },
+      {
+        "name": "project-card-state",
+        "value": "150ms cubic-bezier(0.4, 0, 0.2, 1)",
+        "purpose": "Direct link and card affordance color changes; evidence and actions remain visible without project selection."
+      },
+      {
+        "name": "signal-panel",
+        "value": "180ms easeOut; translateY(8px)",
+        "purpose": "Open and close the particle signal controls panel."
+      },
+      {
+        "name": "career-reveal",
+        "value": "450ms easeOut; translateX(-16px)",
+        "purpose": "One-time career section heading reveal."
+      },
+      {
+        "name": "capability-reveal",
+        "value": "400ms easeOut; translateX(16px)",
+        "purpose": "One-time capability section heading reveal."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "0ms Motion transitions; 0.01ms CSS animation and transition override",
+        "purpose": "Keep all content visible while removing meaningful displacement and duration."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Identity Hero",
+      "kind": "hero",
+      "refersTo": "identity-hero",
+      "description": "Original identity-first hero restored as the first viewport: Farhoud Talebi, Software Engineer, existing tagline, Contact and Résumé actions, and a subtle particle field with no project preview or evidence column.",
+      "html": "<section data-studio-component='identity-hero' aria-labelledby='identity-heading'><p>Software Engineer</p><h1 id='identity-heading'>Farhoud Talebi</h1><p>I build innovative software solutions</p><a data-qa='primary-action' href='#contact'>Contact Farhoud</a><a href='/Farhoud Resume.pdf'>Résumé (PDF)</a></section>",
+      "css": "[data-studio-component='identity-hero'] { display: grid; min-height: 70vh; place-content: center; background: rgb(var(--canvas)); color: rgb(var(--ink)); }"
+    },
+    {
+      "name": "Primary Action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Square Signal action used for the hero's primary contact path.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#contact\">Contact Farhoud</a>",
+      "css": ".ds-btn-primary { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; border: 0; border-radius: 0; background: rgb(var(--signal)); color: rgb(var(--canvas)); padding: 12px 24px; font-family: var(--font-body, \"Work Sans\"), sans-serif; font-size: 14px; font-weight: 600; line-height: 20px; text-decoration: none; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-primary:hover { background: rgb(var(--signal) / 0.9); } .ds-btn-primary:focus-visible { outline: 2px solid rgb(var(--safety)); outline-offset: 3px; } :host-context(.dark) .ds-btn-primary { color: rgb(var(--ink)); }"
+    },
+    {
+      "name": "Secondary Action",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Transparent ruled action used for the hero résumé path.",
+      "html": "<a class=\"ds-btn-secondary\" href=\"/Farhoud Resume.pdf\">Résumé (PDF)</a>",
+      "css": ".ds-btn-secondary { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; border: 1px solid rgb(var(--trace)); border-radius: 0; background: transparent; color: rgb(var(--ink)); padding: 12px 24px; font-family: var(--font-body, \"Work Sans\"), sans-serif; font-size: 14px; font-weight: 600; line-height: 20px; text-decoration: none; transition: border-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-secondary:hover { border-color: rgb(var(--signal)); } .ds-btn-secondary:focus-visible { outline: 2px solid rgb(var(--safety)); outline-offset: 3px; }"
+    },
+    {
+      "name": "Contact Submit",
+      "kind": "button",
+      "refersTo": "button-submit",
+      "description": "Full-width shared Button primitive used to submit the contact form.",
+      "html": "<button class=\"ds-btn-submit\" type=\"submit\"><svg aria-hidden=\"true\" viewBox=\"0 0 512 512\"><path d=\"M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z\"/></svg>Send Message</button>",
+      "css": ".ds-btn-submit { display: inline-flex; width: 100%; height: 44px; align-items: center; justify-content: center; border: 0; border-radius: 6px; background: rgb(var(--signal)); color: rgb(var(--canvas)); padding: 0 32px; font-family: var(--font-body, \"Work Sans\"), sans-serif; font-size: 18px; font-weight: 500; line-height: 28px; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-submit svg { width: 16px; height: 16px; margin-right: 8px; fill: currentColor; } .ds-btn-submit:hover { background: rgb(var(--signal) / 0.9); } .ds-btn-submit:focus-visible { outline: 2px solid rgb(var(--safety)); outline-offset: 3px; } .ds-btn-submit:disabled { pointer-events: none; opacity: 0.5; } :host-context(.dark) .ds-btn-submit { color: rgb(var(--ink)); }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Square ruled contact field with semantic focus, error, and disabled states.",
+      "html": "<label class=\"ds-field-label\" for=\"ds-email\">Email</label><input class=\"ds-input\" id=\"ds-email\" type=\"email\">",
+      "css": ".ds-field-label { display: block; margin-bottom: 8px; color: rgb(var(--ink)); font-family: var(--font-body, \"Work Sans\"), sans-serif; font-size: 14px; font-weight: 600; line-height: 20px; } .ds-input { width: 100%; border: 1px solid rgb(var(--trace)); border-radius: 0; background: rgb(var(--canvas)); color: rgb(var(--ink)); padding: 12px 16px; font-family: var(--font-body, \"Work Sans\"), sans-serif; font-size: 16px; line-height: 24px; transition: border-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-input::placeholder { color: rgb(var(--slate)); } .ds-input:hover { border-color: rgb(var(--slate)); } .ds-input:focus-visible { border-color: rgb(var(--safety)); outline: 2px solid rgb(var(--safety)); outline-offset: 3px; } .ds-input[aria-invalid=\"true\"] { border-color: rgb(var(--safety)); } .ds-input:disabled { cursor: not-allowed; opacity: 0.5; }"
+    },
+    {
+      "name": "Published Product Card",
+      "kind": "custom",
+      "refersTo": "project-published-product",
+      "description": "Compact detailed DeenPath featured card with real App Store screenshots, factual capabilities, stack, dates, status, highlights, and a direct App Store action.",
+      "html": "<article data-qa='project-published-product'><img src='/images/projects/featured/deenpath-store.webp' alt='DeenPath App Store screenshots'><p>Published product · 01/04</p><h3>DeenPath</h3><p>Real App Store product evidence</p><h4>Capabilities</h4><h4>Stack and actions</h4></article>",
+      "css": "[data-qa='project-published-product'] { min-width: 0; border: 1px solid rgb(var(--trace)); background: rgb(var(--canvas)); color: rgb(var(--ink)); }"
+    },
+    {
+      "name": "Featured Project Card",
+      "kind": "custom",
+      "refersTo": "featured-project-card",
+      "description": "Reusable compact detailed card for StockScanner, Remote Admin Toolkit, and Imposter Hunt; use factual editorial covers at /images/projects/featured/stockscanner-cover.webp and /images/projects/featured/rat-cover.webp plus the real icon at /images/projects/imposter-hunt.webp. Factual evidence, technologies, dates/status when verified, direct links, and visible actions are always present.",
+      "html": "<article class='ds-featured-card'><img src='/images/projects/featured/stockscanner-cover.webp' alt='StockScanner editorial cover'><p>Selected work · 02/04</p><h3>StockScanner</h3><p>Factual project description</p><h4>Highlights</h4><h4>Stack and actions</h4></article>",
+      "css": ".ds-featured-card { min-width: 0; border: 1px solid rgb(var(--trace)); background: rgb(var(--canvas)); color: rgb(var(--ink)); } .ds-featured-card img { aspect-ratio: 16 / 9; display: block; width: 100%; object-fit: cover; }"
+    },
+    {
+      "name": "Featured Project Grid",
+      "kind": "custom",
+      "refersTo": "project-selected-work",
+      "description": "Static wrapper for exactly four compact detailed featured cards in the approved order: DeenPath, StockScanner, Remote Admin Toolkit, and Imposter Hunt. It has no filter, selector, or interaction-gated evidence.",
+      "html": "<section data-qa='project-selected-work' aria-labelledby='project-stories-heading'><h3 id='project-stories-heading'>Selected work</h3><div class='ds-featured-grid'><article>DeenPath</article><article>StockScanner</article><article>Remote Admin Toolkit</article><article>Imposter Hunt</article></div></section>",
+      "css": "[data-qa='project-selected-work'] { border-top: 1px solid rgb(var(--trace)); } .ds-featured-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; } @media (max-width: 639px) { .ds-featured-grid { grid-template-columns: minmax(0, 1fr); } }"
+    },
+    {
+      "name": "Static Project Archive",
+      "kind": "custom",
+      "refersTo": "project-archive",
+      "description": "Visible compact archive of exactly 13 remaining projects in alphabetical order: Animal Adoption Center, AndroidQuizApp, ChatServer, FlickrViewer, MazeSolver, Mechanic Shop, Mortgage Scenario Comparisons, PersonalWebsite2025, Purchase Calculator, Recipe Adventure, Rental Cash Dam, Rental Property Calculator, SwiftProjectileCalculationApp. Rental Cash Dam remains immediately before Rental Property Calculator.",
+      "html": "<section data-qa='project-archive' aria-labelledby='project-archive-heading'><h3 id='project-archive-heading'>Archive · 13 projects</h3><ol><li>Animal Adoption Center</li><li>AndroidQuizApp</li><li>ChatServer</li><li>FlickrViewer</li><li>MazeSolver</li><li>Mechanic Shop</li><li>Mortgage Scenario Comparisons</li><li>PersonalWebsite2025</li><li>Purchase Calculator</li><li>Recipe Adventure</li><li>Rental Cash Dam</li><li>Rental Property Calculator</li><li>SwiftProjectileCalculationApp</li></ol></section>",
+      "css": "[data-qa='project-archive'] { border-top: 1px solid rgb(var(--trace)); } [data-qa='project-archive'] li { border-bottom: 1px solid rgb(var(--trace)); padding: 16px 0; }"
+    },
+    {
+      "name": "Simple Site Navigation",
+      "kind": "nav",
+      "refersTo": "navigation-link",
+      "description": "Original-inspired desktop navigation with a name home link and simple section links; an accessible mobile drawer presents the same section links and closes on Escape or outside press.",
+      "html": "<nav data-studio-component=\"site-navigation\" aria-label=\"Primary navigation\"><div class=\"container-custom\"><a href=\"#home\">Farhoud Talebi</a><ul><li><a href=\"#home\">Home</a></li><li><a href=\"#projects\">Projects</a></li><li><a href=\"#experience\">Experience</a></li><li><a href=\"#skills\">Skills</a></li><li><a href=\"#contact\">Contact</a></li></ul></div></nav><div id=\"mobile-navigation-drawer\" role=\"dialog\" aria-label=\"Navigation\"><a href=\"#home\">Home</a><a href=\"#projects\">Projects</a><a href=\"#experience\">Experience</a><a href=\"#skills\">Skills</a><a href=\"#contact\">Contact</a></div>",
+      "css": "[data-studio-component=\"site-navigation\"] { border-bottom: 1px solid rgb(var(--trace)); background: rgb(var(--canvas)); color: rgb(var(--ink)); } [data-studio-component=\"site-navigation\"] ul { display: flex; align-items: center; gap: 20px; } [data-studio-component=\"site-navigation\"] a { color: rgb(var(--slate)); font-family: var(--font-body, \"Work Sans\"), sans-serif; font-size: 14px; font-weight: 500; text-decoration: none; transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1); } [data-studio-component=\"site-navigation\"] a:hover { color: rgb(var(--signal)); }"
+    },
+    {
+      "name": "Career Ledger Row",
+      "kind": "custom",
+      "refersTo": "ledger-row",
+      "description": "Twelve-column career evidence row with native disclosure for additional achievements.",
+      "html": "<article class=\"ds-ledger-row\"><div class=\"ds-ledger-date\">2022-12 — Present<br>Canada<br>full-time</div><header><h3>Sr. Analyst, Software Engineer</h3><a href=\"https://www.collinsaerospace.com\">Collins Aerospace ↗</a></header><div class=\"ds-ledger-proof\"><ul><li><span aria-hidden=\"true\">—</span><span>Implemented NATO STANAG 4358 3G protocol standards in radio codebase, optimizing bit/byte manipulation and packet formatting while maintaining backward compatibility</span></li><li><span aria-hidden=\"true\">—</span><span>Architected and developed a full-stack web application (JavaScript/Python) that automated radio configuration and testing, reducing engineering time by 30%</span></li></ul><details><summary>Show 3 more achievements</summary></details></div><div class=\"ds-ledger-tech\">Technologies<br>C#, .NET, C++, JavaScript, HTML, Python, Waveforms</div></article>",
+      "css": ".ds-ledger-row { display: grid; grid-template-columns: 2fr 3fr 5fr 2fr; gap: 32px; border-top: 1px solid rgb(var(--trace)); border-bottom: 1px solid rgb(var(--trace)); background: rgb(var(--canvas)); color: rgb(var(--ink)); padding: 32px 0; } .ds-ledger-date, .ds-ledger-tech { color: rgb(var(--slate)); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", monospace; font-size: 12px; line-height: 20px; letter-spacing: 0.03em; } .ds-ledger-row h3 { margin: 0; font-family: var(--font-display, \"Barlow Condensed\"), sans-serif; font-size: 24px; font-weight: 600; line-height: 1.25; letter-spacing: -0.025em; } .ds-ledger-row a, .ds-ledger-row summary { color: rgb(var(--signal)); text-decoration-color: rgb(var(--trace)); text-underline-offset: 4px; } .ds-ledger-row a:hover { text-decoration-color: rgb(var(--signal)); } .ds-ledger-row a:focus-visible, .ds-ledger-row summary:focus-visible { outline: 2px solid rgb(var(--safety)); outline-offset: 3px; } .ds-ledger-proof { font-family: var(--font-body, \"Work Sans\"), sans-serif; font-size: 14px; line-height: 24px; } .ds-ledger-proof ul { margin: 0; padding: 0; list-style: none; } .ds-ledger-proof li { display: flex; gap: 12px; margin-top: 12px; } .ds-ledger-proof li:first-child { margin-top: 0; } .ds-ledger-proof details { margin-top: 16px; border-left: 1px solid rgb(var(--trace)); padding-left: 16px; } .ds-ledger-proof summary { width: fit-content; cursor: pointer; font-weight: 500; }"
+    },
+    {
+      "name": "Signal Controls Trigger",
+      "kind": "button",
+      "refersTo": "signal-trigger",
+      "description": "Fixed top-right particle-field control below the header; it exposes its current color and explicit open state, hides while the mobile navigation drawer is open, and opens its panel downward.",
+      "html": "<div class=\"ds-signal-controls\"><button class=\"ds-signal-trigger\" data-qa=\"signal-controls-toggle\" type=\"button\" aria-expanded=\"false\" aria-controls=\"particle-signal-controls-panel\"><span>Signal</span><i aria-hidden=\"true\"></i><b aria-hidden=\"true\">+</b></button><section id=\"particle-signal-controls-panel\" aria-label=\"Signal controls\"></section></div>",
+      "css": ".ds-signal-controls { position: fixed; top: 80px; right: 16px; z-index: 20; } .ds-signal-trigger { display: flex; height: 44px; align-items: center; gap: 8px; border: 1px solid rgb(var(--ink)); border-radius: 0; background: rgb(var(--ink)); color: rgb(var(--canvas)); padding: 0 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", monospace; font-size: 12px; font-weight: 600; line-height: 16px; letter-spacing: 0.1em; text-transform: uppercase; transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), border-color 150ms cubic-bezier(0.4, 0, 0.2, 1), background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-signal-controls:has(#particle-signal-controls-panel) #particle-signal-controls-panel { position: absolute; top: calc(100% + 8px); right: 0; width: min(320px, calc(100vw - 32px)); border: 1px solid rgb(var(--trace)); background: rgb(var(--canvas)); color: rgb(var(--ink)); } body:has(#mobile-navigation-drawer) .ds-signal-controls { visibility: hidden; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Evidence Field",
+    "overview": "The Evidence Field restores an original identity-first first viewport: Farhoud's name, Software Engineer role, existing tagline, Contact and Résumé actions, and a subtle particle field. It presents engineering work as authored, factual proof that technical evaluators can scan without spectacle. Condensed display type gives identity and section markers a clear voice; restrained body copy and monospaced metadata make the evidence technically fluent.\n\nThe system is dense inside generous outer whitespace. A compact four-card featured grid leads with DeenPath, StockScanner, Remote Admin Toolkit, and Imposter Hunt in that order, followed by a visible 13-item archive. The current Bolder Experience and Skills sections remain unchanged. Signal Green marks action and selection, Safety Rust protects focus and error states, and verified project imagery provides the only large image texture.",
+    "keyCharacteristics": [
+      "Six semantic color roles with a four-role dark-mode swap.",
+      "Condensed display type, readable body type, and tabular monospaced metadata.",
+      "Fluid outer gutters around an asymmetric twelve-column desktop field.",
+      "Flat one-pixel dividers, predominantly square geometry, and no shadows.",
+      "Compact detailed featured cards in a 2x2 desktop grid and a single-column mobile flow, followed by a complete visible 13-item archive."
+    ],
+    "rules": [
+      {
+        "name": "The Signal/Safety Separation Rule",
+        "body": "Signal marks action and selection; Safety is reserved for focus, validation, and errors.",
+        "section": "colors"
+      },
+      {
+        "name": "The Role-Swap Rule",
+        "body": "Dark mode swaps Canvas with Ink and Slate with Trace while Signal and Safety remain fixed semantic accents.",
+        "section": "colors"
+      },
+      {
+        "name": "The Three-Register Type Rule",
+        "body": "Use Barlow Condensed for identity and structural titles, Work Sans for explanation and action, and the system mono stack only for metadata and indexing.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-by-Default Rule",
+        "body": "Separate regions with role color, one-pixel rules, and whitespace; do not simulate depth with shadows or translucent glass.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Visible-with-Reduced-Motion Rule",
+        "body": "Motion may clarify a transition, but reduced motion must remove displacement and duration while leaving all content visible.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use the six semantic role tokens instead of introducing ad hoc interface colors.",
+      "Do keep Signal for action/selection and Safety for focus/validation/error.",
+      "Do preserve the three typography registers and the observed spacing rhythm.",
+      "Do use Trace rules, whitespace, and role inversion to organize dense evidence.",
+      "Do keep featured evidence and actions visible without filters, selectors, or interaction gates.",
+      "Do keep controls keyboard-visible and content fully visible when motion is reduced."
+    ],
+    "donts": [
+      "Don't add gradients, glass blur, shadows, glow borders, or decorative blobs.",
+      "Don't turn featured projects into oversized case studies or generic card walls; use the approved compact four-card grid.",
+      "Don't add project filters, selectors, or interaction-gated evidence.",
+      "Don't use Safety as a general accent or Signal as an error color.",
+      "Don't hide actions or essential details behind hover-only behavior.",
+      "Don't introduce a second palette, type family, radius scale, or spacing scale beside the captured system."
+    ]
+  }
+}

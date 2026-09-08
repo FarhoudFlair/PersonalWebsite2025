@@ -1,295 +1,346 @@
-'use client';
-
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FaExternalLinkAlt, FaGithub, FaStar, FaClock, FaCheckCircle } from 'react-icons/fa';
+import Image from 'next/image';
+import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
 import { siteData } from '@/data/siteData';
-import Badge from '@/components/ui/Badge';
-import Button from '@/components/ui/Button';
-import Card from '@/components/ui/Card';
-import ScrollReveal from '@/components/animations/ScrollReveal';
-import { staggerContainer } from '@/utils/motionVariants';
+import type { Project } from '@/types';
 
-export default function ProjectsSection() {
-  const [filter, setFilter] = useState<'featured' | 'all'>('featured');
+const FEATURED_PROJECTS = [
+  {
+    id: 'deenpath',
+    category: 'Published iOS product',
+    image: '/images/projects/featured/deenpath-store.webp',
+    alt: 'DeenPath iOS app store cover',
+    containImage: false,
+  },
+  {
+    id: 'stockscanner',
+    category: 'Market analysis',
+    image: '/images/projects/featured/stockscanner-cover.webp',
+    alt: 'StockScanner project cover',
+    containImage: false,
+  },
+  {
+    id: 'rat',
+    category: 'Systems tooling',
+    image: '/images/projects/featured/rat-cover.webp',
+    alt: 'Remote Admin Toolkit project cover',
+    containImage: false,
+  },
+  {
+    id: 'imposter-hunt',
+    category: 'iOS party game',
+    image: '/images/projects/imposter-hunt.webp',
+    alt: 'Imposter Hunt app icon',
+    containImage: true,
+  },
+] as const;
 
-  const statusIcons = {
-    completed: FaCheckCircle,
-    'in-progress': FaClock,
-    concept: FaStar,
-  };
+const projectsById = siteData.projects.reduce<Record<string, Project>>(
+  (projects, project) => {
+    projects[project.id] = project;
+    return projects;
+  },
+  {}
+);
 
-  const statusColors = {
-    completed: 'text-green-500',
-    'in-progress': 'text-yellow-500',
-    concept: 'text-blue-500',
-  };
+const featuredProjects = FEATURED_PROJECTS.map((featuredProject) => ({
+  ...featuredProject,
+  project: projectsById[featuredProject.id],
+}));
 
-  const filteredProjects = siteData.projects.filter(project => {
-    if (filter === 'all') return true;
-    if (filter === 'featured') return project.featured;
-    return true;
-  });
+const FEATURED_PROJECT_IDS: Record<string, true> = {
+  deenpath: true,
+  stockscanner: true,
+  rat: true,
+  'imposter-hunt': true,
+};
+const archiveProjects = siteData.projects
+  .filter((project) => !FEATURED_PROJECT_IDS[project.id])
+  .sort((firstProject, secondProject) =>
+    firstProject.title.localeCompare(secondProject.title)
+  );
 
-  const projectVariants = {
-    hidden: { opacity: 0, y: 20, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.5,
-        ease: 'easeOut',
-      },
-    },
-  };
+const STATUS_LABELS: Record<NonNullable<Project['status']>, string> = {
+  completed: 'Completed',
+  'in-progress': 'In progress',
+  concept: 'Concept',
+};
+
+function ProjectMetadata({ project }: { project: Project }) {
+  const metadata = [
+    project.status ? STATUS_LABELS[project.status] : null,
+    project.startDate
+      ? project.endDate
+        ? `${project.startDate} — ${project.endDate}`
+        : project.startDate
+      : null,
+  ].filter((value): value is string => Boolean(value));
+
+  if (!metadata.length) {
+    return null;
+  }
 
   return (
-    <section id="projects" className="section-padding bg-surface-light dark:bg-surface-dark">
-      <div className="container-custom">
-        <ScrollReveal>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-primary-light dark:text-text-primary-dark mb-4">
-              Projects
-            </h2>
-            <p className="text-lg sm:text-xl text-text-secondary-light dark:text-text-secondary-dark max-w-2xl mx-auto">
-              A showcase of my recent work and personal projects that demonstrate my skills and passion for development.
-            </p>
-          </div>
-        </ScrollReveal>
+    <p className="metadata flex flex-wrap items-center gap-x-3 gap-y-1 text-xs uppercase text-slate">
+      {metadata.map((value, index) => (
+        <span key={`${project.id}-${value}`}>
+          {index > 0 && <span aria-hidden="true">/ </span>}
+          {value}
+        </span>
+      ))}
+    </p>
+  );
+}
 
-        {/* Filter Buttons */}
-        <ScrollReveal delay={0.2}>
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
-            {[
-              { key: 'featured', label: 'Featured' },
-              { key: 'all', label: 'All Projects' },
-            ].map((filterOption) => (
-              <Button
-                key={filterOption.key}
-                onClick={() => setFilter(filterOption.key as any)}
-                variant={filter === filterOption.key ? 'primary' : 'outline'}
-                size="sm"
-                className="transition-all duration-300"
-              >
-                {filterOption.label}
-              </Button>
-            ))}
-          </div>
-        </ScrollReveal>
+function ProjectActions({ project }: { project: Project }) {
+  if (!project.githubUrl && !project.liveUrl) {
+    return null;
+  }
 
-        {/* Projects Grid */}
-        <motion.div
-          layout
-          initial="hidden"
-          animate="visible"
-          variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+  const isAppStore = project.liveUrl?.includes('apps.apple.com');
+  const actionClassName =
+    'inline-flex min-h-10 items-center gap-2 border border-trace px-3 py-2 text-xs font-semibold text-ink outline-safety transition-colors duration-200 hover:border-signal hover:bg-signal hover:text-canvas dark:hover:text-ink';
+
+  return (
+    <div className="flex flex-wrap gap-2">
+      {project.githubUrl && (
+        <a
+          href={project.githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`View the ${project.title} repository on GitHub (opens in a new tab)`}
+          className={actionClassName}
         >
-          {filteredProjects.map((project, index) => {
-            const StatusIcon = statusIcons[project.status];
-            
-            return (
-              <motion.div
-                key={project.id}
-                layout
-                variants={projectVariants}
-                whileHover={{ y: -10 }}
-                className="group relative"
-              >
-                <Card variant="elevated" className="h-full overflow-hidden">
-                  {/* Project Image */}
-                  <div className="relative h-48 bg-gradient-to-br from-primary-100 to-purple-100 dark:from-primary-900 dark:to-purple-900 overflow-hidden">
-                    {/* Project cover */}
-                    <img
-                      src={project.image}
-                      alt={`${project.title} project cover`}
-                      loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
+          <FaGithub aria-hidden="true" className="h-3.5 w-3.5" />
+          <span>Repository</span>
+        </a>
+      )}
+      {project.liveUrl && (
+        <a
+          href={project.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={
+            isAppStore
+              ? `View ${project.title} on the App Store (opens in a new tab)`
+              : `Open ${project.title} (opens in a new tab)`
+          }
+          className={actionClassName}
+        >
+          <FaExternalLinkAlt aria-hidden="true" className="h-3 w-3" />
+          <span>{isAppStore ? 'View on the App Store' : 'Open project'}</span>
+        </a>
+      )}
+    </div>
+  );
+}
 
-                    {/* Featured Badge */}
-                    {project.featured && (
-                      <div className="absolute top-4 left-4">
-                        <Badge variant="default" size="sm" className="bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
-                          <FaStar className="mr-1" size={12} />
-                          Featured
-                        </Badge>
-                      </div>
-                    )}
+function ProjectImage({
+  src,
+  alt,
+  sizes,
+  contain = false,
+}: {
+  src: string;
+  alt: string;
+  sizes: string;
+  contain?: boolean;
+}) {
+  return (
+    <div className="relative min-h-52 overflow-hidden bg-ink/5 sm:min-h-56">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes={sizes}
+        className={contain ? 'object-contain p-8' : 'object-cover'}
+      />
+    </div>
+  );
+}
 
-                    {/* Status Badge */}
-                    <div className="absolute top-4 right-4">
-                      <Badge 
-                        variant="outline" 
-                        size="sm"
-                        className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm"
-                      >
-                        <StatusIcon className={`mr-1 ${statusColors[project.status]}`} size={12} />
-                        {project.status.charAt(0).toUpperCase() + project.status.slice(1).replace('-', ' ')}
-                      </Badge>
-                    </div>
+function FeaturedProjectCard({
+  featuredProject,
+}: {
+  featuredProject: (typeof featuredProjects)[number];
+}) {
+  const { project, category, image, alt, containImage } = featuredProject;
+  const headingId = `project-heading-${project.id}`;
 
-                    {/* Hover Overlay */}
-                    <div
-                      className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-300"
-                    >
-                      <div className="flex space-x-4">
-                        {project.liveUrl && (
-                          <Button
-                            onClick={() => window.open(project.liveUrl, '_blank')}
-                            size="sm"
-                            className="bg-white text-black hover:bg-gray-100"
-                          >
-                            <FaExternalLinkAlt className="mr-2" size={14} />
-                            Live Demo
-                          </Button>
-                        )}
-                        {project.githubUrl && (
-                          <Button
-                            onClick={() => window.open(project.githubUrl, '_blank')}
-                            variant="outline"
-                            size="sm"
-                            className="bg-transparent border-white text-white hover:bg-white hover:text-black"
-                          >
-                            <FaGithub className="mr-2" size={14} />
-                            Code
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-                  </div>
+  return (
+    <article
+      aria-labelledby={headingId}
+      data-qa={project.id === 'deenpath' ? 'project-published-product' : undefined}
+      className="h-full border border-trace bg-canvas transition-colors duration-200 hover:border-signal"
+    >
+      <div className="grid h-full grid-cols-1 sm:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+        <figure>
+          <ProjectImage
+            src={image}
+            alt={alt}
+            contain={containImage}
+            sizes="(min-width: 1024px) 20vw, (min-width: 640px) 34vw, calc(100vw - 2rem)"
+          />
+        </figure>
 
-                  {/* Project Content */}
-                  <div className="p-6">
-                    {/* Project Title and Description (title shown on the cover above) */}
-                    <div className="mb-4">
-                      <h3 className="sr-only">{project.title}</h3>
-                      {(project.githubUrl || project.liveUrl) && (
-                        <div className="flex items-center justify-end gap-3 mb-2">
-                          {project.githubUrl && (
-                            <a
-                              href={project.githubUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              aria-label={`View ${project.title} source code on GitHub`}
-                              className="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-                            >
-                              <FaGithub size={18} />
-                            </a>
-                          )}
-                          {project.liveUrl && (
-                            <a
-                              href={project.liveUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              aria-label={`Open live demo of ${project.title}`}
-                              className="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-                            >
-                              <FaExternalLinkAlt size={16} />
-                            </a>
-                          )}
-                        </div>
-                      )}
-                      <p className="text-text-secondary-light dark:text-text-secondary-dark text-sm leading-relaxed">
-                        {project.description}
-                      </p>
-                    </div>
-
-                    {/* Project Highlights */}
-                    <div className="mb-4">
-                      <h4 className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark mb-2">
-                        Key Features:
-                      </h4>
-                      <ul className="space-y-1">
-                        {project.highlights.slice(0, 2).map((highlight, hIndex) => (
-                          <li key={hIndex} className="flex items-start space-x-2 text-xs text-text-secondary-light dark:text-text-secondary-dark">
-                            <span className="w-1 h-1 bg-primary-500 rounded-full mt-1.5 flex-shrink-0" />
-                            <span>{highlight}</span>
-                          </li>
-                        ))}
-                        {project.highlights.length > 2 && (
-                          <li className="text-xs text-primary-600 dark:text-primary-400">
-                            +{project.highlights.length - 2} more features
-                          </li>
-                        )}
-                      </ul>
-                    </div>
-
-                    {/* Technologies */}
-                    <div className="mb-4">
-                      <h4 className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark mb-2">
-                        Technologies:
-                      </h4>
-                      <div className="flex flex-wrap gap-1">
-                        {project.technologies.slice(0, 4).map((tech, techIndex) => (
-                          <Badge key={techIndex} variant="secondary" size="sm" className="text-xs">
-                            {tech}
-                          </Badge>
-                        ))}
-                        {project.technologies.length > 4 && (
-                          <Badge variant="outline" size="sm" className="text-xs">
-                            +{project.technologies.length - 4}
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Project Timeline */}
-                    <div className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
-                      {project.startDate} {project.endDate && `- ${project.endDate}`}
-                    </div>
-                  </div>
-                </Card>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-
-        {/* Empty State */}
-        {filteredProjects.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center py-16"
+        <div className="flex min-w-0 flex-col p-4 sm:p-5">
+          <p className="metadata text-xs font-semibold uppercase tracking-widest text-signal">
+            {category}
+          </p>
+          <h4
+            id={headingId}
+            className="mt-2 break-words font-display text-2xl font-bold leading-none text-ink sm:text-3xl"
           >
-            <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-xl font-semibold text-text-primary-light dark:text-text-primary-dark mb-2">
-              No projects found
-            </h3>
-            <p className="text-text-secondary-light dark:text-text-secondary-dark">
-              Try adjusting your filter to see more projects.
-            </p>
-          </motion.div>
-        )}
+            {project.title}
+          </h4>
+          <ProjectMetadata project={project} />
+          <p className="mt-4 break-words text-sm leading-6 text-slate [overflow-wrap:anywhere]">
+            {project.description}
+          </p>
 
-        {/* Call to Action */}
-        <ScrollReveal delay={0.6}>
-          <div className="text-center mt-16">
-            <h3 className="text-2xl font-bold text-text-primary-light dark:text-text-primary-dark mb-4">
-              Have a project in mind?
-            </h3>
-            <p className="text-lg text-text-secondary-light dark:text-text-secondary-dark mb-6 max-w-2xl mx-auto">
-              I'm always interested in new opportunities and exciting projects. Let's discuss how we can work together to bring your ideas to life.
-            </p>
-            <Button
-              onClick={() => {
-                const element = document.querySelector('#contact');
-                if (element) {
-                  const offset = 80;
-                  const elementPosition = element.getBoundingClientRect().top;
-                  const offsetPosition = elementPosition + window.pageYOffset - offset;
-                  window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-                }
-              }}
-              size="lg"
-              className="min-w-[200px]"
-            >
-              Let's Talk
-            </Button>
+          <ul
+            aria-label={`${project.title} technologies`}
+            className="metadata mt-4 min-w-0 flex flex-wrap gap-x-3 gap-y-2 border-t border-trace pt-3 text-xs leading-5 text-slate"
+          >
+            {project.technologies.map((technology) => (
+              <li
+                key={`${project.id}-${technology}`}
+                className="min-w-0 break-words border-l border-trace pl-2 [overflow-wrap:anywhere]"
+              >
+                {technology}
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-auto pt-5">
+            <ProjectActions project={project} />
           </div>
-        </ScrollReveal>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+export default function ProjectsSection() {
+  return (
+    <section
+      id="projects"
+      data-studio-section="projects"
+      data-studio-component="project-showcase"
+      className="section-padding field-rule bg-canvas"
+    >
+      <div className="field-container">
+        <header className="grid gap-6 border-b border-trace pb-10 lg:grid-cols-12 lg:items-end">
+          <h2 className="font-display text-6xl font-bold uppercase leading-none text-ink sm:text-7xl lg:col-span-8 lg:text-8xl">
+            Projects
+          </h2>
+          <p className="max-w-md text-sm leading-6 text-slate lg:col-span-4">
+            Four featured projects, with the rest of the catalog collapsed
+            until you want it.
+          </p>
+        </header>
+
+        <section
+          aria-labelledby="project-selected-work-heading"
+          data-qa="project-selected-work"
+          className="mt-12 lg:mt-16"
+        >
+          <header className="mb-6 flex flex-col gap-3 border-b border-trace pb-5 sm:flex-row sm:items-end sm:justify-between">
+            <h3
+              id="project-selected-work-heading"
+              className="font-display text-3xl font-bold leading-none text-ink sm:text-4xl"
+            >
+              Selected work
+            </h3>
+            <p className="metadata text-xs uppercase text-slate">
+              Featured projects
+            </p>
+          </header>
+
+          <ul className="grid gap-5 md:grid-cols-2">
+            {featuredProjects.map((featuredProject) => (
+              <li key={featuredProject.project.id} className="min-w-0">
+                <FeaturedProjectCard featuredProject={featuredProject} />
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section
+          aria-labelledby="project-archive-heading"
+          data-qa="project-archive"
+          className="mt-16 lg:mt-20"
+        >
+          <details className="archive-details group">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 border-b border-ink py-4 outline-safety marker:content-none [&::-webkit-details-marker]:hidden">
+              <span className="min-w-0">
+                <h3
+                  id="project-archive-heading"
+                  className="font-display text-3xl font-bold leading-none text-ink sm:text-4xl"
+                >
+                  Archive
+                </h3>
+                <p className="mt-3 max-w-md text-sm leading-6 text-slate">
+                  {archiveProjects.length} more project
+                  {archiveProjects.length === 1 ? '' : 's'}, listed
+                  alphabetically with repository links and technical details.
+                </p>
+              </span>
+              <span className="shrink-0 text-sm font-semibold text-signal underline decoration-trace underline-offset-4 group-hover:decoration-signal">
+                <span className="archive-details-closed">See more...</span>
+                <span className="archive-details-open">See less</span>
+              </span>
+            </summary>
+
+            <ol className="border-t border-trace">
+            {archiveProjects.map((project) => {
+              const headingId = `project-heading-${project.id}`;
+
+              return (
+                <li key={project.id} className="border-b border-trace">
+                  <article
+                    aria-labelledby={headingId}
+                    className="grid gap-5 py-5 lg:grid-cols-12 lg:items-start lg:gap-8"
+                  >
+                    <div className="min-w-0 lg:col-span-4">
+                      <ProjectMetadata project={project} />
+                      <h4
+                        id={headingId}
+                        className="mt-2 break-words font-display text-2xl font-semibold leading-none text-ink sm:text-3xl"
+                      >
+                        {project.title}
+                      </h4>
+                    </div>
+
+                    <p className="min-w-0 max-w-prose break-words text-sm leading-6 text-slate [overflow-wrap:anywhere] lg:col-span-4">
+                      {project.description}
+                    </p>
+
+                    <div className="min-w-0 lg:col-span-4">
+                      <h5 className="metadata text-xs uppercase text-ink">
+                        Technologies
+                      </h5>
+                      <ul className="metadata mt-3 min-w-0 flex flex-wrap gap-x-3 gap-y-2 text-xs leading-5 text-slate">
+                        {project.technologies.map((technology) => (
+                          <li
+                            key={`${project.id}-${technology}`}
+                            className="min-w-0 break-words border-l border-trace pl-2 [overflow-wrap:anywhere]"
+                          >
+                            {technology}
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="mt-4">
+                        <ProjectActions project={project} />
+                      </div>
+                    </div>
+                  </article>
+                </li>
+              );
+            })}
+          </ol>
+          </details>
+        </section>
       </div>
     </section>
   );
-} 
+}
