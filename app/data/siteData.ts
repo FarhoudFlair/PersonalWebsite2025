@@ -5,11 +5,11 @@ export const siteData: SiteData = {
     name: 'Farhoud Talebi',
     title: 'Software Engineer',
     tagline: 'I build innovative software solutions',
-    bio: 'Passionate software engineer with expertise in full-stack development, cybersecurity, and mobile applications. Bachelor of Computer Science with Honours from Carleton University, specializing in Security with a 98% CGPA and Senate Medal recognition (Top 3%).',
+    bio: 'I build production iOS apps and systems software, from DeenPath on the App Store to radio protocol work at Collins. Computer Science with Honours from Carleton, CyberSecurity specialization, 4.0 CGPA, Senate Medal (top 2%).',
     location: 'Ottawa, ON, Canada',
     email: 'farhoudtalebi@gmail.com',
     avatar: '/images/avatar.jpg',
-    resume: '/Farhoud Resume.pdf',
+    resume: '/Farhoud-Talebi.pdf',
   },
   
   social: [
@@ -43,7 +43,7 @@ export const siteData: SiteData = {
     {
       id: 'exp1',
       company: 'Collins Aerospace',
-      role: 'Sr. Analyst, Software Engineer',
+      role: 'Intermediate Software Engineer / Sr. Analyst',
       startDate: '2022-12',
       endDate: 'Present',
       location: 'Canada',
@@ -485,8 +485,8 @@ export const siteData: SiteData = {
   
   seo: {
     title: 'Farhoud Talebi - Software Engineer',
-          description: 'Software Engineer specializing in full-stack development, cybersecurity, and mobile applications. Expert in C#, C++, Python, Swift, and JavaScript.',
-    keywords: ['software engineer', 'full-stack', 'cybersecurity', 'mobile development', 'c++', 'csharp', 'python', 'swift', 'javascript', 'portfolio'],
+          description: 'Software engineer shipping production iOS apps and systems software. Computer Science with Honours from Carleton, CyberSecurity specialization.',
+    keywords: ['software engineer', 'ios', 'swift', 'python', 'c++', 'full-stack', 'systems software', 'portfolio'],
     ogImage: '/images/og-image.jpg',
     twitterHandle: '@farhoudtalebi',
   },
