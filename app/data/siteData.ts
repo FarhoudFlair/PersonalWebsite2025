@@ -43,7 +43,7 @@ export const siteData: SiteData = {
     {
       id: 'exp1',
       company: 'Collins Aerospace',
-      role: 'Intermediate Software Engineer / Sr. Analyst',
+      role: 'Intermediate Software Engineer',
       startDate: '2022-12',
       endDate: 'Present',
       location: 'Canada',
