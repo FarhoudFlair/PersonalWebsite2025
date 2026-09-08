@@ -32,33 +32,26 @@ export default function ExperienceSection() {
                 <article
                   aria-labelledby={`role-${experience.id}`}
                   className={cn(
-                    'grid gap-6 md:grid-cols-12 lg:gap-8',
-                    isCurrent
-                      ? 'bg-ink px-4 py-10 text-canvas sm:px-6 lg:px-8 lg:py-14'
-                      : 'py-10 lg:py-12'
+                    'grid gap-6 py-10 md:grid-cols-12 lg:gap-8 lg:py-12',
+                    isCurrent && 'border-l-2 border-signal pl-4 sm:pl-5'
                   )}
                 >
                   <div className="md:col-span-2">
-                    <p
-                      className={cn(
-                        'metadata flex flex-wrap gap-x-2 text-xs',
-                        isCurrent ? 'text-canvas/70' : 'text-slate'
-                      )}
-                    >
+                    {isCurrent && (
+                      <p className="metadata mb-2 text-xs font-semibold uppercase tracking-widest text-signal">
+                        Current
+                      </p>
+                    )}
+                    <p className="metadata flex flex-wrap gap-x-2 text-xs text-slate">
                       <time dateTime={experience.startDate}>{experience.startDate}</time>
-                      <span aria-hidden="true">—</span>
+                      <span aria-hidden="true">-</span>
                       {experience.endDate === 'Present' ? (
                         <span>{experience.endDate}</span>
                       ) : (
                         <time dateTime={experience.endDate}>{experience.endDate}</time>
                       )}
                     </p>
-                    <div
-                      className={cn(
-                        'mt-3 space-y-1 text-sm',
-                        isCurrent ? 'text-canvas/70' : 'text-slate'
-                      )}
-                    >
+                    <div className="mt-3 space-y-1 text-sm text-slate">
                       <p>{experience.location}</p>
                       <p>{experience.type}</p>
                     </div>
@@ -68,10 +61,8 @@ export default function ExperienceSection() {
                     <h3
                       id={`role-${experience.id}`}
                       className={cn(
-                        'font-display font-semibold leading-none',
-                        isCurrent
-                          ? 'text-4xl text-canvas lg:text-5xl'
-                          : 'text-2xl text-ink lg:text-3xl'
+                        'font-display font-semibold leading-none text-ink',
+                        isCurrent ? 'text-3xl lg:text-4xl' : 'text-2xl lg:text-3xl'
                       )}
                     >
                       {experience.role}
@@ -81,24 +72,14 @@ export default function ExperienceSection() {
                         href={experience.companyUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={cn(
-                          'mt-3 inline-flex items-baseline gap-2 font-medium underline underline-offset-4 transition-colors',
-                          isCurrent
-                            ? 'text-canvas decoration-signal hover:decoration-canvas'
-                            : 'text-signal decoration-trace hover:decoration-signal'
-                        )}
+                        className="mt-3 inline-flex items-baseline gap-2 font-medium text-signal underline decoration-trace underline-offset-4 transition-colors hover:decoration-signal"
                         aria-label={`${experience.company} website (opens in a new tab)`}
                       >
                         <span>{experience.company}</span>
                         <span aria-hidden="true">↗</span>
                       </a>
                     ) : (
-                      <p
-                        className={cn(
-                          'mt-3 font-medium',
-                          isCurrent ? 'text-canvas' : 'text-signal'
-                        )}
-                      >
+                      <p className="mt-3 font-medium text-signal">
                         {experience.company}
                       </p>
                     )}
@@ -106,22 +87,14 @@ export default function ExperienceSection() {
 
                   <div className="md:col-span-5">
                     <h4 className="sr-only">Achievements at {experience.company}</h4>
-                    <ul
-                      className={cn(
-                        'space-y-3 text-sm leading-relaxed',
-                        isCurrent ? 'text-canvas' : 'text-ink'
-                      )}
-                    >
+                    <ul className="space-y-3 text-sm leading-relaxed text-ink">
                       {primaryAchievements.map((achievement, achievementIndex) => (
                         <li
                           key={`${experience.id}-achievement-${achievementIndex}`}
                           className="flex gap-3"
                         >
-                          <span
-                            aria-hidden="true"
-                            className={isCurrent ? 'text-canvas/70' : 'text-signal'}
-                          >
-                            —
+                          <span aria-hidden="true" className="text-signal">
+                            -
                           </span>
                           <span>{achievement}</span>
                         </li>
@@ -129,39 +102,19 @@ export default function ExperienceSection() {
                     </ul>
 
                     {additionalAchievements.length > 0 && (
-                      <details
-                        className={cn(
-                          'mt-4 border-l pl-4',
-                          isCurrent ? 'border-canvas/30' : 'border-trace'
-                        )}
-                      >
-                        <summary
-                          className={cn(
-                            'w-fit cursor-pointer text-sm font-medium underline underline-offset-4',
-                            isCurrent
-                              ? 'text-canvas decoration-signal marker:text-canvas hover:decoration-canvas'
-                              : 'text-signal decoration-trace marker:text-signal hover:decoration-signal'
-                          )}
-                        >
+                      <details className="mt-4 border-l border-trace pl-4">
+                        <summary className="w-fit cursor-pointer text-sm font-medium text-signal underline decoration-trace underline-offset-4 marker:text-signal hover:decoration-signal">
                           Show {additionalAchievements.length} more achievement
                           {additionalAchievements.length === 1 ? '' : 's'}
                         </summary>
-                        <ul
-                          className={cn(
-                            'mt-3 space-y-3 text-sm leading-relaxed',
-                            isCurrent ? 'text-canvas' : 'text-ink'
-                          )}
-                        >
+                        <ul className="mt-3 space-y-3 text-sm leading-relaxed text-ink">
                           {additionalAchievements.map((achievement, achievementIndex) => (
                             <li
                               key={`${experience.id}-additional-achievement-${achievementIndex}`}
                               className="flex gap-3"
                             >
-                              <span
-                                aria-hidden="true"
-                                className={isCurrent ? 'text-canvas/70' : 'text-signal'}
-                              >
-                                —
+                              <span aria-hidden="true" className="text-signal">
+                                -
                               </span>
                               <span>{achievement}</span>
                             </li>
@@ -172,20 +125,10 @@ export default function ExperienceSection() {
                   </div>
 
                   <div className="md:col-span-2">
-                    <h4
-                      className={cn(
-                        'text-xs font-semibold uppercase',
-                        isCurrent ? 'text-canvas/70' : 'text-slate'
-                      )}
-                    >
+                    <h4 className="text-xs font-semibold uppercase text-slate">
                       Technologies
                     </h4>
-                    <ul
-                      className={cn(
-                        'metadata mt-3 flex flex-wrap gap-x-2 gap-y-1 text-xs leading-relaxed',
-                        isCurrent ? 'text-canvas/70' : 'text-slate'
-                      )}
-                    >
+                    <ul className="metadata mt-3 flex flex-wrap gap-x-2 gap-y-1 text-xs leading-relaxed text-slate">
                       {experience.technologies.map((technology, technologyIndex) => (
                         <li key={`${experience.id}-${technology}`}>
                           {technology}

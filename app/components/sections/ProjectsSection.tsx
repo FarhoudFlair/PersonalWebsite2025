@@ -234,8 +234,8 @@ export default function ProjectsSection() {
             Projects
           </h2>
           <p className="max-w-md text-sm leading-6 text-slate lg:col-span-4">
-            Four featured projects, followed by every remaining project in a
-            compact archive.
+            Four featured projects, with the rest of the catalog collapsed
+            until you want it.
           </p>
         </header>
 
@@ -270,20 +270,28 @@ export default function ProjectsSection() {
           data-qa="project-archive"
           className="mt-16 lg:mt-20"
         >
-          <header className="grid gap-4 border-b border-ink pb-5 md:grid-cols-12 md:items-end">
-            <h3
-              id="project-archive-heading"
-              className="font-display text-3xl font-bold leading-none text-ink sm:text-4xl md:col-span-7"
-            >
-              Archive
-            </h3>
-            <p className="max-w-md text-sm leading-6 text-slate md:col-span-5">
-              All other projects, listed alphabetically with their repository
-              links and technical details.
-            </p>
-          </header>
+          <details className="archive-details group">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 border-b border-ink py-4 outline-safety marker:content-none [&::-webkit-details-marker]:hidden">
+              <span className="min-w-0">
+                <h3
+                  id="project-archive-heading"
+                  className="font-display text-3xl font-bold leading-none text-ink sm:text-4xl"
+                >
+                  Archive
+                </h3>
+                <p className="mt-3 max-w-md text-sm leading-6 text-slate">
+                  {archiveProjects.length} more project
+                  {archiveProjects.length === 1 ? '' : 's'}, listed
+                  alphabetically with repository links and technical details.
+                </p>
+              </span>
+              <span className="shrink-0 text-sm font-semibold text-signal underline decoration-trace underline-offset-4 group-hover:decoration-signal">
+                <span className="archive-details-closed">See more...</span>
+                <span className="archive-details-open">See less</span>
+              </span>
+            </summary>
 
-          <ol className="border-t border-trace">
+            <ol className="border-t border-trace">
             {archiveProjects.map((project) => {
               const headingId = `project-heading-${project.id}`;
 
@@ -330,6 +338,7 @@ export default function ProjectsSection() {
               );
             })}
           </ol>
+          </details>
         </section>
       </div>
     </section>

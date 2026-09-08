@@ -108,6 +108,18 @@
     letter-spacing: 0.03em;
   }
 
+  .archive-details-open {
+    display: none;
+  }
+
+  .archive-details[open] .archive-details-closed {
+    display: none;
+  }
+
+  .archive-details[open] .archive-details-open {
+    display: inline;
+  }
+
   @media (max-width: 39.999rem) {
     body:has(#mobile-navigation-drawer) [data-qa='signal-controls-toggle'] {
       visibility: hidden;

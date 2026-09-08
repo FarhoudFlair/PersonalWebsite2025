@@ -73,12 +73,12 @@ export default function HeroSection() {
       </motion.div>
 
       <motion.div
-        className="field-container relative z-10 flex w-full justify-center py-12 sm:py-16 lg:py-20"
+        className="field-container relative z-10 flex w-full justify-center py-12 sm:py-16 lg:justify-start lg:py-20"
         initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={shouldReduceMotion ? { duration: 0 } : revealTransition}
       >
-        <div className="max-w-4xl text-center">
+        <div className="max-w-4xl text-center lg:text-left">
           <p className="mb-4 text-lg text-slate sm:text-xl">Hi, I&apos;m</p>
 
           <h1
@@ -91,21 +91,27 @@ export default function HeroSection() {
             </span>
           </h1>
 
-          <p className="mx-auto mt-8 max-w-3xl text-balance text-xl leading-8 text-ink sm:mt-10 sm:text-2xl sm:leading-9">
+          <p className="mx-auto mt-8 max-w-3xl text-balance text-xl leading-8 text-ink sm:mt-10 sm:text-2xl sm:leading-9 lg:mx-0">
             {siteData.personal.tagline}
           </p>
 
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-slate sm:text-lg sm:leading-8">
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-slate sm:text-lg sm:leading-8 lg:mx-0">
             {siteData.personal.bio}
           </p>
 
-          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:mt-12 sm:flex-row">
+          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:mt-12 sm:flex-row lg:justify-start">
             <a
-              href="#contact"
+              href="#projects"
               data-qa="primary-action"
               className="inline-flex min-h-11 w-full items-center justify-center bg-signal px-6 py-3 text-sm font-semibold text-canvas outline-safety transition-colors hover:bg-signal/90 dark:text-ink sm:w-auto sm:min-w-40"
             >
-              Contact Me
+              View projects
+            </a>
+            <a
+              href="#contact"
+              className="inline-flex min-h-11 w-full items-center justify-center border border-trace px-6 py-3 text-sm font-semibold text-ink outline-safety transition-colors hover:border-signal hover:text-signal sm:w-auto sm:min-w-40"
+            >
+              Contact
             </a>
             <a
               href={siteData.personal.resume}
@@ -120,7 +126,7 @@ export default function HeroSection() {
           </div>
 
           <motion.div
-            className="mt-14 flex flex-col items-center sm:mt-16"
+            className="mt-14 flex flex-col items-center sm:mt-16 lg:items-start"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={
