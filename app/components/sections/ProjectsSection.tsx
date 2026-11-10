@@ -27,10 +27,10 @@ const FEATURED_PROJECTS = [
   },
   {
     id: 'imposter-hunt',
-    category: 'iOS party game',
-    image: '/images/projects/imposter-hunt.webp',
-    alt: 'Imposter Hunt app icon',
-    containImage: true,
+    category: 'Published iOS game',
+    image: '/images/projects/featured/imposter-hunt-store.webp',
+    alt: 'Imposter Hunt iOS screens: home, game settings, role reveal, and imposter reveal',
+    containImage: false,
   },
 ] as const;
 

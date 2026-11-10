@@ -98,7 +98,7 @@
         },
         {
           "type": "expectVisible",
-          "selector": "[data-qa=\"project-selected-work\"] > ul > li:nth-child(4):last-child img[src*=\"imposter-hunt.webp\"]"
+          "selector": "[data-qa=\"project-selected-work\"] > ul > li:nth-child(4):last-child img[src*=\"imposter-hunt-store.webp\"]"
         },
         {
           "type": "expectText",
