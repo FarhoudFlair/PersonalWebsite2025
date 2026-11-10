@@ -154,6 +154,11 @@ export const siteData: SiteData = {
     { id: 'css', name: 'CSS', icon: 'FaCss3Alt', category: 'frontend-mobile', color: '#1572B6' },
     { id: 'ios', name: 'iOS Development', icon: 'FaApple', category: 'frontend-mobile', color: '#000000' },
     { id: 'android', name: 'Android Development', icon: 'FaAndroid', category: 'frontend-mobile', color: '#3DDC84' },
+    { id: 'react-native', name: 'React Native', icon: 'FaReact', category: 'frontend-mobile', color: '#61DAFB' },
+    { id: 'swiftui', name: 'SwiftUI', icon: 'FaSwift', category: 'frontend-mobile', color: '#F05138' },
+    { id: 'uikit', name: 'UIKit', icon: 'FaApple', category: 'frontend-mobile', color: '#000000' },
+    { id: 'firebase', name: 'Firebase', icon: 'SiFirebase', category: 'frontend-mobile', color: '#DD2C00' },
+    { id: 'supabase', name: 'Supabase', icon: 'SiSupabase', category: 'frontend-mobile', color: '#3FCF8E' },
 
     // Backend & Systems
     { id: 'dotnet', name: '.NET', icon: 'SiDotnet', category: 'backend-systems', color: '#512BD4' },
@@ -163,12 +168,20 @@ export const siteData: SiteData = {
     { id: 'system-programming', name: 'System Programming', icon: 'FaCogs', category: 'backend-systems', color: '#64748B' },
     { id: 'algorithms', name: 'Algorithm Design', icon: 'FaCode', category: 'backend-systems', color: '#6366F1' },
     { id: 'security', name: 'Security', icon: 'FaShieldAlt', category: 'backend-systems', color: '#EF4444' },
+    { id: 'nodejs', name: 'Node.js', icon: 'FaNodeJs', category: 'backend-systems', color: '#5FA04E' },
+    { id: 'rest-apis', name: 'REST APIs', icon: 'FaServer', category: 'backend-systems', color: '#0EA5E9' },
+    { id: 'celery', name: 'Celery', icon: 'SiCelery', category: 'backend-systems', color: '#37814A' },
+    { id: 'oauth', name: 'OAuth 2.0', icon: 'FaKey', category: 'backend-systems', color: '#EB5424' },
+    { id: 'etl', name: 'ETL Pipelines', icon: 'FaStream', category: 'backend-systems', color: '#14B8A6' },
+    { id: 'ood', name: 'Object-Oriented Design', icon: 'FaCubes', category: 'backend-systems', color: '#6366F1' },
 
     // Tools & DevOps
     { id: 'git', name: 'Git', icon: 'FaGitAlt', category: 'tools', color: '#F05032' },
     { id: 'docker', name: 'Docker', icon: 'FaDocker', category: 'tools', color: '#2496ED' },
     { id: 'linux', name: 'Linux', icon: 'FaLinux', category: 'tools', color: '#F59E0B' },
     { id: 'perforce', name: 'Perforce', icon: 'SiPerforce', category: 'tools', color: '#404040' },
+    { id: 'cicd', name: 'CI/CD (GitHub Actions)', icon: 'SiGithubactions', category: 'tools', color: '#2088FF' },
+    { id: 'agile', name: 'Agile/Scrum', icon: 'FaUsers', category: 'tools', color: '#0EA5E9' },
 
     // AI & Automation
     { id: 'ai-assisted-dev', name: 'AI-Assisted Development', icon: 'FaMagic', category: 'ai', color: '#8B5CF6' },
