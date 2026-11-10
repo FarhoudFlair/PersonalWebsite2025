@@ -189,8 +189,8 @@
       "name": "Static Project Archive",
       "kind": "custom",
       "refersTo": "project-archive",
-      "description": "Visible compact archive of exactly 13 remaining projects in alphabetical order: Animal Adoption Center, AndroidQuizApp, ChatServer, FlickrViewer, MazeSolver, Mechanic Shop, Mortgage Scenario Comparisons, PersonalWebsite2025, Purchase Calculator, Recipe Adventure, Rental Cash Dam, Rental Property Calculator, SwiftProjectileCalculationApp. Rental Cash Dam remains immediately before Rental Property Calculator.",
-      "html": "<section data-qa='project-archive' aria-labelledby='project-archive-heading'><h3 id='project-archive-heading'>Archive · 13 projects</h3><ol><li>Animal Adoption Center</li><li>AndroidQuizApp</li><li>ChatServer</li><li>FlickrViewer</li><li>MazeSolver</li><li>Mechanic Shop</li><li>Mortgage Scenario Comparisons</li><li>PersonalWebsite2025</li><li>Purchase Calculator</li><li>Recipe Adventure</li><li>Rental Cash Dam</li><li>Rental Property Calculator</li><li>SwiftProjectileCalculationApp</li></ol></section>",
+      "description": "Visible compact archive of exactly 14 remaining projects in alphabetical order: Animal Adoption Center, AndroidQuizApp, ChatServer, FlickrViewer, MazeSolver, Mechanic Shop, Mortgage Scenario Comparisons, PersonalWebsite2025, Portfolio Rebalancer, Purchase Calculator, Recipe Adventure, Rental Cash Dam, Rental Property Calculator, SwiftProjectileCalculationApp. Rental Cash Dam remains immediately before Rental Property Calculator.",
+      "html": "<section data-qa='project-archive' aria-labelledby='project-archive-heading'><h3 id='project-archive-heading'>Archive · 14 projects</h3><ol><li>Animal Adoption Center</li><li>AndroidQuizApp</li><li>ChatServer</li><li>FlickrViewer</li><li>MazeSolver</li><li>Mechanic Shop</li><li>Mortgage Scenario Comparisons</li><li>PersonalWebsite2025</li><li>Portfolio Rebalancer</li><li>Purchase Calculator</li><li>Recipe Adventure</li><li>Rental Cash Dam</li><li>Rental Property Calculator</li><li>SwiftProjectileCalculationApp</li></ol></section>",
       "css": "[data-qa='project-archive'] { border-top: 1px solid rgb(var(--trace)); } [data-qa='project-archive'] li { border-bottom: 1px solid rgb(var(--trace)); padding: 16px 0; }"
     },
     {
@@ -220,13 +220,13 @@
   ],
   "narrative": {
     "northStar": "The Evidence Field",
-    "overview": "The Evidence Field restores an original identity-first first viewport: Farhoud's name, Software Engineer role, existing tagline, Contact and Résumé actions, and a subtle particle field. It presents engineering work as authored, factual proof that technical evaluators can scan without spectacle. Condensed display type gives identity and section markers a clear voice; restrained body copy and monospaced metadata make the evidence technically fluent.\n\nThe system is dense inside generous outer whitespace. A compact four-card featured grid leads with DeenPath, StockScanner, Remote Admin Toolkit, and Imposter Hunt in that order, followed by a visible 13-item archive. The current Bolder Experience and Skills sections remain unchanged. Signal Green marks action and selection, Safety Rust protects focus and error states, and verified project imagery provides the only large image texture.",
+    "overview": "The Evidence Field restores an original identity-first first viewport: Farhoud's name, Software Engineer role, existing tagline, Contact and Résumé actions, and a subtle particle field. It presents engineering work as authored, factual proof that technical evaluators can scan without spectacle. Condensed display type gives identity and section markers a clear voice; restrained body copy and monospaced metadata make the evidence technically fluent.\n\nThe system is dense inside generous outer whitespace. A compact four-card featured grid leads with DeenPath, StockScanner, Remote Admin Toolkit, and Imposter Hunt in that order, followed by a visible 14-item archive. The current Bolder Experience and Skills sections remain unchanged. Signal Green marks action and selection, Safety Rust protects focus and error states, and verified project imagery provides the only large image texture.",
     "keyCharacteristics": [
       "Six semantic color roles with a four-role dark-mode swap.",
       "Condensed display type, readable body type, and tabular monospaced metadata.",
       "Fluid outer gutters around an asymmetric twelve-column desktop field.",
       "Flat one-pixel dividers, predominantly square geometry, and no shadows.",
-      "Compact detailed featured cards in a 2x2 desktop grid and a single-column mobile flow, followed by a complete visible 13-item archive."
+      "Compact detailed featured cards in a 2x2 desktop grid and a single-column mobile flow, followed by a complete visible 14-item archive."
     ],
     "rules": [
       {

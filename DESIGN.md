@@ -141,7 +141,7 @@ The system is dense inside generous outer whitespace. A flat semantic spine of r
 - Condensed display type, readable body type, and tabular monospaced metadata.
 - Fluid outer gutters around an asymmetric twelve-column desktop field.
 - Flat one-pixel dividers, predominantly square geometry, and no shadows.
-- Compact four-card featured evidence and 13-item archive records that become linear below the desktop breakpoint while keeping all project details and actions visible.
+- Compact four-card featured evidence and 14-item archive records that become linear below the desktop breakpoint while keeping all project details and actions visible.
 
 ## Colors
 
@@ -190,9 +190,9 @@ A restrained six-role palette treats color as interface semantics rather than de
 
 The field container is fluid to a maximum width of `1440px`, centered with inline padding `clamp(1rem, 4vw, 4rem)`. Major sections use block padding `clamp(4.5rem, 9vw, 8rem)`. The recurring rhythm is the observed Tailwind spacing sequence captured in frontmatter, with `0.5rem`, `0.75rem`, `1rem`, `1.5rem`, `2rem`, `2.5rem`, `3rem`, and `4rem` doing most grouping work.
 
-At `lg` (`1024px`) and above, the original identity-first hero stays centered around Farhoud's name, Software Engineer role, existing tagline, Contact/Résumé actions, and subtle particles; it has no project preview or current-evidence column. Projects then show exactly four compact detailed cards in this order—DeenPath, StockScanner, Remote Admin Toolkit, Imposter Hunt—in a 2x2 grid at `1440px`, followed by a visible 13-item archive. `sm` is `640px`, `md` is `768px`, and `xl` is `1280px`. The navigation is fixed at `4rem` high, and anchor scrolling accounts for a `5rem` offset.
+At `lg` (`1024px`) and above, the original identity-first hero stays centered around Farhoud's name, Software Engineer role, existing tagline, Contact/Résumé actions, and subtle particles; it has no project preview or current-evidence column. Projects then show exactly four compact detailed cards in this order—DeenPath, StockScanner, Remote Admin Toolkit, Imposter Hunt—in a 2x2 grid at `1440px`, followed by a visible 14-item archive. `sm` is `640px`, `md` is `768px`, and `xl` is `1280px`. The navigation is fixed at `4rem` high, and anchor scrolling accounts for a `5rem` offset.
 
-Below `lg`, the hero remains identity-first and the four featured cards become a single-column flow in the same order; all card evidence and actions stay visible. The complete 13-item archive follows as static content, with Rental Cash Dam before Rental Property Calculator. The current Bolder Experience and Skills sections remain unchanged. The navigation becomes an accessible right-side drawer; signal controls remain fixed at the top-right below the header and hide while that drawer is open. The root supports a `320px` minimum width with no horizontal overflow.
+Below `lg`, the hero remains identity-first and the four featured cards become a single-column flow in the same order; all card evidence and actions stay visible. The complete 14-item archive follows as static content, with Rental Cash Dam before Rental Property Calculator. The current Bolder Experience and Skills sections remain unchanged. The navigation becomes an accessible right-side drawer; signal controls remain fixed at the top-right below the header and hide while that drawer is open. The root supports a `320px` minimum width with no horizontal overflow.
 
 ### Project Image Strategy
 
@@ -230,12 +230,12 @@ Components feel instrumental and explicit: every state is visible through semant
 - **Featured grid:** Exactly four compact detailed cards in this order: DeenPath, StockScanner, Remote Admin Toolkit, Imposter Hunt. The desktop grid is 2x2; it becomes one column on mobile.
 - **Published product card:** DeenPath is the first featured card and uses real App Store screenshots, verified status/dates, highlights, technologies, and a direct App Store action.
 - **Editorial featured cards:** StockScanner and Remote Admin Toolkit use factual editorial covers; Imposter Hunt uses its real icon. Each card keeps its evidence and direct link visible.
-- **Archive list:** Exactly 13 remaining projects are always visible in a compact static list in alphabetical order: Animal Adoption Center, AndroidQuizApp, ChatServer, FlickrViewer, MazeSolver, Mechanic Shop, Mortgage Scenario Comparisons, PersonalWebsite2025, Purchase Calculator, Recipe Adventure, Rental Cash Dam, Rental Property Calculator, SwiftProjectileCalculationApp. Rental Cash Dam remains immediately before Rental Property Calculator. It is never filtered or revealed by selection.
+- **Archive list:** Exactly 14 remaining projects are always visible in a compact static list in alphabetical order: Animal Adoption Center, AndroidQuizApp, ChatServer, FlickrViewer, MazeSolver, Mechanic Shop, Mortgage Scenario Comparisons, PersonalWebsite2025, Portfolio Rebalancer, Purchase Calculator, Recipe Adventure, Rental Cash Dam, Rental Property Calculator, SwiftProjectileCalculationApp. Rental Cash Dam remains immediately before Rental Property Calculator. It is never filtered or revealed by selection.
 - **Evidence rule:** No filters, selectors, giant/full-width case studies, interaction-gated evidence, or hover-only actions.
 
 ### Preserved Experience & Skills
 - **Bolder Experience:** Keep the current Experience section, career records, achievements, technologies, and behavior unchanged.
-- **Bolder Skills:** Keep the current Skills section, five groups, 32 skills, icon rail, and behavior unchanged.
+- **Bolder Skills:** Keep the current Skills section, five groups, 45 skills, icon rail, and behavior unchanged.
 
 ### Records / Containers
 - **Project records:** Flat compact articles separated by Trace rules. Featured cards and archive records remain complete and visible at every breakpoint.

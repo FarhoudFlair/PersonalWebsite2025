@@ -143,26 +143,31 @@
         {
           "type": "expectText",
           "selector": "[data-qa=\"project-archive\"] > ol > li:nth-child(9)",
-          "value": "Purchase Calculator"
+          "value": "Portfolio Rebalancer"
         },
         {
           "type": "expectText",
           "selector": "[data-qa=\"project-archive\"] > ol > li:nth-child(10)",
-          "value": "Recipe Adventure"
+          "value": "Purchase Calculator"
         },
         {
           "type": "expectText",
           "selector": "[data-qa=\"project-archive\"] > ol > li:nth-child(11)",
-          "value": "Rental Cash Dam"
+          "value": "Recipe Adventure"
         },
         {
           "type": "expectText",
           "selector": "[data-qa=\"project-archive\"] > ol > li:nth-child(12)",
+          "value": "Rental Cash Dam"
+        },
+        {
+          "type": "expectText",
+          "selector": "[data-qa=\"project-archive\"] > ol > li:nth-child(13)",
           "value": "Rental Property Calculator"
         },
         {
           "type": "expectText",
-          "selector": "[data-qa=\"project-archive\"] > ol > li:nth-child(13):last-child",
+          "selector": "[data-qa=\"project-archive\"] > ol > li:nth-child(14):last-child",
           "value": "SwiftProjectileCalculationApp"
         }
       ]

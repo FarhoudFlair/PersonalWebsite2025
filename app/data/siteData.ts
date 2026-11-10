@@ -374,6 +374,22 @@ export const siteData: SiteData = {
       ],
     },
     {
+      id: 'portfolio-rebalancer',
+      title: 'Portfolio Rebalancer',
+      description: 'Full-stack portfolio rebalancer with Questrade API integration that prepares the trades needed to bring an account back to its target weights.',
+      longDescription: 'A fintech automation platform that connects to Questrade, reads account holdings, and calculates the trades needed to rebalance a portfolio or deploy new cash against target weights. Built with a FastAPI backend, React frontend, PostgreSQL, and async Celery workers, with OAuth 2.0 PKCE and JWT authorization and Dockerized CI/CD deployment. Rebalancing logic is modular, validated, and auditable.',
+      image: '/images/projects/personal-website.jpg',
+      technologies: ['Python', 'FastAPI', 'React', 'PostgreSQL', 'Celery', 'Docker', 'OAuth 2.0'],
+      githubUrl: 'https://github.com/FarhoudFlair/PortfolioRebalancer',
+      startDate: '2025-05',
+      endDate: '2025-08',
+      highlights: [
+        'Questrade API integration with OAuth 2.0 PKCE and JWT authorization',
+        'Async Celery workers and Dockerized CI/CD deployment',
+        'Modular rebalancing logic with validated, auditable calculations',
+      ],
+    },
+    {
       id: 'purchase-calculator',
       title: 'Purchase Calculator',
       description: 'Financial calculator for analyzing purchase decisions and payment scenarios.',

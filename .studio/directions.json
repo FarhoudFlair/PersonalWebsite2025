@@ -13,7 +13,7 @@
         "contact"
       ],
       "typography_personality": "Condensed technical display headings with a calm sans body and utility monospace reserved for dates and technology metadata.",
-      "image_strategy": "Four featured assets use real DeenPath App Store screenshots at /images/projects/featured/deenpath-store.webp, a factual StockScanner editorial cover at /images/projects/featured/stockscanner-cover.webp, a factual Remote Admin Toolkit editorial cover at /images/projects/featured/rat-cover.webp, and real Imposter Hunt App Store screenshots at /images/projects/featured/imposter-hunt-store.webp; the remaining 13 projects use existing factual covers in a visible compact alphabetical archive with Rental Cash Dam immediately before Rental Property Calculator.",
+      "image_strategy": "Four featured assets use real DeenPath App Store screenshots at /images/projects/featured/deenpath-store.webp, a factual StockScanner editorial cover at /images/projects/featured/stockscanner-cover.webp, a factual Remote Admin Toolkit editorial cover at /images/projects/featured/rat-cover.webp, and real Imposter Hunt App Store screenshots at /images/projects/featured/imposter-hunt-store.webp; the remaining 14 projects use existing factual covers in a visible compact alphabetical archive with Rental Cash Dam immediately before Rental Property Calculator.",
       "interaction_model": "Direct document-flow interaction: all four featured cards, archive entries, evidence, and actions remain visible without project filters, selectors, giant/full-width case studies, or interaction-gated evidence; consolidated signal controls remain available.",
       "scores": {
         "brief_fit": 5,
@@ -70,6 +70,6 @@
     "autonomous_selection_authorized": false,
     "authority_evidence": "",
     "selected_direction_id": "field-map",
-    "rationale": "The user explicitly selected the final hybrid: restore the original identity-first hero and navigation; show four compact detailed cards followed by the visible 13-item archive; preserve the current Bolder Experience and Skills sections; use factual DeenPath screenshots, StockScanner/RAT editorial covers, and the real Imposter Hunt icon in a direct document flow."
+    "rationale": "The user explicitly selected the final hybrid: restore the original identity-first hero and navigation; show four compact detailed cards followed by the visible 14-item archive; preserve the current Bolder Experience and Skills sections; use factual DeenPath screenshots, StockScanner/RAT editorial covers, and the real Imposter Hunt icon in a direct document flow."
   }
 }
