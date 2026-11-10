@@ -363,6 +363,7 @@ export const siteData: SiteData = {
       technologies: ['Swift', 'SwiftUI', 'iOS Development', 'App Store'],
       liveUrl: 'https://apps.apple.com/app/id6757217696',
       githubUrl: 'https://github.com/FarhoudFlair/Imposter-Hunt',
+      websiteUrl: '/imposter-hunt',
       status: 'completed',
       startDate: '2026-11',
       endDate: 'Present',

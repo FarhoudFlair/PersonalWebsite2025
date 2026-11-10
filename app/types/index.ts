@@ -50,6 +50,8 @@ export interface Project {
   technologies: string[];
   liveUrl?: string;
   githubUrl?: string;
+  /** Product page on this site, e.g. '/imposter-hunt'. */
+  websiteUrl?: string;
   status?: 'completed' | 'in-progress' | 'concept';
   startDate?: string;
   endDate?: string;

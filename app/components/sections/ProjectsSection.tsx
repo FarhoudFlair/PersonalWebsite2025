@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
+import Link from 'next/link';
+import { FaArrowRight, FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
 import { siteData } from '@/data/siteData';
 import type { Project } from '@/types';
 
@@ -92,7 +93,7 @@ function ProjectMetadata({ project }: { project: Project }) {
 }
 
 function ProjectActions({ project }: { project: Project }) {
-  if (!project.githubUrl && !project.liveUrl) {
+  if (!project.githubUrl && !project.liveUrl && !project.websiteUrl) {
     return null;
   }
 
@@ -102,6 +103,16 @@ function ProjectActions({ project }: { project: Project }) {
 
   return (
     <div className="flex flex-wrap gap-2">
+      {project.websiteUrl && (
+        <Link
+          href={project.websiteUrl}
+          aria-label={`Visit the ${project.title} product page`}
+          className={actionClassName}
+        >
+          <FaArrowRight aria-hidden="true" className="h-3 w-3" />
+          <span>Product page</span>
+        </Link>
+      )}
       {project.githubUrl && (
         <a
           href={project.githubUrl}
