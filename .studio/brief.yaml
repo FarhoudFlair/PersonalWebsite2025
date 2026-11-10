@@ -56,7 +56,7 @@ constraints:
   - "Local-only disposable experiment; no production deployment"
   - "Restore the original identity-first hero composition and preserve the current Bolder Experience and Skills sections unchanged."
   - "Featured order and layout are fixed: DeenPath, StockScanner, Remote Admin Toolkit, Imposter Hunt; compact 2x2 desktop and single-column mobile cards; 13-item visible alphabetical archive with Rental Cash Dam immediately before Rental Property Calculator."
-  - "Use the four approved featured assets only: real DeenPath App Store screenshots at /images/projects/featured/deenpath-store.webp, a factual editorial cover for StockScanner at /images/projects/featured/stockscanner-cover.webp, a factual editorial cover for Remote Admin Toolkit at /images/projects/featured/rat-cover.webp, and the real Imposter Hunt icon at /images/projects/imposter-hunt.webp."
+  - "Use the four approved featured assets only: real DeenPath App Store screenshots at /images/projects/featured/deenpath-store.webp, a factual editorial cover for StockScanner at /images/projects/featured/stockscanner-cover.webp, a factual editorial cover for Remote Admin Toolkit at /images/projects/featured/rat-cover.webp, and real Imposter Hunt App Store screenshots at /images/projects/featured/imposter-hunt-store.webp."
 assumptions:
   - "Audience and job are inferred from the explicit brief"
   - "No valid portrait exists (avatar image is absent)"

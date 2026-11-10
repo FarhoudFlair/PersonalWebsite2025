@@ -198,7 +198,7 @@ Below `lg`, the hero remains identity-first and the four featured cards become a
 
 - DeenPath uses real App Store screenshots at `/images/projects/featured/deenpath-store.webp`.
 - StockScanner and Remote Admin Toolkit use factual editorial covers at `/images/projects/featured/stockscanner-cover.webp` and `/images/projects/featured/rat-cover.webp`.
-- Imposter Hunt uses its real icon at `/images/projects/imposter-hunt.webp`.
+- Imposter Hunt uses real App Store screenshots at `/images/projects/featured/imposter-hunt-store.webp`.
 - Archive entries retain the existing factual project covers from `siteData.ts`; no portrait substitute or fabricated imagery is allowed.
 
 ## Elevation & Depth

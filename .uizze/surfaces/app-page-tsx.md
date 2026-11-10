@@ -20,7 +20,7 @@ Approved composition:
 Image strategy:
 - DeenPath uses real App Store screenshots at `/images/projects/featured/deenpath-store.webp`.
 - StockScanner and Remote Admin Toolkit use factual editorial covers at `/images/projects/featured/stockscanner-cover.webp` and `/images/projects/featured/rat-cover.webp`.
-- Imposter Hunt uses its real icon at `/images/projects/imposter-hunt.webp`; archive entries keep existing factual project covers.
+- Imposter Hunt uses real App Store screenshots at `/images/projects/featured/imposter-hunt-store.webp`; archive entries keep existing factual project covers.
 
 Constraints: Preserve factual data and every external link; no portrait; keyboard and reduced-motion access; dark/light theme; consolidated particle controls; EmailJS behavior without a real local send; retain Imposter Hunt routes; no gradients, glass, fake metrics, timeline dots, blobs, or decorative pills; preserve Contact/Footer behavior, navigation, privacy/support routes, and all required QA flows.
 Required QA markers: `project-published-product` identifies the DeenPath card, `project-selected-work` wraps the four-card featured grid, and `project-archive` identifies the complete 13-item archive.

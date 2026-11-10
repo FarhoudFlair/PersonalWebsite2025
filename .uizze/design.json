@@ -173,7 +173,7 @@
       "name": "Featured Project Card",
       "kind": "custom",
       "refersTo": "featured-project-card",
-      "description": "Reusable compact detailed card for StockScanner, Remote Admin Toolkit, and Imposter Hunt; use factual editorial covers at /images/projects/featured/stockscanner-cover.webp and /images/projects/featured/rat-cover.webp plus the real icon at /images/projects/imposter-hunt.webp. Factual evidence, technologies, dates/status when verified, direct links, and visible actions are always present.",
+      "description": "Reusable compact detailed card for StockScanner, Remote Admin Toolkit, and Imposter Hunt; use factual editorial covers at /images/projects/featured/stockscanner-cover.webp and /images/projects/featured/rat-cover.webp plus real Imposter Hunt App Store screenshots at /images/projects/featured/imposter-hunt-store.webp. Factual evidence, technologies, dates/status when verified, direct links, and visible actions are always present.",
       "html": "<article class='ds-featured-card'><img src='/images/projects/featured/stockscanner-cover.webp' alt='StockScanner editorial cover'><p>Selected work · 02/04</p><h3>StockScanner</h3><p>Factual project description</p><h4>Highlights</h4><h4>Stack and actions</h4></article>",
       "css": ".ds-featured-card { min-width: 0; border: 1px solid rgb(var(--trace)); background: rgb(var(--canvas)); color: rgb(var(--ink)); } .ds-featured-card img { aspect-ratio: 16 / 9; display: block; width: 100%; object-fit: cover; }"
     },
