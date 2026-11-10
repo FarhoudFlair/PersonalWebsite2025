@@ -2,6 +2,7 @@
 
 import type { ReactNode } from 'react';
 import { Suspense, lazy, useCallback, useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { SettingsProvider } from '@/context/SettingsContext';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import ParticleColorSelector from '@/components/ui/ParticleColorSelector';
@@ -71,6 +72,10 @@ function InnerClientLogic({ children }: { children: ReactNode }) {
 }
 
 function AppClientWrapper({ children }: AppClientWrapperProps) {
+  // App pages (e.g. /imposter-hunt) have their own look; skip the portfolio's particle layer there.
+  const pathname = usePathname();
+  if (pathname?.startsWith('/imposter-hunt')) return <>{children}</>;
+
   return (
     <SettingsProvider>
       <InnerClientLogic>{children}</InnerClientLogic>
