@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaArrowRight, FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
+import { FaArrowRight, FaChevronDown, FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
 import { siteData } from '@/data/siteData';
 import type { Project } from '@/types';
 
@@ -288,7 +288,7 @@ export default function ProjectsSection() {
                   id="project-archive-heading"
                   className="font-display text-3xl font-bold leading-none text-ink sm:text-4xl"
                 >
-                  Archive
+                  More projects
                 </h3>
                 <p className="mt-3 max-w-md text-sm leading-6 text-slate">
                   {archiveProjects.length} more project
@@ -296,9 +296,15 @@ export default function ProjectsSection() {
                   alphabetically with repository links and technical details.
                 </p>
               </span>
-              <span className="shrink-0 text-sm font-semibold text-signal underline decoration-trace underline-offset-4 group-hover:decoration-signal">
-                <span className="archive-details-closed">See more...</span>
+              <span className="inline-flex min-h-12 shrink-0 items-center gap-3 border-2 border-signal bg-signal px-5 py-3 text-base font-semibold text-canvas transition-colors duration-200 group-hover:border-ink group-hover:bg-ink group-hover:text-canvas dark:text-ink dark:group-hover:text-canvas sm:px-6">
+                <span className="archive-details-closed">
+                  See {archiveProjects.length} more
+                </span>
                 <span className="archive-details-open">See less</span>
+                <FaChevronDown
+                  aria-hidden="true"
+                  className="h-3.5 w-3.5 transition-transform duration-200 group-open:rotate-180 motion-reduce:transition-none"
+                />
               </span>
             </summary>
 
